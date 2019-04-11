@@ -8,5 +8,6 @@ namespace Domainlayer
 {
     public class Class1
     {
+		// okaz nu er det ikke længere tom
     }
 }
