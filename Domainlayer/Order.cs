@@ -4,20 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EksamensProjektUnigGardin
+namespace Domainlayer
 {
     public class Order
     {
-        public Order()
-        {
-
-        }
-        public Order(string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            Zip = zip;
-        }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Zip { get; set; }
@@ -26,8 +16,25 @@ namespace EksamensProjektUnigGardin
         public int PhoneNumber { get; set; }
         public string Email { get; set; }
         public List<string> SampleType { get; set; }
-        
-        public DateTime timeStamp { get; set; }
+      
+        public DateTime TimeStamp { get; set; }
+
+        public Order()
+        {
+
+        }
+        public Order(string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email, List<string> sampleType)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Zip = zip;
+			City = city;
+			Country = country;
+			PhoneNumber = phoneNumber;
+			Email = email;
+			SampleType = sampleType;
+			TimeStamp = DateTime.Now;
+        }
         
         
     }

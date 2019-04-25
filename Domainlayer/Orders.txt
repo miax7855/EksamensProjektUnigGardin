@@ -1,2 +1,2 @@
-﻿FirstName;LastName;Zip;City;Country;Phone;Email;timeStamp;SampleType,SampleType,SampleType
+﻿FirstName;LastName;Zip;City;Country;Phone;Email;SampleType,SampleType,SampleType
 

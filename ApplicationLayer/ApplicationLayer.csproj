@@ -53,5 +53,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domainlayer\Domainlayer.csproj">
+      <Project>{93f4edfc-eea8-4e48-ac3e-1f36a2326ce6}</Project>
+      <Name>Domainlayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationLayer
 {
-    public class DBController
+    class DBController
     {
-
     }
 }

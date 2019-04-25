@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domainlayer", "Domainlayer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationLayer", "ApplicationLayer\ApplicationLayer.csproj", "{B73CF90E-365C-4B62-9690-F7081D94F681}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "ImportControllerUnitTest\Tests.csproj", "{7AC532D9-586D-432F-826A-2A045594AABD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B73CF90E-365C-4B62-9690-F7081D94F681}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B73CF90E-365C-4B62-9690-F7081D94F681}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B73CF90E-365C-4B62-9690-F7081D94F681}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AC532D9-586D-432F-826A-2A045594AABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AC532D9-586D-432F-826A-2A045594AABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AC532D9-586D-432F-826A-2A045594AABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AC532D9-586D-432F-826A-2A045594AABD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
