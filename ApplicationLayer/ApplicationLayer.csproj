@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller.cs" />
+    <Compile Include="DBController.cs" />
     <Compile Include="ImportController.cs" />
     <Compile Include="OrderRepository.cs" />
     <Compile Include="Program.cs" />
