@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EksamensProjektUnigGardin",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domainlayer", "Domainlayer\Domainlayer.csproj", "{93F4EDFC-EEA8-4E48-AC3E-1F36A2326CE6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationLayer", "ApplicationLayer\ApplicationLayer.csproj", "{B73CF90E-365C-4B62-9690-F7081D94F681}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{93F4EDFC-EEA8-4E48-AC3E-1F36A2326CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93F4EDFC-EEA8-4E48-AC3E-1F36A2326CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93F4EDFC-EEA8-4E48-AC3E-1F36A2326CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B73CF90E-365C-4B62-9690-F7081D94F681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B73CF90E-365C-4B62-9690-F7081D94F681}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B73CF90E-365C-4B62-9690-F7081D94F681}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B73CF90E-365C-4B62-9690-F7081D94F681}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
