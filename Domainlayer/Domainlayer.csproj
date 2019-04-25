@@ -51,7 +51,9 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ErrorLog.txt" />
+    <Content Include="ErrorLog.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

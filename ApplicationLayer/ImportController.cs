@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domainlayer;
 
 namespace ApplicationLayer
 {
@@ -25,9 +26,9 @@ namespace ApplicationLayer
 		{
 			foreach (string item in text)
 			{
-				string[] orderItems = item.Split(';');
-				string[] sampleTypeArray = orderItems[7].Split(',');
-				ConvertArrayToList(sampleTypeArray);
+				orderItems = item.Split(';');
+				sampleTypeArray = orderItems[7].Split(',');
+				sampleTypeList = ConvertArrayToList(sampleTypeArray);
 				Order order = new Order(orderItems[0], orderItems[1], Convert.ToInt32(orderItems[2]), orderItems[3], orderItems[4], Convert.ToInt32(orderItems[5]), orderItems[6], sampleTypeList);
 				orderRepo.AddOrder(order);
 			}

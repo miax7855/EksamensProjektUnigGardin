@@ -11,7 +11,7 @@ namespace ApplicationLayer
     {
         private OrderRepository oRepo = new OrderRepository();
         private DBController dbController = new DBController();
-        private FabricSampleRepository fsRepo = new FabricSampleRepository();
+    //    private FabricSampleRepository fsRepo = new FabricSampleRepository();
         private Errors error = new Errors();
         
 
@@ -19,7 +19,7 @@ namespace ApplicationLayer
         {
             try
             {
-               string message = dbController.SaveOrder(order);
+   //            string message = dbController.SaveOrder(order);
             }
             catch (Exception)
             {
