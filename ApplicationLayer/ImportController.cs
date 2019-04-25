@@ -13,6 +13,7 @@ namespace EksamensProjektUnigGardin
 		string[] orderItems;
 		string[] sampleTypeArray;
 		List<string> sampleTypeList;
+		OrderRepository orderRepo;
 
 		public void readLines()
         {
@@ -28,10 +29,9 @@ namespace EksamensProjektUnigGardin
 				string[] sampleTypeArray = orderItems[7].Split(',');
 				ConvertArrayToList(sampleTypeArray);
 				Order order = new Order(orderItems[0], orderItems[1], Convert.ToInt32(orderItems[2]), orderItems[3], orderItems[4], Convert.ToInt32(orderItems[5]), orderItems[6], sampleTypeList);
-			
-
-
+				orderRepo.AddOrder(order);
 			}
+		
 		}
 		public List<string> ConvertArrayToList(string[] c)
 		{
