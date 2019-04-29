@@ -17,7 +17,7 @@ namespace ApplicationLayer
 
         public void ExportOrder(Order order)
         {
-
+            dbController.SaveOrder(order);
         }
 
 
