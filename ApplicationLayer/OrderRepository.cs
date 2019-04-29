@@ -10,15 +10,20 @@ namespace ApplicationLayer
 {
     public class OrderRepository
     {
-        private List<Order> orders = new List<Order>();
+		private Dictionary<int, Order> orders = new Dictionary<int, Order>();
 
-        public void AddOrder(Order o)
+
+		public void AddOrder(Order o)
         {
-            orders.Add(o);
+			orders.Add(o.OrderId, o);
         }
         public void RemoveOrder(Order o)
         {
-            orders.Remove(o);
+			orders.Remove(o.OrderId);
         }
-    }
+		public IDictionary<int, Order> GetOrders()
+		{
+			return orders;
+		}
+	}
 }
