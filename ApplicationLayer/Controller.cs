@@ -10,10 +10,9 @@ namespace ApplicationLayer
 {
     public class Controller
     {
-        private OrderRepository oRepo = new OrderRepository();
-        private DBController dbController = new DBController();
-		private ImportController iController = new ImportController();
-        private Errors error = new Errors();
+
+		private DBController dbController;
+		private ImportController iController;
 		public bool programStillRunning = true;
 
         public void ExportOrder(Order order)
