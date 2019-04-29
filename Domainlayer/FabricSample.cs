@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domainlayer
 {
-    class FabricSample
+    public class FabricSample
     {
+        public int FabricSampleNumber { get; set; }
+        public int Quantity { get; set; }
     }
 }
