@@ -11,13 +11,13 @@ namespace ApplicationLayer
     {
         private OrderRepository oRepo = new OrderRepository();
         private DBController dbController = new DBController();
-        private FabricSampleRepository fsRepo = new FabricSampleRepository();
+    //    private FabricSampleRepository fsRepo = new FabricSampleRepository();
         private Errors error = new Errors();
         
 
         public void ExportOrder(Order order)
         {
-            dbController.SaveOrder(order);
+
         }
 
 
