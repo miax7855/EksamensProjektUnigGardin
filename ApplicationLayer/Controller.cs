@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Domainlayer;
 
@@ -11,22 +12,37 @@ namespace ApplicationLayer
     {
         private OrderRepository oRepo = new OrderRepository();
         private DBController dbController = new DBController();
-        private FabricSampleRepository fsRepo = new FabricSampleRepository();
+		private ImportController iController = new ImportController();
+       // private FabricSampleRepository fsRepo = new FabricSampleRepository();
         private Errors error = new Errors();
+
+		public bool programStillRunning = true;
         
 
-        public void ExportOrder(Order order)
-        {
-            try
-            {
-               string message = dbController.SaveOrder(order);
-            }
-            catch (Exception)
-            {
-                throw ;
-            }
-        }
+        //public void ExportOrder(Order order)
+        //{
+        //    try
+        //    {
+        //       string message = dbController.SaveOrder(order);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw ;
+        //    }
+        //}
 
+
+		public void RefreshOrders()
+		{
+			Thread thread = new Thread(iController.RegisterOrders);
+
+			do
+			{
+				Thread.Sleep(5000);
+				thread.Start();
+			}
+			while (programStillRunning);
+		}
 
     }
 }
