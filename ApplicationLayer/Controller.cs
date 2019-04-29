@@ -10,9 +10,10 @@ namespace ApplicationLayer
 {
     public class Controller
     {
-
-		private DBController dbController;
-		private ImportController iController;
+        private OrderRepository oRepo;
+        private DBController dbController;
+		private ImportController iController = new ImportController();
+        private Errors error = new Errors();
 		public bool programStillRunning = true;
 
         public void ExportOrder(Order order)
@@ -23,14 +24,18 @@ namespace ApplicationLayer
 
 		public void RefreshOrders()
 		{
+			int i = 0;
+
 			Thread thread = new Thread(iController.RegisterOrders);
+
+			thread.Start("TestText.txt");
 
 			do
 			{
-				Thread.Sleep(5000);
-				thread.Start();
+				Thread.Sleep(1000);
+				i++;
 			}
-			while (programStillRunning);
+			while (i < 1);
 		}
 
     }
