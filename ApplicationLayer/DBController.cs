@@ -20,7 +20,7 @@ namespace ApplicationLayer
                 try
                 {
                     con.Open();
-                    SqlCommand cmd1 = new SqlCommand("spSaveOrder", con);
+                    SqlCommand cmd1 = new SqlCommand("spSaveOrdersS", con);
                     cmd1.CommandType = CommandType.StoredProcedure;
                     cmd1.Parameters.Add(new SqlParameter("@Customer_FirstName", order.FirstName));
                     cmd1.Parameters.Add(new SqlParameter("@Customer_SurName", order.LastName));
@@ -31,6 +31,7 @@ namespace ApplicationLayer
                     cmd1.Parameters.Add(new SqlParameter("@City", order.City));
                     cmd1.Parameters.Add(new SqlParameter("@Order_Date", DateTime.Now));
                     cmd1.Parameters.Add(new SqlParameter("@Order_Type", order.SampleType));
+					cmd1.ExecuteNonQuery();
                 }
                 catch(SqlException e)
                 {
