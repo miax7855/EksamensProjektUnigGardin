@@ -10,10 +10,6 @@ namespace ApplicationLayer
     {
         static void Main(string[] args)
         {
-			ImportController ic = new ImportController();
-
-			ic.ObserveTextFile();
-			Console.Read();
         }
     }
 }
