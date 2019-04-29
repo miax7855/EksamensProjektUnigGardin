@@ -17,13 +17,25 @@ using ApplicationLayer;
 namespace EksamensProjektUnigGardin
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ShowCurrentOrders.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ShowCurrentOrders : Page
     {
-        public MainWindow()
+        Controller controller = new Controller();
+        public ShowCurrentOrders()
         {
             InitializeComponent();
+            ShowOrders();
+            
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void ShowOrders()
+        {
+            lstOrders.ItemsSource 
         }
     }
 }

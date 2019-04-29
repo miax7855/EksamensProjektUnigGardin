@@ -1,0 +1,31 @@
+﻿<Page x:Class="EksamensProjektUnigGardin.ShowCurrentOrders"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EksamensProjektUnigGardin"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ShowCurrentOrders">
+
+    <Grid>
+        <ListView Name ="lstOrders" HorizontalAlignment="Left" Height="337" Margin="333,59,0,0" VerticalAlignment="Top" Width="438" SelectionChanged="ListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="FirstName" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="LastName" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Zip" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="City" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Country" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="PhoneNumber" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Email" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="SampleType" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="TimeStamp" Width="80" DisplayMemberBinding="{Binding Name}"/>
+                </GridView>
+            </ListView.View>
+            <ListBox Height="100" Width="100"/>
+        </ListView>
+        <ListBox HorizontalAlignment="Left" Height="179" Margin="87,92,0,0" VerticalAlignment="Top" Width="169"/>
+
+    </Grid>
+</Page>

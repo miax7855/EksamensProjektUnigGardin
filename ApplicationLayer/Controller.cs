@@ -19,7 +19,10 @@ namespace ApplicationLayer
         {
 
         }
-
+        public List<Order> ReturnRepoList()
+        {
+            return oRepo.ReturnCurrentOrders();
+        }
 
     }
 }
