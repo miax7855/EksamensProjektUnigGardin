@@ -13,23 +13,9 @@ namespace ApplicationLayer
         private OrderRepository oRepo = new OrderRepository();
         private DBController dbController = new DBController();
 		private ImportController iController = new ImportController();
-       // private FabricSampleRepository fsRepo = new FabricSampleRepository();
         private Errors error = new Errors();
-
 		public bool programStillRunning = true;
         
-
-        //public void ExportOrder(Order order)
-        //{
-        //    try
-        //    {
-        //       string message = dbController.SaveOrder(order);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw ;
-        //    }
-        //}
 
 
 		public void RefreshOrders()
