@@ -17,14 +17,7 @@ namespace ApplicationLayer
 
         public void ExportOrder(Order order)
         {
-            try
-            {
-   //            string message = dbController.SaveOrder(order);
-            }
-            catch (Exception)
-            {
-                throw ;
-            }
+
         }
 
 

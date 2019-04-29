@@ -10,7 +10,7 @@ namespace ApplicationLayer
 {
     public class OrderRepository
     {
-        public List<Order> orders = new List<Order>();
+        private List<Order> orders = new List<Order>();
 
         public void AddOrder(Order o)
         {
