@@ -8,7 +8,8 @@ namespace Domainlayer
 {
     public class Order
     {
-        public string FirstName { get; set; }
+		public int OrderId { get; set; }
+		public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Zip { get; set; }
         public string City { get; set; }
@@ -23,8 +24,9 @@ namespace Domainlayer
         {
 
         }
-        public Order(string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email, List<string> sampleType)
+        public Order(int orderId, string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email, List<string> sampleType)
         {
+			OrderId = orderId;
             FirstName = firstName;
             LastName = lastName;
             Zip = zip;
