@@ -15,7 +15,11 @@ namespace ApplicationLayer
 		private ImportController iController = new ImportController();
         private Errors error = new Errors();
 		public bool programStillRunning = true;
-        
+
+        public void ExportOrder(Order order)
+        {
+            dbController.SaveOrder(order);
+        }
 
 
 		public void RefreshOrders()
