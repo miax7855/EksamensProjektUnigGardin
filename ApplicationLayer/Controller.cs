@@ -10,8 +10,8 @@ namespace ApplicationLayer
 {
     public class Controller
     {
-        private OrderRepository oRepo = new OrderRepository();
-        private DBController dbController = new DBController();
+        private OrderRepository oRepo;
+        private DBController dbController;
 		private ImportController iController = new ImportController();
         private Errors error = new Errors();
 		public bool programStillRunning = true;
@@ -24,14 +24,18 @@ namespace ApplicationLayer
 
 		public void RefreshOrders()
 		{
+			int i = 0;
+
 			Thread thread = new Thread(iController.RegisterOrders);
+
+			thread.Start("TestText.txt");
 
 			do
 			{
-				Thread.Sleep(5000);
-				thread.Start();
+				Thread.Sleep(1000);
+				i++;
 			}
-			while (programStillRunning);
+			while (i < 1);
 		}
 
     }

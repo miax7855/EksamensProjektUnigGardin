@@ -1,0 +1,1 @@
+﻿1;Julian;Petersen;52464;deutschland;123456789;julian@gmail.com;1,2,3

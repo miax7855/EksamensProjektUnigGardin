@@ -17,21 +17,25 @@ namespace ApplicationLayer
 
 	public class ImportController
     {
-		string[] text;
+		//public string[] text;
 		string[] orderItems;
 		string[] sampleTypeArray;
 		List<string> sampleTypeList;
-		OrderRepository orderRepo;
+		OrderRepository orderRepo = new OrderRepository();
 		IDictionary<int, Order> orders;
 
-		public void ReadLines()
+		public string[] ReadLines(string fileName)
         {
-            string[] text = File.ReadAllLines("Orders.txt");
+            string[] text = File.ReadAllLines(fileName);
+			return text;
         }
-		public void RegisterOrders()
+		public void RegisterOrders(object fileNameObj)
 		{
+			
+			string fileName = (string)fileNameObj;
+
 			orders = orderRepo.GetOrders();
-			ReadLines();
+			string[] text = ReadLines(fileName);
 
 			foreach (string item in text)
 			{
@@ -57,7 +61,10 @@ namespace ApplicationLayer
 			return ListConvert;
 		}
 		
-
+		public List<string> GetSampleTypeList()
+		{
+			return sampleTypeList;
+		}
 
 
 	}
