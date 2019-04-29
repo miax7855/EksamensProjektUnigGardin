@@ -11,7 +11,7 @@ namespace Domainlayer
     {
         public void SaveErrorLog(string message)
         {
-            using (StreamWriter sw = new StreamWriter(@"Source\Repos\EksamensProjektUnigGardin\Domainlayer\ErrorLog.txt")) 
+            using (StreamWriter sw = new StreamWriter("ErrorLog.txt")) 
                 sw.WriteLine(message);
         }
     }
