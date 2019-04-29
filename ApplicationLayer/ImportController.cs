@@ -6,9 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Domainlayer;
 
+
+
+
+
+
 namespace ApplicationLayer
 {
-    public class ImportController
+	
+
+	public class ImportController
     {
 		string[] text;
 		string[] orderItems;
@@ -16,14 +23,14 @@ namespace ApplicationLayer
 		List<string> sampleTypeList;
 		OrderRepository orderRepo;
 
-		public void readLines()
+		public void ReadLines()
         {
             string[] text = File.ReadAllLines("Orders.txt");
-
-            
         }
 		public void RegisterOrders()
 		{
+			ReadLines();
+
 			foreach (string item in text)
 			{
 				orderItems = item.Split(';');
