@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApplicationLayer;
 using System.Collections.Generic;
+using Domainlayer;
 
 namespace ImportControllerUnitTest
 {
@@ -19,18 +20,17 @@ namespace ImportControllerUnitTest
 		[TestMethod]
 		public void TestProperReadingOfSampleTypes()
 		{
-			ImportController ic = new ImportController();
 			Controller c = new Controller();
+			OrderRepository or = OrderRepository.GetOrderRepo();
 
-			List<string> testList = new List<string>();
+			List<string> testSampleType = new List<string> { "1", "2", "3" };
 
-			testList.Add("1");
-			testList.Add("2");
-			testList.Add("3");
+			Order o = new Order(1, "Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", testSampleType);
 
 			c.RefreshOrders();
+			Order o2 = or.GetOrderDic()[1];
 
-			Assert.AreEqual(testList, ic.GetSampleTypeList());
+			Assert.AreEqual(o.SampleType.ToString(), o2.SampleType.ToString());
 		}
 	}
 }

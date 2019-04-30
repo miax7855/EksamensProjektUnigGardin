@@ -22,21 +22,35 @@ namespace ApplicationLayer
         }
 
 
-		public void RefreshOrders()
+		public void ImportOrder()
 		{
-			int i = 0;
-
-			Thread thread = new Thread(iController.RegisterOrders);
-
-			thread.Start("TestText.txt");
-
-			do
-			{
-				Thread.Sleep(1000);
-				i++;
-			}
-			while (i < 1);
+			object fileNameObj = "TestText.txt";
+			iController.RegisterOrders(fileNameObj);
+			RefreshOrders();
 		}
 
+		public void RefreshOrders()
+		{
+			object fileNameObj = "TestText.txt";
+			//int i = 0;
+
+			//Thread thread = new Thread(iController.RegisterOrders);
+
+			//thread.Start("TestText.txt");
+
+			//do
+			//{
+			//	Thread.Sleep(1000);
+			//	i++;
+			//}
+			//while (i < 1);
+			iController.RegisterOrders(fileNameObj);
+		}
+
+		public Dictionary<int, Order> ShowAllOrders()
+		{
+			oRepo = OrderRepository.GetOrderRepo();
+			return oRepo.GetOrderDic();
+		}
     }
 }
