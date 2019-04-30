@@ -31,24 +31,26 @@ namespace ApplicationLayer
 
 		public void RefreshOrders()
 		{
-			int i = 0;
+			object fileNameObj = "TestText.txt";
+			//int i = 0;
 
-			Thread thread = new Thread(iController.RegisterOrders);
+			//Thread thread = new Thread(iController.RegisterOrders);
 
-			thread.Start("TestText.txt");
+			//thread.Start("TestText.txt");
 
-			do
-			{
-				Thread.Sleep(1000);
-				i++;
-			}
-			while (i < 1);
+			//do
+			//{
+			//	Thread.Sleep(1000);
+			//	i++;
+			//}
+			//while (i < 1);
+			iController.RegisterOrders(fileNameObj);
 		}
 
 		public IDictionary<int, Order> ShowAllOrders()
 		{
 			oRepo = new OrderRepository();
-			return oRepo.GetOrders();
+			return  oRepo.GetOrders();
 		}
     }
 }

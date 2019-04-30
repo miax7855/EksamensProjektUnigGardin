@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApplicationLayer;
 using System.Collections.Generic;
+using Domainlayer;
 
 namespace ImportControllerUnitTest
 {
@@ -21,6 +22,7 @@ namespace ImportControllerUnitTest
 		{
 			ImportController ic = new ImportController();
 			Controller c = new Controller();
+			OrderRepository o = new OrderRepository();
 
 			List<string> testList = new List<string>();
 
@@ -29,8 +31,10 @@ namespace ImportControllerUnitTest
 			testList.Add("3");
 
 			c.RefreshOrders();
+			IDictionary<int, Order> testOrders =  o.GetOrders();
+			
 
-			Assert.AreEqual(testList, ic.GetSampleTypeList());
+			Assert.AreEqual(testList, testOrders.Values);
 		}
 	}
 }

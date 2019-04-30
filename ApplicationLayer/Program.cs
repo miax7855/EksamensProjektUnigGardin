@@ -14,8 +14,8 @@ namespace ApplicationLayer
 			Controller con = new Controller();
 
 			con.RefreshOrders();
-			Console.WriteLine(con.ShowAllOrders()); 
-
+			Dictionary<int, Order> orders = con.ShowAllOrders().ToDictionary<int, Order>;
+			Console.Read();
 		}
     }
 }
