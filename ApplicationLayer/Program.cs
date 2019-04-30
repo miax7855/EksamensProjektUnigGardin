@@ -18,7 +18,7 @@ namespace ApplicationLayer
 
 			foreach(Order o in orders.Values)
 			{
-				Console.WriteLine(o.SampleType);
+				Console.WriteLine(o.PrintOrderInfo(o));
 			}
 			Console.Read();
 		}
