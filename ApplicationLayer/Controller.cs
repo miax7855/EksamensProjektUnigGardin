@@ -22,6 +22,13 @@ namespace ApplicationLayer
         }
 
 
+		public void ImportOrder()
+		{
+			object fileNameObj = "TestText.txt";
+			iController.RegisterOrders(fileNameObj);
+			RefreshOrders();
+		}
+
 		public void RefreshOrders()
 		{
 			int i = 0;
@@ -38,5 +45,10 @@ namespace ApplicationLayer
 			while (i < 1);
 		}
 
+		public IDictionary<int, Order> ShowAllOrders()
+		{
+			oRepo = new OrderRepository();
+			return oRepo.GetOrders();
+		}
     }
 }

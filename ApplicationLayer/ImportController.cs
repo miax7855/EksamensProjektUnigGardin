@@ -45,7 +45,7 @@ namespace ApplicationLayer
 					sampleTypeArray = orderItems[7].Split(',');
 					sampleTypeList = ConvertArrayToList(sampleTypeArray);
 					Order order = new Order(Convert.ToInt32(orderItems[0]), orderItems[1], orderItems[2], Convert.ToInt32(orderItems[3]), orderItems[4], orderItems[5], Convert.ToInt32(orderItems[6]), orderItems[7], sampleTypeList);
-				orderRepo.AddOrder(order);
+					orderRepo.AddOrder(order);
 				}
 			}
 		
