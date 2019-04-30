@@ -21,7 +21,7 @@ namespace ApplicationLayer
 		string[] orderItems;
 		string[] sampleTypeArray;
 		List<string> sampleTypeList;
-		OrderRepository orderRepo = new OrderRepository();
+		OrderRepository orderRepo;
 		IDictionary<int, Order> orders;
 
 		public string[] ReadLines(string fileName)
@@ -33,8 +33,8 @@ namespace ApplicationLayer
 		{
 			
 			string fileName = (string)fileNameObj;
-
-			orders = orderRepo.GetOrders();
+			orderRepo = OrderRepository.GetOrderRepo();
+			orders = orderRepo.GetOrderDic();
 			string[] text = ReadLines(fileName);
 
 			foreach (string item in text)
