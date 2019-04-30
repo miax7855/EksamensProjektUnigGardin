@@ -49,8 +49,8 @@ namespace ApplicationLayer
 
 		public Dictionary<int, Order> ShowAllOrders()
 		{
-			oRepo = new OrderRepository();
-			return  oRepo.GetOrders();
+			oRepo = OrderRepository.GetOrderRepo();
+			return oRepo.GetOrderDic();
 		}
     }
 }

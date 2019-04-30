@@ -22,19 +22,25 @@ namespace ImportControllerUnitTest
 		{
 			ImportController ic = new ImportController();
 			Controller c = new Controller();
-			OrderRepository o = new OrderRepository();
+			OrderRepository or = OrderRepository.GetOrderRepo();
+			//Dictionary<int, Order> orderTests = new Dictionary<int, Order>();
 
-			List<string> testList = new List<string>();
+			List<string> testSampleType = new List<string> { "1", "2", "3" };
 
-			testList.Add("1");
-			testList.Add("2");
-			testList.Add("3");
+			Order o = new Order(1, "Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", testSampleType);
+
+			//orderTests.Add(1, o);
+
 
 			c.RefreshOrders();
-			IDictionary<int, Order> testOrders =  o.GetOrders();
-			
+			Order o2 = or.GetOrderDic()[1];
 
-			Assert.AreEqual(testList, testOrders.Values);
+			
+			//Dictionary<int, Order> testOrders = or.GetOrderDic();
+
+
+
+			Assert.AreEqual(o.SampleType.ToString(), o2.SampleType.ToString());
 		}
 	}
 }
