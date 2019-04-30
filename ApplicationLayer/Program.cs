@@ -14,7 +14,12 @@ namespace ApplicationLayer
 			Controller con = new Controller();
 
 			con.RefreshOrders();
-			Dictionary<int, Order> orders = con.ShowAllOrders().ToDictionary<int, Order>;
+			Dictionary<int, Order> orders = con.ShowAllOrders();
+
+			foreach(Order o in orders.Values)
+			{
+				Console.WriteLine(o);
+			}
 			Console.Read();
 		}
     }

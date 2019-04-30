@@ -21,7 +21,7 @@ namespace ApplicationLayer
         {
 			orders.Remove(o.OrderId);
         }
-		public IDictionary<int, Order> GetOrders()
+		public Dictionary<int, Order> GetOrders()
 		{
 			return orders;
 		}

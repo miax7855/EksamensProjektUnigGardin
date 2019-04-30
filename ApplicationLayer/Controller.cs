@@ -47,7 +47,7 @@ namespace ApplicationLayer
 			iController.RegisterOrders(fileNameObj);
 		}
 
-		public IDictionary<int, Order> ShowAllOrders()
+		public Dictionary<int, Order> ShowAllOrders()
 		{
 			oRepo = new OrderRepository();
 			return  oRepo.GetOrders();
