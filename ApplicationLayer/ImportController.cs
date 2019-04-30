@@ -17,17 +17,16 @@ namespace ApplicationLayer
 
 	public class ImportController
     {
-		//public string[] text;
+		public string[] text;
 		string[] orderItems;
 		string[] sampleTypeArray;
 		List<string> sampleTypeList;
 		OrderRepository orderRepo;
 		IDictionary<int, Order> orders;
 
-		public string[] ReadLines(string fileName)
+		public void ReadLines(string fileName)
         {
             string[] text = File.ReadAllLines(fileName);
-			return text;
         }
 		public void RegisterOrders(object fileNameObj)
 		{
@@ -35,7 +34,7 @@ namespace ApplicationLayer
 			string fileName = (string)fileNameObj;
 			orderRepo = OrderRepository.GetOrderRepo();
 			orders = orderRepo.GetOrderDic();
-			string[] text = ReadLines(fileName);
+			ReadLines(fileName);
 
 			foreach (string item in text)
 			{
