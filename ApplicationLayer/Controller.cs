@@ -24,14 +24,14 @@ namespace ApplicationLayer
 
 		public void ImportOrder()
 		{
-			object fileNameObj = "TestText.txt";
+			object fileNameObj = "Orders.txt";
 			iController.RegisterOrders(fileNameObj);
 			RefreshOrders();
 		}
 
 		public void RefreshOrders()
 		{
-			object fileNameObj = "TestText.txt";
+			object fileNameObj = "Orders.txt";
 			//int i = 0;
 
 			//Thread thread = new Thread(iController.RegisterOrders);

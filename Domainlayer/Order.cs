@@ -37,7 +37,13 @@ namespace Domainlayer
 			SampleType = sampleType;
 			TimeStamp = DateTime.Now;
         }
-        
-        
-    }
+
+		public string PrintOrderInfo(Order o)
+		{
+			return "OrderId: " + o.OrderId + " " + "FirstName: " + o.FirstName + " " + "LastName: " + o.LastName;
+		}
+		
+		
+		
+	}
 }
