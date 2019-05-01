@@ -18,7 +18,10 @@ namespace ImportControllerUnitTest
 			
 
 		}
-		string TempData;
+		string TempData1;
+		string[] TempArray1;
+		string[] TempArray2;
+		int TempInteger;
 
 		[TestMethod]
 		public void TestProperReadingOfSampleTypes()
@@ -38,34 +41,36 @@ namespace ImportControllerUnitTest
 		[TestMethod]
 		public void TestRefreshOrders()
 		{
+			
 			string Filepath = @"C:\Users\chocobams\source\repos\EksamensProjektUnigGardin2\Domainlayer\Orders.txt";
-			//SaveCurrentDataTxt(Filepath);
+			ClearTxt();
 			Controller c = new Controller();
 			c.RefreshOrders(Filepath);
 			OrderRepository or = OrderRepository.GetOrderRepo();
 			int Count = or.GetOrderDic().Count();
 			using (StreamWriter Writer = new StreamWriter(Filepath, true))
 			{
-				//Writer.WriteLine(TempData);
-				Writer.WriteLine("6;Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;1,2,3", true);
-				Writer.WriteLine("7;Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;U4000,A6666,K6666,U4001", true);
-				Writer.WriteLine("8;Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;U6542,U7854", true);
-				Writer.WriteLine("9;Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;U5426", true);
-				Writer.WriteLine("10;Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
+				Writer.WriteLine(""+ TempInteger+"6;Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;1,2,3", true);
+				Writer.WriteLine("" + TempInteger +1+ "7;Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;U4000,A6666,K6666,U4001", true);
+				Writer.WriteLine("" + TempInteger +2+ "8;Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;U6542,U7854", true);
+				Writer.WriteLine("" + TempInteger +3+ "9;Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;U5426", true);
+				Writer.WriteLine("" + TempInteger +4+ "10;Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
 			}
 			Thread.Sleep(5000);
-			Count = or.GetOrderDic().Count();
-			Assert.AreEqual(10, Count);
+			Count = or.GetOrderDic().Count();	
+			Assert.AreEqual(5, Count);
 		}
-		public void SaveCurrentDataTxt(string Fp)
+		public void ClearTxt()
 		{
 			string Filepath = @"C:\Users\chocobams\source\repos\EksamensProjektUnigGardin2\Domainlayer\Orders.txt";
-			using (StreamReader Sr = new StreamReader(Filepath))
+			using (StreamWriter Writer = new StreamWriter(Filepath))
 			{
-				TempData = Sr.ReadToEnd();
-			}
 
+				File.WriteAllText(Filepath, String.Empty);
+				File.Create(Filepath).Close();
+			}
 		}
+		
 		
 
 
