@@ -3,6 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ApplicationLayer;
 using System.Collections.Generic;
 using Domainlayer;
+using System.Linq;
+using System.IO;
+using System.Threading;
 
 namespace ImportControllerUnitTest
 {
@@ -15,7 +18,7 @@ namespace ImportControllerUnitTest
 			
 
 		}
-
+		string TempData;
 
 		[TestMethod]
 		public void TestProperReadingOfSampleTypes()
@@ -27,10 +30,46 @@ namespace ImportControllerUnitTest
 
 			Order o = new Order(1, "Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", testSampleType);
 
-			c.RefreshOrders();
+			c.RefreshOrders("Orders.txt");
 			Order o2 = or.GetOrderDic()[1];
 
 			Assert.AreEqual(o.SampleType.ToString(), o2.SampleType.ToString());
 		}
+		[TestMethod]
+		public void TestRefreshOrders()
+		{
+			string Filepath = @"C:\Users\chocobams\source\repos\EksamensProjektUnigGardin2\Domainlayer\Orders.txt";
+			//SaveCurrentDataTxt(Filepath);
+			Controller c = new Controller();
+			c.RefreshOrders(Filepath);
+			OrderRepository or = OrderRepository.GetOrderRepo();
+			int Count = or.GetOrderDic().Count();
+			using (StreamWriter Writer = new StreamWriter(Filepath, true))
+			{
+				//Writer.WriteLine(TempData);
+				Writer.WriteLine("6;Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;1,2,3", true);
+				Writer.WriteLine("7;Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;U4000,A6666,K6666,U4001", true);
+				Writer.WriteLine("8;Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;U6542,U7854", true);
+				Writer.WriteLine("9;Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;U5426", true);
+				Writer.WriteLine("10;Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
+			}
+			Thread.Sleep(5000);
+			Count = or.GetOrderDic().Count();
+			Assert.AreEqual(10, Count);
+		}
+		public void SaveCurrentDataTxt(string Fp)
+		{
+			string Filepath = @"C:\Users\chocobams\source\repos\EksamensProjektUnigGardin2\Domainlayer\Orders.txt";
+			using (StreamReader Sr = new StreamReader(Filepath))
+			{
+				TempData = Sr.ReadToEnd();
+			}
+
+		}
+		
+
+
+
+
 	}
 }
