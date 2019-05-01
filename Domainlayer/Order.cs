@@ -40,7 +40,14 @@ namespace Domainlayer
 
 		public string PrintOrderInfo(Order o)
 		{
-			return "OrderId: " + o.OrderId + " " + "FirstName: " + o.FirstName + " " + "LastName: " + o.LastName;
+			string sampleTypesInOrder = string.Empty;
+
+			foreach(string sample in o.SampleType)
+			{
+				sampleTypesInOrder += sample + ", ";
+			}
+
+			return "OrderId: " + o.OrderId + " " + "FirstName: " + o.FirstName + " " + "LastName: " + o.LastName + "Bestilling: " + sampleTypesInOrder;
 		}
 		
 		
