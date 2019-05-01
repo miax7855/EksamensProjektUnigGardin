@@ -40,11 +40,21 @@ namespace Domainlayer
 
 		public string PrintOrderInfo(Order o)
 		{
+			char[] symbol = new char[] { ',', ' ' };
+
 			string sampleTypesInOrder = string.Empty;
 
-			foreach(string sample in o.SampleType)
+			if(o.SampleType.Count == 1)
 			{
-				sampleTypesInOrder += sample + ", ";
+				sampleTypesInOrder = o.SampleType[0].ToString();
+			}
+			else
+			{
+				foreach (string sample in o.SampleType)
+				{
+					sampleTypesInOrder += sample + ", ";
+				}
+				sampleTypesInOrder = sampleTypesInOrder.TrimEnd(symbol);
 			}
 
 			return "OrderId: " + o.OrderId + " " + "FirstName: " + o.FirstName + " " + "LastName: " + o.LastName + "Bestilling: " + sampleTypesInOrder;
