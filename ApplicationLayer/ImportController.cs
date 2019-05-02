@@ -25,7 +25,8 @@ namespace ApplicationLayer
 
 		public string[] ReadLines(string fileName)
         {
-            string[] text = File.ReadAllLines(fileName);
+			string parentDirectory = GetFilePath();
+            string[] text = File.ReadAllLines(parentDirectory + "/Domainlayer/Content/" + fileName);
 			return text;
         }
 		public void RegisterOrders(object fileNameObj)
@@ -65,6 +66,16 @@ namespace ApplicationLayer
 			return sampleTypeList;
 		}
 
+		public string GetFilePath()
+		{
+			string destination = Environment.CurrentDirectory;
 
+			for (int i = 0; i < 3; i++)
+			{
+				destination = Directory.GetParent(destination).ToString();
+			}
+
+			return destination;
+		}
 	}
 }
