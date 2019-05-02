@@ -37,7 +37,30 @@ namespace Domainlayer
 			SampleType = sampleType;
 			TimeStamp = DateTime.Now;
         }
-        
-        
-    }
+
+		public string PrintOrderInfo(Order o)
+		{
+			char[] symbol = new char[] { ',', ' ' };
+
+			string sampleTypesInOrder = string.Empty;
+
+			if(o.SampleType.Count == 1)
+			{
+				sampleTypesInOrder = o.SampleType[0].ToString();
+			}
+			else
+			{
+				foreach (string sample in o.SampleType)
+				{
+					sampleTypesInOrder += sample + ", ";
+				}
+				sampleTypesInOrder = sampleTypesInOrder.TrimEnd(symbol);
+			}
+
+			return "OrderId: " + o.OrderId + " " + "FirstName: " + o.FirstName + " " + "LastName: " + o.LastName + "Bestilling: " + sampleTypesInOrder;
+		}
+		
+		
+		
+	}
 }

@@ -11,7 +11,24 @@ namespace ApplicationLayer
     public class OrderRepository
     {
 		private Dictionary<int, Order> orders = new Dictionary<int, Order>();
+		static private OrderRepository orderRepository;
+		public static OrderRepository GetOrderRepo()
+		{
+			if (orderRepository == null)
+			{
+				orderRepository = new OrderRepository();
 
+				return orderRepository;
+			}
+			else
+			{
+				return orderRepository;
+			}
+		}
+		public Dictionary<int, Order> GetOrderDic()
+		{
+			return orders;
+		}
 
 		public void AddOrder(Order o)
         {
@@ -21,9 +38,5 @@ namespace ApplicationLayer
         {
 			orders.Remove(o.OrderId);
         }
-		public IDictionary<int, Order> GetOrders()
-		{
-			return orders;
-		}
 	}
 }

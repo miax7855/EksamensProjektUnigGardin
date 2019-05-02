@@ -9,7 +9,7 @@ namespace ImportControllerUnitTest
 	public class ErrorLogsTest
 	{
 		[TestMethod]
-		public void TestMethod1()
+		public void TestSaveErrorLog()
 		{
 			string actualString;
 			Errors errorsTest = new Errors();
