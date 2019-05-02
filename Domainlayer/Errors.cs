@@ -12,7 +12,7 @@ namespace Domainlayer
         public void SaveErrorLog(string message)
         {
 			using (StreamWriter sw = new StreamWriter("ErrorLog.txt"))
-				sw.WriteLine(DateTime.Now + "\n" + message + "\n///\n///\n///\n");
+				sw.WriteLine(DateTime.Now + "\n" + message + "\n///\n///\n///");
 		}
     }
 }
