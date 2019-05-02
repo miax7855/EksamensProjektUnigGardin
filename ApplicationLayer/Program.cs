@@ -11,16 +11,16 @@ namespace ApplicationLayer
     {
         static void Main(string[] args)
         {
-			Controller con = new Controller();
+			//Controller con = new Controller();
 
-			con.RefreshOrders();
-			Dictionary<int, Order> orders = con.ShowAllOrders();
+			//con.RefreshOrders();
+			//Dictionary<int, Order> orders = con.ShowAllOrders();
 
-			foreach(Order o in orders.Values)
-			{
-				Console.WriteLine(o.PrintOrderInfo(o));
-			}
-			Console.Read();
+			//foreach(Order o in orders.Values)
+			//{
+			//	Console.WriteLine(o.PrintOrderInfo(o));
+			//}
+			//Console.Read();
 		}
     }
 }

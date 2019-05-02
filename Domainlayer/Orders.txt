@@ -1,5 +1,0 @@
-﻿1;Julian;Petersen;52464;deutschland;123456789;julian@gmail.com;1,2,3
-2;Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;U4000,A6666,K6666,U4001
-3;Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;U6542,U7854
-4;Anders;Weiskvist;Bellinge;Danmark;6543214;An@ders.com;U5426
-5;Jens,Jensen;Bolbro;Danmark;588359;Bo@bronze.com;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999

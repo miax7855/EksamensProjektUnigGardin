@@ -15,35 +15,37 @@ namespace ApplicationLayer
 		private ImportController iController = new ImportController();
         private Errors error = new Errors();
 		public bool programStillRunning = true;
+		object fileNameObj = "Orders.txt";
 
-        public void ExportOrder(Order order)
+
+		public void ExportOrder(Order order)
         {
             dbController.SaveOrder(order);
         }
 
 
-		public void ImportOrder()
+		public void ImportOrder(string Filepath)
 		{
-			object fileNameObj = "Orders.txt";
+			fileNameObj = Filepath;
 			iController.RegisterOrders(fileNameObj);
-			RefreshOrders();
+			RefreshOrders(Filepath);
 		}
 
-		public void RefreshOrders()
+		public void RefreshOrders(string Filepath)
 		{
-			object fileNameObj = "Orders.txt";
-			//int i = 0;
+			fileNameObj = Filepath;
+			int i = 0;
 
-			//Thread thread = new Thread(iController.RegisterOrders);
+			Thread thread = new Thread(iController.RegisterOrders);
 
-			//thread.Start("TestText.txt");
+			thread.Start(fileNameObj);
 
-			//do
-			//{
-			//	Thread.Sleep(1000);
-			//	i++;
-			//}
-			//while (i < 1);
+			do
+			{
+				Thread.Sleep(1000);
+				i++;
+			}
+			while (i < 10);
 			iController.RegisterOrders(fileNameObj);
 		}
 
