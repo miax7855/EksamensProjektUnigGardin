@@ -77,16 +77,18 @@ namespace ImportControllerUnitTest
 
 			Assert.AreNotEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
 		}
+		[TestMethod]
 		public void TestRefreshOrders()
 		{
 
-			string Filepath = @"C:\Users\chocobams\source\repos\EksamensProjektUnigGardin2\Domainlayer\Orders.txt";
-			ClearTxt();
+			ImportController ic = new ImportController();
 			Controller c = new Controller();
-			c.RefreshOrders(Filepath);
+			string fileName = "Orders.txt";
+			string relativePath = ic.GetFilePath(fileName);
+			c.RefreshOrders(fileName);
 			OrderRepository or = OrderRepository.GetOrderRepo();
 			int Count = or.GetOrderDic().Count();
-			using (StreamWriter Writer = new StreamWriter(Filepath, true))
+			using (StreamWriter Writer = new StreamWriter(relativePath, true))
 			{
 				Writer.WriteLine("" + TempInteger + "6;Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;1,2,3", true);
 				Writer.WriteLine("" + TempInteger + 1 + "7;Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;U4000,A6666,K6666,U4001", true);
