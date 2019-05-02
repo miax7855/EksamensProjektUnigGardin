@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B73CF90E-365C-4B62-9690-F7081D94F681}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ApplicationLayer</RootNamespace>
-    <AssemblyName>ApplicationLayer</AssemblyName>
+    <ProjectGuid>{C9030314-4A6B-4A40-9B6F-B2B416093098}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>library</RootNamespace>
+    <AssemblyName>library</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,26 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller.cs" />
-    <Compile Include="DBController.cs" />
-    <Compile Include="FabricSampleRepository.cs" />
-    <Compile Include="ImportController.cs" />
-    <Compile Include="OrderRepository.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="IOrder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Domainlayer\Domainlayer.csproj">
-      <Project>{93f4edfc-eea8-4e48-ac3e-1f36a2326ce6}</Project>
-      <Name>Domainlayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\library\library.csproj">
-      <Project>{c9030314-4a6b-4a40-9b6f-b2b416093098}</Project>
-      <Name>library</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
