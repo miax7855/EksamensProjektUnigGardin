@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domainlayer;
+using library;
 
 
 namespace ApplicationLayer
 {
     public class OrderRepository
     {
-		private Dictionary<int, Order> orders = new Dictionary<int, Order>();
+		private Dictionary<int, IOrder> orders = new Dictionary<int, IOrder>();
 		static private OrderRepository orderRepository;
 		public static OrderRepository GetOrderRepo()
 		{
@@ -25,7 +26,7 @@ namespace ApplicationLayer
 				return orderRepository;
 			}
 		}
-		public Dictionary<int, Order> GetOrderDic()
+		public Dictionary<int, IOrder> GetOrderDic()
 		{
 			return orders;
 		}
@@ -38,5 +39,15 @@ namespace ApplicationLayer
         {
 			orders.Remove(o.OrderId);
         }
-	}
+        public List<IOrder> ReturnCurrentOrdersAsList()
+        {
+            List<IOrder> orderList = new List<IOrder>();
+            foreach (KeyValuePair<int, IOrder> item in orders)
+            {
+                orderList.Add(item.Value);
+            }
+            return orderList;
+        }
+
+    }
 }

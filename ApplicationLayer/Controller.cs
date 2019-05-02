@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Domainlayer;
+using library;
 
 namespace ApplicationLayer
 {
@@ -22,9 +23,9 @@ namespace ApplicationLayer
         {
             dbController.SaveOrder(order);
         }
-        public List<Order> ReturnRepoList()
+        public List<IOrder> ReturnRepoList()
         {
-            return oRepo.ReturnCurrentOrders();
+            return oRepo.ReturnCurrentOrdersAsList();
         }
 
 		public void ImportOrder(string Filepath)
