@@ -5,44 +5,57 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Domainlayer;
-using library;
 
 namespace ApplicationLayer
 {
     public class Controller
     {
+        private OrderRepository oRepo;
+        private DBController dbController;
+		private ImportController iController = new ImportController();
+        private Errors error = new Errors();
+		public bool programStillRunning = true;
+		object fileNameObj = "Orders.txt";
 
-		private DBController dbController;
-		private ImportController iController;
-        OrderRepository oRepo = new OrderRepository();
 
-        public bool programStillRunning = true;
-
-        public void ExportOrder(Order order)
+		public void ExportOrder(Order order)
         {
             dbController.SaveOrder(order);
         }
-        List<IOrder> listOfOrders = new List<IOrder>();
-        public List<IOrder> ReturnRepoList()
+        public List<Order> ReturnRepoList()
         {
-            foreach (KeyValuePair<int, IOrder> pair in oRepo.ReturnOrders())
-            {
-                listOfOrders.Add(pair.Value);
-            }
-            return listOfOrders;
+            return oRepo.ReturnCurrentOrders();
         }
 
-        public void RefreshOrders()
+		public void ImportOrder(string Filepath)
 		{
+			fileNameObj = Filepath;
+			iController.RegisterOrders(fileNameObj);
+			RefreshOrders(Filepath);
+		}
+
+		public void RefreshOrders(string Filepath)
+		{
+			fileNameObj = Filepath;
+			int i = 0;
+
 			Thread thread = new Thread(iController.RegisterOrders);
+
+			thread.Start(fileNameObj);
 
 			do
 			{
-				Thread.Sleep(5000);
-				thread.Start();
+				Thread.Sleep(1000);
+				i++;
 			}
-			while (programStillRunning);
+			while (i < 10);
+			iController.RegisterOrders(fileNameObj);
 		}
 
+		public Dictionary<int, Order> ShowAllOrders()
+		{
+			oRepo = OrderRepository.GetOrderRepo();
+			return oRepo.GetOrderDic();
+		}
     }
 }
