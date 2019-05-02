@@ -6,11 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Domainlayer;
 
-
-
-
-
-
 namespace ApplicationLayer
 {
 	
@@ -30,7 +25,7 @@ namespace ApplicationLayer
         }
 		public void RegisterOrders()
 		{
-			orders = orderRepo.GetOrders();
+			//orders = orderRepo.GetOrders();
 			ReadLines();
 
 			foreach (string item in text)

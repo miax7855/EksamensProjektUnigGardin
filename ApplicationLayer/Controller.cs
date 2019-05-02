@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Domainlayer;
+using library;
 
 namespace ApplicationLayer
 {
@@ -13,18 +14,25 @@ namespace ApplicationLayer
 
 		private DBController dbController;
 		private ImportController iController;
-		public bool programStillRunning = true;
+        OrderRepository oRepo = new OrderRepository();
+
+        public bool programStillRunning = true;
 
         public void ExportOrder(Order order)
         {
             dbController.SaveOrder(order);
         }
-        public List<Order> ReturnRepoList()
+        List<IOrder> listOfOrders = new List<IOrder>();
+        public List<IOrder> ReturnRepoList()
         {
-            return oRepo.ReturnCurrentOrders();
+            foreach (KeyValuePair<int, IOrder> pair in oRepo.ReturnOrders())
+            {
+                listOfOrders.Add(pair.Value);
+            }
+            return listOfOrders;
         }
 
-		public void RefreshOrders()
+        public void RefreshOrders()
 		{
 			Thread thread = new Thread(iController.RegisterOrders);
 

@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Reflection;
 using ApplicationLayer;
+using library;
 
 namespace EksamensProjektUnigGardin
 {
@@ -22,20 +24,50 @@ namespace EksamensProjektUnigGardin
     public partial class ShowCurrentOrders : Page
     {
         Controller controller = new Controller();
+        List<IOrder> orders = new List<IOrder>();
+
         public ShowCurrentOrders()
         {
             InitializeComponent();
-            ShowOrders();
+            ShowSamplesInListBox();
+        }
+
+        public void ShowOrdersInListView()
+        {
+            orders = controller.ReturnRepoList();
+            SelectedOrders.ItemsSource = orders;
+        }
+        
+        private void ShowSamplesInListBox()
+        {
+            orders = controller.ReturnRepoList();
+            foreach (IOrder item in orders)
+            {
+                lstBox.Items.Add(item.OrderId);
+            }
+        }
+        List<IOrder> newList = new List<IOrder>();
+
+        private void LstBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int tal = 0;
+            foreach (System.Int32 item in e.AddedItems)
+            {
+                tal = item;
+            }
+            //string test = this.lstBox.SelectedItem.ToString();
+            //SelectedOrders.ItemsSource =
+            //string IDSelected = e.AddedItems.ToString();
             
-        }
+            IOrder result = orders.Find(x => x.OrderId == tal);
+            newList.Add(result);
+            SelectedOrders.Items.Clear();
+            SelectedOrders.ItemsSource = newList;
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-        private void ShowOrders()
-        {
-            lstOrders.ItemsSource 
+            //orders.Find(x => x.OrderId == e.AddedItems);
+            //SelectedOrders.ItemsSource = e.AddedItems;
+            //Type t = Type.GetType("IOrder");
+            //PropertyInfo p = 
         }
     }
 }
