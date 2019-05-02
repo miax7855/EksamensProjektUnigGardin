@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationLayer", "Applica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "ImportControllerUnitTest\Tests.csproj", "{7AC532D9-586D-432F-826A-2A045594AABD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "library", "library\library.csproj", "{C9030314-4A6B-4A40-9B6F-B2B416093098}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{7AC532D9-586D-432F-826A-2A045594AABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AC532D9-586D-432F-826A-2A045594AABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AC532D9-586D-432F-826A-2A045594AABD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9030314-4A6B-4A40-9B6F-B2B416093098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9030314-4A6B-4A40-9B6F-B2B416093098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9030314-4A6B-4A40-9B6F-B2B416093098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9030314-4A6B-4A40-9B6F-B2B416093098}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

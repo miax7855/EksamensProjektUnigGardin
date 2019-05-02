@@ -39,6 +39,55 @@ namespace ApplicationLayer
                 }
             }
         }
+        public void InsertIntoOrderLines(Order order)
+        {
+            using (SqlConnection con1 = new SqlConnection(connectionstring))
+            {
+                try
+                {
+                    con1.Open();
+                    SqlCommand cmd2 = new SqlCommand("spAddSamplesToOrder", con1);
+                    cmd2.CommandType = CommandType.StoredProcedure;
+                    cmd2.Parameters.Add(new SqlParameter("@OrderID", order.OrderId));
+                    cmd2.Parameters.Add(new SqlParameter("@SampleType1", order.SampleType[0]));
+                    cmd2.Parameters.Add(new SqlParameter("@SampleType2", order.SampleType[1]));
+                    cmd2.Parameters.Add(new SqlParameter("@SampleType3", order.SampleType[2]));
+                    cmd2.Parameters.Add(new SqlParameter("@SampleType4", order.SampleType[3]));
+                    cmd2.Parameters.Add(new SqlParameter("@SampleType5", order.SampleType[4]));
+                    cmd2.Parameters.Add(new SqlParameter("@SampleType6", order.SampleType[5]));
+                    cmd2.Parameters.Add(new SqlParameter("@SampleType7", order.SampleType[6]));
+                    cmd2.Parameters.Add(new SqlParameter("@SampleType8", order.SampleType[7]));
+                    cmd2.Parameters.Add(new SqlParameter("@SampleType9", order.SampleType[8]));
+                    cmd2.Parameters.Add(new SqlParameter("@SampleType10", order.SampleType[9]));
+
+                    cmd2.ExecuteNonQuery();
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine("Shieeet" + e);
+                }
+            }
+        }
+        public void InsertIntoStock(int Quantity)
+        {
+            using (SqlConnection con2 = new SqlConnection(connectionstring))
+            {
+                try
+                {
+                    con2.Open();
+                    SqlCommand cmd3 = new SqlCommand("spInsertIntoStock", con2);
+                    cmd3.CommandType = CommandType.StoredProcedure;
+                    cmd3.Parameters.Add(new SqlParameter("@Quantity", Quantity));
+                    
+                    cmd3.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine("Shieeet" + e);
+                }
+            }
+        }
 
         
     }

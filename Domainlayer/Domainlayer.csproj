@@ -57,5 +57,11 @@
     </Content>
     <Content Include="Content\TestText.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\library\library.csproj">
+      <Project>{c9030314-4a6b-4a40-9b6f-b2b416093098}</Project>
+      <Name>library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
