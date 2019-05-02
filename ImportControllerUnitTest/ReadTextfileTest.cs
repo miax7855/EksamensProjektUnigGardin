@@ -102,12 +102,14 @@ namespace ImportControllerUnitTest
 		}
 		public void ClearTxt()
 		{
-			string Filepath = @"C:\Users\chocobams\source\repos\EksamensProjektUnigGardin2\Domainlayer\Orders.txt";
-			using (StreamWriter Writer = new StreamWriter(Filepath))
+			ImportController ic = new ImportController();
+			string fileName = "Orders.txt";
+			string relativePath = ic.GetFilePath(fileName);
+			using (StreamWriter Writer = new StreamWriter(relativePath))
 			{
 
-				File.WriteAllText(Filepath, String.Empty);
-				File.Create(Filepath).Close();
+				File.WriteAllText(relativePath, String.Empty);
+				File.Create(relativePath).Close();
 			}
 		}
 	}
