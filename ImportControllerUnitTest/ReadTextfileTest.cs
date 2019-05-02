@@ -23,7 +23,9 @@ namespace ImportControllerUnitTest
 		[TestMethod]
 		public void TestProperReadingOfSampleTypes()
 		{
-			string Filepath = @"C:\Users\chocobams\source\repos\EksamensProjektUnigGardin2\Domainlayer\Orders.txt";
+			ImportController ic = new ImportController();
+			string fileName = "Orders.txt";
+			string relativePath = ic.GetFilePath(fileName);
 			Controller c = new Controller();
 			OrderRepository or = OrderRepository.GetOrderRepo();
 
@@ -31,7 +33,7 @@ namespace ImportControllerUnitTest
 
 			Order o = new Order(1, "Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", testSampleType);
 
-			c.RefreshOrders(Filepath);
+			c.RefreshOrders(fileName);
 			Order o2 = or.GetOrderDic()[1];
 
 			Assert.AreEqual(o.SampleType.ToString(), o2.SampleType.ToString());
@@ -40,15 +42,17 @@ namespace ImportControllerUnitTest
 		[TestMethod]
 		public void TestProperReadingOfOrder()
 		{
-			string Filepath = @"C:\Users\chocobams\source\repos\EksamensProjektUnigGardin2\Domainlayer\Orders.txt";
+			ImportController ic = new ImportController();
 			Controller c = new Controller();
+			string fileName = "Orders.txt";
+			string relativePath = ic.GetFilePath(fileName);
 			OrderRepository or = OrderRepository.GetOrderRepo();
 
 			List<string> testSampleType = new List<string> { "U6542", "U7854" };
 
 			Order o = new Order(3, "Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", testSampleType);
 
-			c.RefreshOrders(Filepath);
+			c.RefreshOrders(fileName);
 			Order o2 = or.GetOrderDic()[3];
 
 			Assert.AreEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
@@ -57,8 +61,10 @@ namespace ImportControllerUnitTest
 		[TestMethod]
 		public void TestProperReadingOfOrder2()
 		{
-			string Filepath = @"C:\Users\chocobams\source\repos\EksamensProjektUnigGardin2\Domainlayer\Orders.txt";
+			ImportController ic = new ImportController();
 			Controller c = new Controller();
+			string fileName = "Orders.txt";
+			string relativePath = ic.GetFilePath(fileName);
 			OrderRepository or = OrderRepository.GetOrderRepo();
 
 			//dengang med et forkert testSampleType liste
@@ -66,7 +72,7 @@ namespace ImportControllerUnitTest
 
 			Order o = new Order(3, "Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", testSampleType);
 
-			c.RefreshOrders(Filepath);
+			c.RefreshOrders(fileName);
 			Order o2 = or.GetOrderDic()[3];
 
 			Assert.AreNotEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
