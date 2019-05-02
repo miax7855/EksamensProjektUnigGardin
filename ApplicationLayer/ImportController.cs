@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domainlayer;
+using library;
 
 
 
@@ -21,7 +22,7 @@ namespace ApplicationLayer
 		string[] sampleTypeArray;
 		List<string> sampleTypeList;
 		OrderRepository orderRepo;
-		IDictionary<int, Order> orders;
+		IDictionary<int, IOrder> orders;
 
 		public string[] ReadLines(string fileName)
         {
