@@ -14,7 +14,7 @@ namespace ApplicationLayer
         private OrderRepository oRepo;
         private DBController dbController;
 		private ImportController iController = new ImportController();
-        private Errors error = new Errors();
+        private ErrorController error = new ErrorController();
 		public bool programStillRunning = true;
 		object fileNameObj = "Orders.txt";
 

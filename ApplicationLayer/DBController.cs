@@ -11,7 +11,7 @@ namespace ApplicationLayer
     public class DBController
     {
         private Controller controller = new Controller();
-		private Errors error = new Errors();
+		private ErrorController error = new ErrorController();
         private static string connectionstring =
             "Server = den1.mssql8.gear.host; Database = uniggardin; User Id = uniggardin; Password = Iy71?B8skjQ_";
         public void SaveOrder(Order order)
