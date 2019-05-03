@@ -28,16 +28,16 @@ namespace ApplicationLayer
             return oRepo.ReturnCurrentOrdersAsList();
         }
 
-		public void ImportOrder(string Filepath)
+		public void ImportOrder(string filepath)
 		{
-			fileNameObj = Filepath;
+			fileNameObj = filepath;
 			iController.RegisterOrders(fileNameObj);
-			RefreshOrders(Filepath);
+			RefreshOrders(filepath);
 		}
 
-		public void RefreshOrders(string Filepath)
+		public void RefreshOrders(string filepath)
 		{
-			fileNameObj = Filepath;
+			fileNameObj = filepath;
 			int i = 0;
 
 			Thread thread = new Thread(iController.RegisterOrders);
@@ -53,7 +53,7 @@ namespace ApplicationLayer
 			iController.RegisterOrders(fileNameObj);
 		}
 
-		public Dictionary<int, Order> ShowAllOrders()
+		public Dictionary<int, IOrder> ShowAllOrders()
 		{
 			oRepo = OrderRepository.GetOrderRepo();
 			return oRepo.GetOrderDic();

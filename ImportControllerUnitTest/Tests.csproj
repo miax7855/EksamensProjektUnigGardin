@@ -70,6 +70,10 @@
       <Project>{85301fb8-b5e2-4bcd-9423-0c87b1f4baf2}</Project>
       <Name>EksamensProjektUnigGardin</Name>
     </ProjectReference>
+    <ProjectReference Include="..\library\library.csproj">
+      <Project>{c9030314-4a6b-4a40-9b6f-b2b416093098}</Project>
+      <Name>library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
