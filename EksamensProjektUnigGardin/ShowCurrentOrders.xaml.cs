@@ -24,50 +24,51 @@ namespace EksamensProjektUnigGardin
     public partial class ShowCurrentOrders : Page
     {
         Controller controller = new Controller();
+        OrderRepository oRepo;
         List<IOrder> orders = new List<IOrder>();
+        List<IOrder> listOfCurrentListViewItems = new List<IOrder>();
 
         public ShowCurrentOrders()
         {
             InitializeComponent();
+            orders = AddFakes();
             ShowSamplesInListBox();
         }
 
         public void ShowOrdersInListView()
         {
-            orders = controller.ReturnRepoList();
             SelectedOrders.ItemsSource = orders;
         }
         
         private void ShowSamplesInListBox()
         {
-            orders = controller.ReturnRepoList();
             foreach (IOrder item in orders)
             {
                 lstBox.Items.Add(item.OrderId);
             }
         }
-        List<IOrder> newList = new List<IOrder>();
 
         private void LstBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             int tal = 0;
             foreach (System.Int32 item in e.AddedItems)
             {
                 tal = item;
             }
-            //string test = this.lstBox.SelectedItem.ToString();
-            //SelectedOrders.ItemsSource =
-            //string IDSelected = e.AddedItems.ToString();
-            
+           
             IOrder result = orders.Find(x => x.OrderId == tal);
-            newList.Add(result);
+            listOfCurrentListViewItems.Add(result);
             SelectedOrders.Items.Clear();
-            SelectedOrders.ItemsSource = newList;
-
-            //orders.Find(x => x.OrderId == e.AddedItems);
-            //SelectedOrders.ItemsSource = e.AddedItems;
-            //Type t = Type.GetType("IOrder");
-            //PropertyInfo p = 
+            //SelectedOrders.ItemsSource = listOfCurrentListViewItems;
+            
+        }
+        public List<IOrder> AddFakes()
+        {
+            oRepo = OrderRepository.GetOrderRepo();
+            controller.ImportOrder("Orders.txt");
+            
+            return oRepo.ReturnOrdersAsList();
         }
     }
 }

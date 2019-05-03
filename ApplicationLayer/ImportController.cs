@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 using Domainlayer;
 using library;
 
-
-
-
-
-
 namespace ApplicationLayer
 {
 	
@@ -23,6 +18,7 @@ namespace ApplicationLayer
 		List<string> sampleTypeList;
 		OrderRepository orderRepo;
 		IDictionary<int, IOrder> orders;
+        List<IOrder> listOfOrders = new List<IOrder>();
 
 		public string[] ReadLines(string fileName)
         {
@@ -51,7 +47,8 @@ namespace ApplicationLayer
 			}
 		
 		}
-		public List<string> ConvertArrayToList(string[] c)
+        
+        public List<string> ConvertArrayToList(string[] c)
 		{
 			List<string> ListConvert = new List<string>();
 			foreach (string item in c)
