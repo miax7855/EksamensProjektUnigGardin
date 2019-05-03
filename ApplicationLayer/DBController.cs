@@ -11,6 +11,7 @@ namespace ApplicationLayer
     public class DBController
     {
         private Controller controller = new Controller();
+		private Errors error = new Errors();
         private static string connectionstring =
             "Server = den1.mssql8.gear.host; Database = uniggardin; User Id = uniggardin; Password = Iy71?B8skjQ_";
         public void SaveOrder(Order order)
@@ -35,7 +36,7 @@ namespace ApplicationLayer
                 }
                 catch(SqlException e)
                 {
-                    Console.WriteLine("Shiiiit" + e);
+					error.SaveErrorLog(e.ToString());
                 }
             }
         }
@@ -64,8 +65,8 @@ namespace ApplicationLayer
                 }
                 catch (SqlException e)
                 {
-                    Console.WriteLine("Shieeet" + e);
-                }
+					error.SaveErrorLog(e.ToString());
+				}
             }
         }
         public void InsertIntoStock(int Quantity)
@@ -84,8 +85,8 @@ namespace ApplicationLayer
                 catch (Exception e)
                 {
 
-                    Console.WriteLine("Shieeet" + e);
-                }
+					error.SaveErrorLog(e.ToString());
+				}
             }
         }
 
