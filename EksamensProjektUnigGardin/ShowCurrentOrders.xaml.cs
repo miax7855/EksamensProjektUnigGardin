@@ -13,28 +13,25 @@ namespace EksamensProjektUnigGardin
     public partial class ShowCurrentOrders : Page
     {
         Controller controller = new Controller();
-        ImportController ic = new ImportController();
-
-        OrderRepository oRepo;
-
+        ImportController iController = new ImportController();
         private List<IOrder> ordersAsList = new List<IOrder>();
         private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
 
         public ShowCurrentOrders()
         {
             InitializeComponent();
-            ic.OrderRegistered += OnOrderRegistered;
-            controller.ImportOrder("Orders.txt", ic);
+            iController.OrderRegistered += OnOrderRegistered;
+            controller.ImportOrder("Orders.txt", iController);
         }
 
         private void ShowOrderIDsInListBox()
         {
             this.Dispatcher.Invoke(() => {
-                lstBox.Items.Clear();
+                listBox.Items.Clear();
 
                 foreach (IOrder item in this.ordersAsList)
                 {
-                    lstBox.Items.Add(item.OrderId);
+                    listBox.Items.Add(item.OrderId);
                 }
             });
         }
@@ -55,7 +52,6 @@ namespace EksamensProjektUnigGardin
             SelectedOrders.ItemsSource = null;
             SelectedOrders.Items.Clear();
             SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
-
         }
 
         public void OnOrderRegistered(object source, OrderRepository e)
@@ -69,8 +65,7 @@ namespace EksamensProjektUnigGardin
         {
             if (InsertOrderTextBox.Text != null)
             {
-                controller.ImportOrder(ic.GetFilePath("Orders.txt"), ic, InsertOrderTextBox.Text);
-
+                controller.ImportOrder(iController.GetFilePath("Orders.txt"), iController, InsertOrderTextBox.Text);
             }
         }
 
