@@ -19,5 +19,6 @@ namespace ApplicationLayer
 				sw.WriteLine(DateTime.Now + "\n" + message + "\n///\n///\n///");
 
 		}
+        
 	}
 }
