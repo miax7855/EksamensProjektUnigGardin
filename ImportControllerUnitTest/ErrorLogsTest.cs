@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Domainlayer;
 using System.IO;
+using ApplicationLayer;
 
 namespace ImportControllerUnitTest
 {
@@ -12,7 +13,7 @@ namespace ImportControllerUnitTest
 		public void TestSaveErrorLog()
 		{
 			string actualString;
-			Errors errorsTest = new Errors();
+			ErrorController errorsTest = new ErrorController();
 
 			string expectedString = "THERE ARE OVER 9000 ERRORS!";
 			errorsTest.SaveErrorLog(expectedString);
