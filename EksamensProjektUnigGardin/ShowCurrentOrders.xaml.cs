@@ -73,5 +73,12 @@ namespace EksamensProjektUnigGardin
 
             }
         }
+
+        private void SelectedOrders_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            IOrder iOrder = (IOrder)SelectedOrders.SelectedValue;
+            SamplesListBox.ItemsSource = iOrder.SampleType;
+        }
+        
     }
 }

@@ -19,7 +19,7 @@
                 </TransformGroup>
             </ListBox.RenderTransform>
         </ListBox>
-        <ListView x:Name="SelectedOrders" HorizontalAlignment="Left" Height="232" Margin="170,10,0,0" VerticalAlignment="Top" Width="730">
+        <ListView x:Name="SelectedOrders" HorizontalAlignment="Left" Height="168" Margin="116,10,0,0" VerticalAlignment="Top" Width="760" SelectionChanged="SelectedOrders_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="OrderID" 
@@ -53,8 +53,9 @@
             </ListView.View>
             <GroupBox Header="GroupBox" Height="100" Width="100"/>
         </ListView>
-        <TextBox x:Name="InsertOrderTextBox" HorizontalAlignment="Left" Height="88" Margin="341,271,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="386"/>
-        <Button x:Name="InsertOrderButton" Content="Button" HorizontalAlignment="Left" Margin="218,322,0,0" VerticalAlignment="Top" Width="75" Click="InsertOrderButton_Click"/>
+        <TextBox x:Name="InsertOrderTextBox" HorizontalAlignment="Left" Height="88" Margin="10,328,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="386"/>
+        <Button x:Name="InsertOrderButton" Content="Button" HorizontalAlignment="Left" Margin="129,421,0,0" VerticalAlignment="Top" Width="75" Click="InsertOrderButton_Click"/>
+        <ListBox x:Name="SamplesListBox" HorizontalAlignment="Left" Height="204" Margin="456,212,0,0" VerticalAlignment="Top" Width="131" SelectionChanged="SamplesListBox_SelectionChanged"/>
 
     </Grid>
 </Page>
