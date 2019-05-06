@@ -23,20 +23,7 @@ namespace ApplicationLayer
         {
             dbController.SaveOrder(order);
         }
-        public void ImportOrder(string fileName)
-        {
-            fileNameObj = fileName;
-            RefreshOrders(fileName);
-        }
-
-        public void RefreshOrders(string fileName)
-        {
-            fileNameObj = fileName;
-            Thread thread = new Thread(iController.RegisterOrders);
-
-            thread.Start(fileNameObj);
-        }
-
+       
         public void ImportOrder(string fileName, ImportController importcontroller)
         {
             fileNameObj = fileName;

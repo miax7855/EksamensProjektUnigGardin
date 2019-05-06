@@ -11,10 +11,11 @@ namespace ApplicationLayer
 {
 	public delegate void RegisterOrderEventHandler<OrderRepository>(object source, EventArgs e);
 
-	public class ImportController
+    public class ImportController
     {
         public event EventHandler<OrderRepository> OrderRegistered;
-		string[] orderItems;
+
+        string[] orderItems;
 		string[] sampleTypeArray;
 		List<string> sampleTypeList;
 		OrderRepository orderRepo;
