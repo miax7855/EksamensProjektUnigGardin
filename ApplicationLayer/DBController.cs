@@ -34,7 +34,7 @@ namespace ApplicationLayer
                     cmd1.Parameters.Add(new SqlParameter("@Order_Type", order.SampleType));
 					cmd1.ExecuteNonQuery();
                 }
-                catch(SqlException e)
+                catch(Exception e)
                 {
 					error.SaveErrorLog(e.ToString());
                 }
