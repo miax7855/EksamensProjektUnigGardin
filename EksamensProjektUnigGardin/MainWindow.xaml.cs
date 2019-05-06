@@ -25,7 +25,6 @@ namespace EksamensProjektUnigGardin
         {
             InitializeComponent();
             this.Content = new ShowCurrentOrders();
-
         }
     }
 }

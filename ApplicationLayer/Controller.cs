@@ -15,7 +15,7 @@ namespace ApplicationLayer
         private DBController dbController;
 		private ImportController iController = new ImportController();
         private ErrorController error = new ErrorController();
-		public bool programStillRunning = true;
+		public bool programRunning = true;
 		object fileNameObj = "Orders.txt";
 
 
