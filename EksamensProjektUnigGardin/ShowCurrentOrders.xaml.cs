@@ -17,8 +17,8 @@ namespace EksamensProjektUnigGardin
 
         OrderRepository oRepo;
 
-        List<IOrder> ordersAsList = new List<IOrder>();
-        List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
+        private List<IOrder> ordersAsList = new List<IOrder>();
+        private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
 
         public ShowCurrentOrders()
         {
@@ -42,7 +42,7 @@ namespace EksamensProjektUnigGardin
         {
             SelectedOrders.ItemsSource = ordersAsList;
         }
-        private void LstBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int tal = 0;
             foreach (System.Int32 item in e.AddedItems)

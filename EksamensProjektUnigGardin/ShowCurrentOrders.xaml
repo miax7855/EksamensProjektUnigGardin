@@ -9,7 +9,7 @@
       Title="ShowCurrentOrders">
 
     <Grid Margin="0,0,-192,-0.4">
-        <ListBox Name ="lstBox" HorizontalAlignment="Left" Height="307" VerticalAlignment="Top" Width="112" SelectionChanged="LstBox_SelectionChanged" RenderTransformOrigin="0.5,0.5" Margin="30,30,0,0">
+        <ListBox Name ="listBox" HorizontalAlignment="Left" Height="307" VerticalAlignment="Top" Width="112" SelectionChanged="ListBox_SelectionChanged" RenderTransformOrigin="0.5,0.5" Margin="30,30,0,0">
             <ListBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
