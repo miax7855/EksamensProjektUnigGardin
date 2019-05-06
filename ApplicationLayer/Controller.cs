@@ -23,33 +23,40 @@ namespace ApplicationLayer
         {
             dbController.SaveOrder(order);
         }
-        
+        public void ImportOrder(string fileName)
+        {
+            fileNameObj = fileName;
+            RefreshOrders(fileName);
+        }
 
-		public void ImportOrder(string fileName)
-		{
-			fileNameObj = fileName;
-			iController.RegisterOrders(fileNameObj);
-			RefreshOrders(fileName);
-		}
+        public void RefreshOrders(string fileName)
+        {
+            fileNameObj = fileName;
+            Thread thread = new Thread(iController.RegisterOrders);
 
-		public void RefreshOrders(string fileName)
-		{
-			fileNameObj = fileName;
-			//int i = 0;
+            thread.Start(fileNameObj);
+        }
 
-			Thread thread = new Thread(iController.RegisterOrders);
+        public void ImportOrder(string fileName, ImportController importcontroller)
+        {
+            fileNameObj = fileName;
+            RefreshOrders(fileName, importcontroller);
+        }
+        public void ImportOrder(string fileName, ImportController importcontroller, string orderToAdd)
+        {
+            fileNameObj = fileName;
+            importcontroller.RegisterOrdersInGUI(fileNameObj, orderToAdd);
+        }
+        public void RefreshOrders(string fileName, ImportController importcontroller)
+        {
+            fileNameObj = fileName;
 
-			thread.Start(fileNameObj);
+            Thread thread = new Thread(importcontroller.RegisterOrders);
+            thread.IsBackground = true;
+            thread.Start(fileNameObj);
+        }
 
-			//do
-			//{
-			//	Thread.Sleep(1000);
-			//	i++;
-			//}
-			//while (i < 10);
-		}
-
-		public Dictionary<int, IOrder> ShowAllOrders()
+        public Dictionary<int, IOrder> ShowAllOrders()
 		{
 			oRepo = OrderRepository.GetOrderRepo();
 			return oRepo.GetOrderDic();

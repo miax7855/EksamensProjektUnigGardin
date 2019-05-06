@@ -9,44 +9,67 @@ using library;
 
 namespace ApplicationLayer
 {
-	
-
 	public class ImportController
     {
+        public delegate void RegisterOrderEventHandler<OrderRepository>(object source, EventArgs e);
+        public event EventHandler<OrderRepository> OrderRegistered;
 		string[] orderItems;
 		string[] sampleTypeArray;
 		List<string> sampleTypeList;
 		OrderRepository orderRepo;
 		IDictionary<int, IOrder> orders;
         List<IOrder> listOfOrders = new List<IOrder>();
-
-		public string[] ReadLines(string fileName)
-        {
-			string relativePath = GetFilePath(fileName);
-            string[] text = File.ReadAllLines(relativePath);
-			return text;
-        }
+        
 		public void RegisterOrders(object fileNameObj)
 		{
-			
-			string fileName = (string)fileNameObj;
-			orderRepo = OrderRepository.GetOrderRepo();
-			orders = orderRepo.GetOrderDic();
-			string[] text = ReadLines(fileName);
+            string fileName = (string)fileNameObj;
+            string relativePath = GetFilePath(fileName);
 
-			foreach (string item in text)
-			{
-				orderItems = item.Split(';');
-				if (!orders.ContainsKey(Convert.ToInt32(orderItems[0])))
-				{
-					sampleTypeArray = orderItems[8].Split(',');
-					sampleTypeList = ConvertArrayToList(sampleTypeArray);
-					Order order = new Order(Convert.ToInt32(orderItems[0]), orderItems[1], orderItems[2], Convert.ToInt32(orderItems[3]), orderItems[4], orderItems[5], Convert.ToInt32(orderItems[6]), orderItems[7], sampleTypeList);
-					orderRepo.AddOrder(order);
-				}
-			}
-		
-		}
+            FileStream fs = new FileStream(relativePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+            using (StreamReader reader = new StreamReader(fs))
+            {
+                while (true)
+                {
+                    string line = reader.ReadLine();
+                    orderRepo = OrderRepository.GetOrderRepo();
+                    orders = orderRepo.GetOrderDic();
+
+                    if (!String.IsNullOrWhiteSpace(line))
+                    {
+                        orderItems = line.Split(';');
+                        if (!orders.ContainsKey(Convert.ToInt32(orderItems[0])))
+                        {
+                            sampleTypeArray = orderItems[8].Split(',');
+                            sampleTypeList = ConvertArrayToList(sampleTypeArray);
+                            Order order = new Order(Convert.ToInt32(orderItems[0]), orderItems[1], orderItems[2], Convert.ToInt32(orderItems[3]), 
+                                orderItems[4], orderItems[5], Convert.ToInt32(orderItems[6]), orderItems[7], sampleTypeList);
+
+                            orderRepo.AddOrder(order);
+
+                            OnOrderRegistered();
+                        }
+                    }
+                }
+            }
+        }
+        public void RegisterOrdersInGUI(object fileNameObj, string orderLinesToAdd)
+        {
+            string filename = (string)fileNameObj;
+            FileStream filestream = new FileStream(filename, FileMode.Append, FileAccess.Write);
+            byte[] buffer = Encoding.Default.GetBytes(orderLinesToAdd);
+            filestream.Write(buffer, 0, buffer.Length);
+            filestream.Flush();
+            filestream.Close();
+        }
+
+        public void OnOrderRegistered()
+        {
+            if (OrderRegistered != null)
+            {
+                OrderRegistered(this, OrderRepository.GetOrderRepo());
+            }
+        }
         
         public List<string> ConvertArrayToList(string[] c)
 		{

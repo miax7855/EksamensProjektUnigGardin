@@ -9,7 +9,7 @@ using library;
 
 namespace ApplicationLayer
 {
-    public class OrderRepository
+    public class OrderRepository : EventArgs
     {
 		private Dictionary<int, IOrder> orders = new Dictionary<int, IOrder>();
         private List<IOrder> orderAsList = new List<IOrder>();
