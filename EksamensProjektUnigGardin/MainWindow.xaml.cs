@@ -24,7 +24,10 @@ namespace EksamensProjektUnigGardin
         public MainWindow()
         {
             InitializeComponent();
+            ImportController importController = new ImportController();
+
             this.Content = new ShowCurrentOrders();
+
         }
     }
 }

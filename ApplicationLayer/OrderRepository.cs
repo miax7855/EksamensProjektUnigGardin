@@ -9,9 +9,10 @@ using library;
 
 namespace ApplicationLayer
 {
-    public class OrderRepository
+    public class OrderRepository : EventArgs
     {
 		private Dictionary<int, IOrder> orders = new Dictionary<int, IOrder>();
+        private List<IOrder> orderAsList = new List<IOrder>();
 		static private OrderRepository orderRepository;
 		public static OrderRepository GetOrderRepo()
 		{
@@ -30,8 +31,15 @@ namespace ApplicationLayer
 		{
 			return orders;
 		}
-
-		public void AddOrder(Order o)
+        public List<IOrder> ReturnOrdersAsList()
+        {
+            foreach (KeyValuePair<int, IOrder> item in orders)
+            {
+                orderAsList.Add(item.Value);
+            }
+            return orderAsList;
+        }
+        public void AddOrder(Order o)
         {
 			orders.Add(o.OrderId, o);
         }
@@ -39,15 +47,7 @@ namespace ApplicationLayer
         {
 			orders.Remove(o.OrderId);
         }
-        public List<IOrder> ReturnCurrentOrdersAsList()
-        {
-            List<IOrder> orderList = new List<IOrder>();
-            foreach (KeyValuePair<int, IOrder> item in orders)
-            {
-                orderList.Add(item.Value);
-            }
-            return orderList;
-        }
+        
 
     }
 }
