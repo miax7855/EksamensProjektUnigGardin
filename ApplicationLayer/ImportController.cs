@@ -9,9 +9,10 @@ using library;
 
 namespace ApplicationLayer
 {
+	public delegate void RegisterOrderEventHandler<OrderRepository>(object source, EventArgs e);
+
 	public class ImportController
     {
-        public delegate void RegisterOrderEventHandler<OrderRepository>(object source, EventArgs e);
         public event EventHandler<OrderRepository> OrderRegistered;
 		string[] orderItems;
 		string[] sampleTypeArray;
