@@ -29,5 +29,6 @@ namespace ApplicationLayer
 			using (StreamWriter sw = new StreamWriter(relativePath))
 				sw.WriteLine(message + "\n///\n///\n///");
 		}
+        
 	}
 }

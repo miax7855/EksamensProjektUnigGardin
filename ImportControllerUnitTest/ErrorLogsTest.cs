@@ -4,6 +4,7 @@ using Domainlayer;
 using System.IO;
 using ApplicationLayer;
 
+
 namespace ImportControllerUnitTest
 {
 	[TestClass]
@@ -22,5 +23,15 @@ namespace ImportControllerUnitTest
 			Assert.AreEqual(expectedString, actualString);
 			//Assert.AreEqual(True, expectedString.Equals(actualString));
 		}
+        [TestMethod]
+        public void TestSaveOrderCatch()
+        {
+            Order order = new Order();
+           
+            DBController dbc = new DBController();
+            ErrorController errorstest = new ErrorController();
+            order = null;
+            dbc.SaveOrder(order);
+        }
 	}
 }

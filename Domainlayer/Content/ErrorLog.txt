@@ -1,7 +1,6 @@
-THERE ARE OVER 9000 ERRORS!
-///
-///
-///
+06-05-2019 09:54:51
+System.NullReferenceException: Objektreferencen er ikke indstillet til en forekomst af et objekt.
+   ved ApplicationLayer.DBController.SaveOrder(Order order) i C:\Users\Anders\Source\Repos\EksamensProjektUnigGardin\ApplicationLayer\DBController.cs:linje 26
 ///
 ///
 ///
