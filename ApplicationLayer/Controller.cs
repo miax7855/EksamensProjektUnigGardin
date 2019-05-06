@@ -23,37 +23,40 @@ namespace ApplicationLayer
         {
             dbController.SaveOrder(order);
         }
-        public List<IOrder> ReturnRepoList()
+        public void ImportOrder(string fileName)
         {
-            return oRepo.ReturnCurrentOrdersAsList();
+            fileNameObj = fileName;
+            RefreshOrders(fileName);
         }
 
-		public void ImportOrder(string filepath)
-		{
-			fileNameObj = filepath;
-			iController.RegisterOrders(fileNameObj);
-			RefreshOrders(filepath);
-		}
+        public void RefreshOrders(string fileName)
+        {
+            fileNameObj = fileName;
+            Thread thread = new Thread(iController.RegisterOrders);
 
-		public void RefreshOrders(string filepath)
-		{
-			fileNameObj = filepath;
-			int i = 0;
+            thread.Start(fileNameObj);
+        }
 
-			Thread thread = new Thread(iController.RegisterOrders);
+        public void ImportOrder(string fileName, ImportController importcontroller)
+        {
+            fileNameObj = fileName;
+            RefreshOrders(fileName, importcontroller);
+        }
+        public void ImportOrder(string fileName, ImportController importcontroller, string orderToAdd)
+        {
+            fileNameObj = fileName;
+            importcontroller.RegisterOrdersInGUI(fileNameObj, orderToAdd);
+        }
+        public void RefreshOrders(string fileName, ImportController importcontroller)
+        {
+            fileNameObj = fileName;
 
-			thread.Start(fileNameObj);
+            Thread thread = new Thread(importcontroller.RegisterOrders);
+            thread.IsBackground = true;
+            thread.Start(fileNameObj);
+        }
 
-			do
-			{
-				Thread.Sleep(1000);
-				i++;
-			}
-			while (i < 10);
-			iController.RegisterOrders(fileNameObj);
-		}
-
-		public Dictionary<int, IOrder> ShowAllOrders()
+        public Dictionary<int, IOrder> ShowAllOrders()
 		{
 			oRepo = OrderRepository.GetOrderRepo();
 			return oRepo.GetOrderDic();

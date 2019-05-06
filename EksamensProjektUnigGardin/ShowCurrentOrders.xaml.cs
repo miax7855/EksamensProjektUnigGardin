@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Reflection;
-using ApplicationLayer;
+﻿using ApplicationLayer;
 using library;
+using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.Windows.Controls;
 
 namespace EksamensProjektUnigGardin
 {
@@ -24,30 +13,35 @@ namespace EksamensProjektUnigGardin
     public partial class ShowCurrentOrders : Page
     {
         Controller controller = new Controller();
-        List<IOrder> orders = new List<IOrder>();
+        ImportController ic = new ImportController();
+
+        OrderRepository oRepo;
+
+        List<IOrder> ordersAsList = new List<IOrder>();
+        List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
 
         public ShowCurrentOrders()
         {
             InitializeComponent();
-            ShowSamplesInListBox();
+            ic.OrderRegistered += OnOrderRegistered;
+            controller.ImportOrder("Orders.txt", ic);
         }
 
+        private void ShowOrderIDsInListBox()
+        {
+            this.Dispatcher.Invoke(() => {
+                lstBox.Items.Clear();
+
+                foreach (IOrder item in this.ordersAsList)
+                {
+                    lstBox.Items.Add(item.OrderId);
+                }
+            });
+        }
         public void ShowOrdersInListView()
         {
-            orders = controller.ReturnRepoList();
-            SelectedOrders.ItemsSource = orders;
+            SelectedOrders.ItemsSource = ordersAsList;
         }
-        
-        private void ShowSamplesInListBox()
-        {
-            orders = controller.ReturnRepoList();
-            foreach (IOrder item in orders)
-            {
-                lstBox.Items.Add(item.OrderId);
-            }
-        }
-        List<IOrder> newList = new List<IOrder>();
-
         private void LstBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             int tal = 0;
@@ -55,19 +49,29 @@ namespace EksamensProjektUnigGardin
             {
                 tal = item;
             }
-            //string test = this.lstBox.SelectedItem.ToString();
-            //SelectedOrders.ItemsSource =
-            //string IDSelected = e.AddedItems.ToString();
-            
-            IOrder result = orders.Find(x => x.OrderId == tal);
-            newList.Add(result);
-            SelectedOrders.Items.Clear();
-            SelectedOrders.ItemsSource = newList;
 
-            //orders.Find(x => x.OrderId == e.AddedItems);
-            //SelectedOrders.ItemsSource = e.AddedItems;
-            //Type t = Type.GetType("IOrder");
-            //PropertyInfo p = 
+            IOrder result = ordersAsList.Find(x => x.OrderId == tal);
+            ListOfCurrentListViewItems.Add(result);
+            SelectedOrders.ItemsSource = null;
+            SelectedOrders.Items.Clear();
+            SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
+
+        }
+
+        public void OnOrderRegistered(object source, OrderRepository e)
+        {
+            this.ordersAsList.Clear();
+            this.ordersAsList = e.ReturnOrdersAsList();
+            ShowOrderIDsInListBox();
+        }
+
+        private void InsertOrderButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (InsertOrderTextBox.Text != null)
+            {
+                controller.ImportOrder(ic.GetFilePath("Orders.txt"), ic, InsertOrderTextBox.Text);
+
+            }
         }
     }
 }
