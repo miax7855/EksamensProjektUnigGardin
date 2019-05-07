@@ -1,6 +1,6 @@
-06-05-2019 09:54:51
+07-05-2019 13:19:11
 System.NullReferenceException: Objektreferencen er ikke indstillet til en forekomst af et objekt.
-   ved ApplicationLayer.DBController.SaveOrder(Order order) i C:\Users\Anders\Source\Repos\EksamensProjektUnigGardin\ApplicationLayer\DBController.cs:linje 26
+   ved ApplicationLayer.DBController.SaveOrder(Order order) i C:\Users\chocobams\Source\Repos\EksamensProjektUnigGardin2\ApplicationLayer\DBController.cs:linje 26
 ///
 ///
 ///

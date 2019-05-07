@@ -34,9 +34,10 @@ namespace ImportControllerUnitTest
 
 			Order o = new Order(1, "Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", testSampleType);
 
-			c.RefreshOrders(fileName);
-			Order o2 = (Order)or.GetOrderDic()[1];
-
+			c.RefreshOrders(fileName, ic);
+			// venter 1 sekund pga. den anden thread ikke har tilføjet data til orderRepo endnu
+			Thread.Sleep(1000);
+			IOrder o2 = or.GetOrderDic()[1];
 			Assert.AreEqual(o.SampleType.ToString(), o2.SampleType.ToString());
 		}
 
@@ -53,7 +54,7 @@ namespace ImportControllerUnitTest
 
 			Order o = new Order(3, "Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", testSampleType);
 
-			c.RefreshOrders(fileName);
+			c.RefreshOrders(fileName, ic);
 			Order o2 = (Order)or.GetOrderDic()[3];
 
 			Assert.AreEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
@@ -73,7 +74,7 @@ namespace ImportControllerUnitTest
 
 			Order o = new Order(3, "Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", testSampleType);
 
-			c.RefreshOrders(fileName);
+			c.RefreshOrders(fileName, ic);
 			Order o2 = (Order)or.GetOrderDic()[3];
 
 			Assert.AreNotEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
@@ -85,7 +86,7 @@ namespace ImportControllerUnitTest
 			Controller c = new Controller();
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
-			c.RefreshOrders(fileName);
+			c.RefreshOrders(fileName, ic);
 			OrderRepository or = OrderRepository.GetOrderRepo();
 			using (StreamWriter Writer = new StreamWriter(relativePath, true))
 			{
