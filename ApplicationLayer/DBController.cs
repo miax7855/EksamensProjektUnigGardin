@@ -89,7 +89,26 @@ namespace ApplicationLayer
 				}
             }
         }
+        public void FinishedOrder(Order order)
+        {
+            using (SqlConnection con3 = new SqlConnection(connectionstring))
+            {
+                try
+                {
+                    con3.Open();
+                    SqlCommand cmd3 = new SqlCommand("spRemoveFinishedOrder", con3);
+                    cmd3.CommandType = CommandType.StoredProcedure;
+                    cmd3.Parameters.Add(new SqlParameter("@Order_ID", order.OrderId));
 
+                    cmd3.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+
+                    error.SaveErrorLog(e.ToString());
+                }
+            }
+        }
         
     }
 }
