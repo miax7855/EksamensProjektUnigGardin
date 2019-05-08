@@ -12,11 +12,13 @@ namespace ApplicationLayer
     {
         private Controller controller = new Controller();
 		private ErrorController error = new ErrorController();
+		private SqlConnection con;
+
         private static string connectionstring =
             "Server = den1.mssql8.gear.host; Database = uniggardin; User Id = uniggardin; Password = Iy71?B8skjQ_";
         public void SaveOrder(Order order)
         {
-            using (SqlConnection con = new SqlConnection(connectionstring))
+            using (con = new SqlConnection(connectionstring))
             {
                 try
                 {
@@ -42,12 +44,12 @@ namespace ApplicationLayer
         }
         public void InsertIntoOrderLines(Order order)
         {
-            using (SqlConnection con1 = new SqlConnection(connectionstring))
+            using (con = new SqlConnection(connectionstring))
             {
                 try
                 {
-                    con1.Open();
-                    SqlCommand cmd2 = new SqlCommand("spAddSamplesToOrder", con1);
+                    con.Open();
+                    SqlCommand cmd2 = new SqlCommand("spAddSamplesToOrder", con);
                     cmd2.CommandType = CommandType.StoredProcedure;
                     cmd2.Parameters.Add(new SqlParameter("@OrderID", order.OrderId));
                     cmd2.Parameters.Add(new SqlParameter("@SampleType1", order.SampleType[0]));
@@ -71,12 +73,12 @@ namespace ApplicationLayer
         }
         public void InsertIntoStock(int Quantity)
         {
-            using (SqlConnection con2 = new SqlConnection(connectionstring))
+            using (con = new SqlConnection(connectionstring))
             {
                 try
                 {
-                    con2.Open();
-                    SqlCommand cmd3 = new SqlCommand("spInsertIntoStock", con2);
+                    con.Open();
+                    SqlCommand cmd3 = new SqlCommand("spInsertIntoStock", con);
                     cmd3.CommandType = CommandType.StoredProcedure;
                     cmd3.Parameters.Add(new SqlParameter("@Quantity", Quantity));
                     
@@ -90,6 +92,32 @@ namespace ApplicationLayer
             }
         }
 
-        
+        public void UpdateStock(Order order)
+		{
+			using (con = new SqlConnection(connectionstring))
+			{
+				try
+				{
+					con.Open();
+
+
+					foreach (string s in order.SampleType)
+					{
+						SqlCommand cmd4 = new SqlCommand("spUpdateStock", con);
+						cmd4.CommandType = CommandType.StoredProcedure;
+						cmd4.Parameters.Add(new SqlParameter("@Quantity", 1));
+						cmd4.Parameters.Add(new SqlParameter("@SampleType", s));
+
+						cmd4.ExecuteNonQuery();
+					}
+
+
+				}
+				catch(SqlException e)
+				{
+					error.SaveErrorLog(e.ToString());
+				}
+			}
+		}
     }
 }
