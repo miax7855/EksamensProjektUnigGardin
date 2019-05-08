@@ -93,33 +93,56 @@ namespace EksamensProjektUnigGardin
 
         private void OrderPackagedButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-			MessageBox.Show("Er du sikker at pakken er færdig?", "Confirmation");
+			bool confirmation = ShowPopUpBox();
+			if (confirmation)
+			{
+				if (SelectedOrders.HasItems)
+				{
 
-            if (SelectedOrders.HasItems)
-            {
-				
-				IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
-                ListOfCurrentListViewItems.Remove(orderToRemove);
+					IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
+					ListOfCurrentListViewItems.Remove(orderToRemove);
 
-                orderRepo.RemoveOrder(orderToRemove);
-                ordersAsList = orderRepo.ReturnOrdersAsList();
+					orderRepo.RemoveOrder(orderToRemove);
+					ordersAsList = orderRepo.ReturnOrdersAsList();
 
-                SelectedOrders.ItemsSource = null;
-                SelectedOrders.Items.Clear();
-                //SelectedOrders.Items.Remove(orderToRemove);
-                SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
+					SelectedOrders.ItemsSource = null;
+					SelectedOrders.Items.Clear();
+					//SelectedOrders.Items.Remove(orderToRemove);
+					SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
 
-                listBox.Items.Clear();
-                ShowOrderIDsInListBox();
+					listBox.Items.Clear();
+					ShowOrderIDsInListBox();
 
 
-                //SelectedOrders.Items.Remove(SelectedOrders.FindResource(orderToRemove));
-                //SelectedOrders.Items.Clear();
-                //SelectedOrders.ItemsSource = ordersAsList;
-                //SelectedOrders.SelectedValue
-            }
+					//SelectedOrders.Items.Remove(SelectedOrders.FindResource(orderToRemove));
+					//SelectedOrders.Items.Clear();
+					//SelectedOrders.ItemsSource = ordersAsList;
+					//SelectedOrders.SelectedValue
+				}
+			}
 
-        }
+			OrderPackagedButton.IsEnabled = false;
+
+		}
+
+		private bool ShowPopUpBox()
+		{
+			bool confirmation = false;
+			MessageBoxResult result = MessageBox.Show("Er du sikker at pakken er færdig?", "Confirmation", MessageBoxButton.YesNo);
+			switch (result)
+			{
+				case MessageBoxResult.Yes:
+					confirmation = true;
+					break;
+					
+				case MessageBoxResult.No:
+					MessageBox.Show("Kann så ikke bearbejde pakken...", "Confirmation");
+					confirmation = false;
+					break;
+			}
+
+			return confirmation;
+		} 
         
     }
 }
