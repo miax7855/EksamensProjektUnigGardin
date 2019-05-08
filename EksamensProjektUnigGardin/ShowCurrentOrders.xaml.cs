@@ -128,7 +128,7 @@ namespace EksamensProjektUnigGardin
 		private bool ShowPopUpBox()
 		{
 			bool confirmation = false;
-			MessageBoxResult result = MessageBox.Show("Er du sikker at pakken er færdig?", "Confirmation", MessageBoxButton.YesNo);
+			MessageBoxResult result = MessageBox.Show("Er du sikker at pakken er færdig?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Information);
 			switch (result)
 			{
 				case MessageBoxResult.Yes:
