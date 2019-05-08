@@ -50,7 +50,7 @@ namespace ApplicationLayer
 
                             orderRepo.AddOrder(order);
 
-                            OnOrderRegistered();C:\Users\Mia\source\repos\EksamensProjektUnigGardin\EksamensProjektUnigGardin\App.config
+                            OnOrderRegistered();
                         }
                     }
                 }

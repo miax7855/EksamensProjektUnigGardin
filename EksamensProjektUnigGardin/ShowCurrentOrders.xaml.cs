@@ -97,10 +97,10 @@ namespace EksamensProjektUnigGardin
                 orderRepo.RemoveOrder(orderToRemove);
                 ordersAsList = orderRepo.ReturnOrdersAsList();
 
-                //SelectedOrders.ItemsSource = null;
-                //SelectedOrders.Items.Clear();
-                SelectedOrders.Items.Remove(orderToRemove);
-                //SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
+                SelectedOrders.ItemsSource = null;
+                SelectedOrders.Items.Clear();
+                //SelectedOrders.Items.Remove(orderToRemove);
+                SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
 
                 listBox.Items.Clear();
                 ShowOrderIDsInListBox();
