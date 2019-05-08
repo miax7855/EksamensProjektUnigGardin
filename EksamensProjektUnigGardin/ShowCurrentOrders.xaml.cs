@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace EksamensProjektUnigGardin
 {
@@ -23,7 +24,9 @@ namespace EksamensProjektUnigGardin
             InitializeComponent();
             iController.OrderRegistered += OnOrderRegistered;
             controller.ImportOrder("Orders.txt", iController);
-        }
+			OrderPackagedButton.IsEnabled = false;
+
+		}
 
         private void ShowOrderIDsInListBox()
         {
@@ -79,7 +82,8 @@ namespace EksamensProjektUnigGardin
                 SamplesListBox.ItemsSource = null;
                 SamplesListBox.Items.Clear();
                 SamplesListBox.ItemsSource = iOrder.SampleType;
-            }
+				OrderPackagedButton.IsEnabled = true;
+			}
         }
 
         private void SamplesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -89,9 +93,12 @@ namespace EksamensProjektUnigGardin
 
         private void OrderPackagedButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+			MessageBox.Show("Er du sikker at pakken er færdig?", "Confirmation");
+
             if (SelectedOrders.HasItems)
             {
-                IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
+				
+				IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
                 ListOfCurrentListViewItems.Remove(orderToRemove);
 
                 orderRepo.RemoveOrder(orderToRemove);
