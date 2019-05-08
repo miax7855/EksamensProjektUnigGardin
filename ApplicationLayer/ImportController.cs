@@ -10,6 +10,7 @@ using library;
 namespace ApplicationLayer
 {
 	public delegate void RegisterOrderEventHandler<OrderRepository>(object source, EventArgs e);
+    
 
     public class ImportController
     {
@@ -55,6 +56,14 @@ namespace ApplicationLayer
                 }
             }
         }
+        public void DeleteOrderItemEvent(object fileNameObj, IOrder io)
+        {
+            string fileName = (string)fileNameObj;
+            FileStream filestream = new FileStream(fileName, FileMode.Truncate, FileAccess.ReadWrite);
+
+            
+        }
+
         public void RegisterOrdersInGUI(object fileNameObj, string orderLinesToAdd)
         {
             string filename = (string)fileNameObj;

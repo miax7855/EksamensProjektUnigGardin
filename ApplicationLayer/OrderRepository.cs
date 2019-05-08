@@ -39,11 +39,11 @@ namespace ApplicationLayer
             }
             return orderAsList;
         }
-        public void AddOrder(Order o)
+        public void AddOrder(IOrder o)
         {
 			orders.Add(o.OrderId, o);
         }
-        public void RemoveOrder(Order o)
+        public void RemoveOrder(IOrder o)
         {
 			orders.Remove(o.OrderId);
         }
