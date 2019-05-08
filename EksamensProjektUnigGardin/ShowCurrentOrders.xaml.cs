@@ -16,6 +16,7 @@ namespace EksamensProjektUnigGardin
         ImportController iController = new ImportController();
         private List<IOrder> ordersAsList = new List<IOrder>();
         private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
+        OrderRepository orderRepo = OrderRepository.GetOrderRepo();
 
         public ShowCurrentOrders()
         {
@@ -85,5 +86,33 @@ namespace EksamensProjektUnigGardin
         {
 
         }
+
+        private void OrderPackagedButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (SelectedOrders.HasItems)
+            {
+                IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
+                ListOfCurrentListViewItems.Remove(orderToRemove);
+
+                orderRepo.RemoveOrder(orderToRemove);
+                ordersAsList = orderRepo.ReturnOrdersAsList();
+
+                //SelectedOrders.ItemsSource = null;
+                //SelectedOrders.Items.Clear();
+                SelectedOrders.Items.Remove(orderToRemove);
+                //SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
+
+                listBox.Items.Clear();
+                ShowOrderIDsInListBox();
+
+
+                //SelectedOrders.Items.Remove(SelectedOrders.FindResource(orderToRemove));
+                //SelectedOrders.Items.Clear();
+                //SelectedOrders.ItemsSource = ordersAsList;
+                //SelectedOrders.SelectedValue
+            }
+
+        }
+        
     }
 }
