@@ -29,11 +29,15 @@ namespace EksamensProjektUnigGardin
         public ShowCurrentOrders()
         {
             InitializeComponent();
+
+            BindCollectionToListView();
+            
+
             iController.OrderRegistered += OnOrderRegistered;
             controller.ImportOrder("Orders.txt", iController);
 			OrderPackagedButton.IsEnabled = false;
-
-		}
+            ShowOrderIDsInListBox();
+        }
 
         private void ShowOrderIDsInListBox()
         {
@@ -61,10 +65,8 @@ namespace EksamensProjektUnigGardin
 
             IOrder result = ordersAsList.Find(x => x.OrderId == tal);
 
-            SelectedOrders.ItemsSource = null;
-            SelectedOrders.Items.Clear();
+            
 
-            SelectedOrders.ItemsSource = ObsCollForListView;
             ObsCollForListView.Add(result);
 
             //SelectedOrders.Items.Clear();
@@ -113,16 +115,11 @@ namespace EksamensProjektUnigGardin
 				{
 
 					IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
-					ListOfCurrentListViewItems.Remove(orderToRemove);
+					ObsCollForListView.Remove(orderToRemove);
 
 					orderRepo.RemoveOrder(orderToRemove);
 					ordersAsList = orderRepo.ReturnOrdersAsList();
-
-					SelectedOrders.ItemsSource = null;
-					SelectedOrders.Items.Clear();
-					//SelectedOrders.Items.Remove(orderToRemove);
-					SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
-
+                    
 					listBox.Items.Clear();
 					ShowOrderIDsInListBox();
 
@@ -156,6 +153,12 @@ namespace EksamensProjektUnigGardin
 
 			return confirmation;
 		} 
+        private void BindCollectionToListView()
+        {
+            SelectedOrders.ItemsSource = null;
+            SelectedOrders.Items.Clear();
+            SelectedOrders.ItemsSource = ObsCollForListView;
+        }
         
     }
 }
