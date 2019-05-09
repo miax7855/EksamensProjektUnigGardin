@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Controls;
+using System.Windows;
 using System.Collections.ObjectModel;
 
 namespace EksamensProjektUnigGardin
@@ -30,13 +31,16 @@ namespace EksamensProjektUnigGardin
             InitializeComponent();
             iController.OrderRegistered += OnOrderRegistered;
             controller.ImportOrder("Orders.txt", iController);
-        }
-        
-        public void ShowOrderIDsInListBox()
+			OrderPackagedButton.IsEnabled = false;
+
+		}
+
+        private void ShowOrderIDsInListBox()
         {
-            this.Dispatcher.Invoke(() =>
-            {
-                foreach (IOrder item in ordersAsList)
+            Dispatcher.Invoke(() => {
+                listBox.Items.Clear();
+
+                foreach (IOrder item in this.ordersAsList)
                 {
                     listBox.Items.Add(item.OrderId);
                 }
@@ -88,11 +92,11 @@ namespace EksamensProjektUnigGardin
             
             if (iOrder != null)
             {
-                listBox.Items.RemoveAt(listBox.Items.IndexOf(iOrder.OrderId));
-                //SamplesListBox.ItemsSource = null;
-                //SamplesListBox.Items.Clear();
-                //SamplesListBox.ItemsSource = iOrder.SampleType;
-            }
+                SamplesListBox.ItemsSource = null;
+                SamplesListBox.Items.Clear();
+                SamplesListBox.ItemsSource = iOrder.SampleType;
+				OrderPackagedButton.IsEnabled = true;
+			}
         }
 
         private void SamplesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -102,21 +106,56 @@ namespace EksamensProjektUnigGardin
 
         private void OrderPackagedButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (SelectedOrders.HasItems)
-            {
-                IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
+			bool confirmation = ShowPopUpBox();
+			if (confirmation)
+			{
+				if (SelectedOrders.HasItems)
+				{
 
-                orderRepo.RemoveOrder(orderToRemove);
-                ordersAsList = orderRepo.ReturnOrdersAsList();
+					IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
+					ListOfCurrentListViewItems.Remove(orderToRemove);
 
-                ObsCollForListView.Remove(orderToRemove);
-  
-                //listBox.Items.Clear();
-                ShowOrderIDsInListBox();
-                
-            }
+					orderRepo.RemoveOrder(orderToRemove);
+					ordersAsList = orderRepo.ReturnOrdersAsList();
 
-        }
+					SelectedOrders.ItemsSource = null;
+					SelectedOrders.Items.Clear();
+					//SelectedOrders.Items.Remove(orderToRemove);
+					SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
+
+					listBox.Items.Clear();
+					ShowOrderIDsInListBox();
+
+
+					//SelectedOrders.Items.Remove(SelectedOrders.FindResource(orderToRemove));
+					//SelectedOrders.Items.Clear();
+					//SelectedOrders.ItemsSource = ordersAsList;
+					//SelectedOrders.SelectedValue
+				}
+			}
+
+			OrderPackagedButton.IsEnabled = false;
+
+		}
+
+		private bool ShowPopUpBox()
+		{
+			bool confirmation = false;
+			MessageBoxResult result = MessageBox.Show("Er du sikker at pakken er færdig?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Information);
+			switch (result)
+			{
+				case MessageBoxResult.Yes:
+					confirmation = true;
+					break;
+					
+				case MessageBoxResult.No:
+					MessageBox.Show("Kann så ikke bearbejde pakken...", "Confirmation");
+					confirmation = false;
+					break;
+			}
+
+			return confirmation;
+		} 
         
     }
 }
