@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace EksamensProjektUnigGardin
 {
     /// <summary>
     /// Interaction logic for ShowCurrentOrders.xaml
     /// </summary>
+    
     public partial class ShowCurrentOrders : Page
     {
         Controller controller = new Controller();
@@ -18,25 +20,30 @@ namespace EksamensProjektUnigGardin
         private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
         OrderRepository orderRepo = OrderRepository.GetOrderRepo();
 
+        ObservableCollection<IOrder> ObsCollForListView = new ObservableCollection<IOrder>();
+        //ObservableCollection<int> ObsCollForOrderIDs = new ObservableCollection<int>();
+
+        //ObservableCollection<int> ObsCollForListBox = new ObservableCollection<int>();
+
         public ShowCurrentOrders()
         {
             InitializeComponent();
             iController.OrderRegistered += OnOrderRegistered;
             controller.ImportOrder("Orders.txt", iController);
         }
-
-        private void ShowOrderIDsInListBox()
+        
+        public void ShowOrderIDsInListBox()
         {
-            this.Dispatcher.Invoke(() => {
-                listBox.Items.Clear();
-
-                foreach (IOrder item in this.ordersAsList)
+            this.Dispatcher.Invoke(() =>
+            {
+                foreach (IOrder item in ordersAsList)
                 {
                     listBox.Items.Add(item.OrderId);
                 }
+
             });
         }
-        public void ShowOrdersInListView()
+        public void ShowSamplesInListBox()
         {
             SelectedOrders.ItemsSource = ordersAsList;
         }
@@ -49,10 +56,15 @@ namespace EksamensProjektUnigGardin
             }
 
             IOrder result = ordersAsList.Find(x => x.OrderId == tal);
-            ListOfCurrentListViewItems.Add(result);
+
             SelectedOrders.ItemsSource = null;
             SelectedOrders.Items.Clear();
-            SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
+
+            SelectedOrders.ItemsSource = ObsCollForListView;
+            ObsCollForListView.Add(result);
+
+            //SelectedOrders.Items.Clear();
+            //SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
         }
 
         public void OnOrderRegistered(object source, OrderRepository e)
@@ -76,9 +88,10 @@ namespace EksamensProjektUnigGardin
             
             if (iOrder != null)
             {
-                SamplesListBox.ItemsSource = null;
-                SamplesListBox.Items.Clear();
-                SamplesListBox.ItemsSource = iOrder.SampleType;
+                listBox.Items.RemoveAt(listBox.Items.IndexOf(iOrder.OrderId));
+                //SamplesListBox.ItemsSource = null;
+                //SamplesListBox.Items.Clear();
+                //SamplesListBox.ItemsSource = iOrder.SampleType;
             }
         }
 
@@ -92,24 +105,15 @@ namespace EksamensProjektUnigGardin
             if (SelectedOrders.HasItems)
             {
                 IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
-                ListOfCurrentListViewItems.Remove(orderToRemove);
 
                 orderRepo.RemoveOrder(orderToRemove);
                 ordersAsList = orderRepo.ReturnOrdersAsList();
 
-                SelectedOrders.ItemsSource = null;
-                SelectedOrders.Items.Clear();
-                //SelectedOrders.Items.Remove(orderToRemove);
-                SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
-
-                listBox.Items.Clear();
+                ObsCollForListView.Remove(orderToRemove);
+  
+                //listBox.Items.Clear();
                 ShowOrderIDsInListBox();
-
-
-                //SelectedOrders.Items.Remove(SelectedOrders.FindResource(orderToRemove));
-                //SelectedOrders.Items.Clear();
-                //SelectedOrders.ItemsSource = ordersAsList;
-                //SelectedOrders.SelectedValue
+                
             }
 
         }
