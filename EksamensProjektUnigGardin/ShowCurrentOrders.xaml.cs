@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Controls;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace EksamensProjektUnigGardin
 {
     /// <summary>
     /// Interaction logic for ShowCurrentOrders.xaml
     /// </summary>
+    
     public partial class ShowCurrentOrders : Page
     {
         Controller controller = new Controller();
@@ -18,6 +20,11 @@ namespace EksamensProjektUnigGardin
         private List<IOrder> ordersAsList = new List<IOrder>();
         private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
         OrderRepository orderRepo = OrderRepository.GetOrderRepo();
+
+        ObservableCollection<IOrder> ObsCollForListView = new ObservableCollection<IOrder>();
+        //ObservableCollection<int> ObsCollForOrderIDs = new ObservableCollection<int>();
+
+        //ObservableCollection<int> ObsCollForListBox = new ObservableCollection<int>();
 
         public ShowCurrentOrders()
         {
@@ -37,9 +44,10 @@ namespace EksamensProjektUnigGardin
                 {
                     listBox.Items.Add(item.OrderId);
                 }
+
             });
         }
-        public void ShowOrdersInListView()
+        public void ShowSamplesInListBox()
         {
             SelectedOrders.ItemsSource = ordersAsList;
         }
@@ -52,10 +60,15 @@ namespace EksamensProjektUnigGardin
             }
 
             IOrder result = ordersAsList.Find(x => x.OrderId == tal);
-            ListOfCurrentListViewItems.Add(result);
+
             SelectedOrders.ItemsSource = null;
             SelectedOrders.Items.Clear();
-            SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
+
+            SelectedOrders.ItemsSource = ObsCollForListView;
+            ObsCollForListView.Add(result);
+
+            //SelectedOrders.Items.Clear();
+            //SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
         }
 
         public void OnOrderRegistered(object source, OrderRepository e)

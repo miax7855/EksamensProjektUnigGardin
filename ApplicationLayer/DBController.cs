@@ -111,7 +111,6 @@ namespace ApplicationLayer
             }
         }
         
-
         public void UpdateStock(Order order)
 		{
 			using (con = new SqlConnection(connectionstring))
