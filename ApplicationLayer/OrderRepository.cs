@@ -33,6 +33,7 @@ namespace ApplicationLayer
 		}
         public List<IOrder> ReturnOrdersAsList()
         {
+			orderAsList.Clear();
             foreach (KeyValuePair<int, IOrder> item in orders)
             {
                 orderAsList.Add(item.Value);

@@ -30,7 +30,7 @@ namespace EksamensProjektUnigGardin
 
         private void ShowOrderIDsInListBox()
         {
-            this.Dispatcher.Invoke(() => {
+            Dispatcher.Invoke(() => {
                 listBox.Items.Clear();
 
                 foreach (IOrder item in this.ordersAsList)
