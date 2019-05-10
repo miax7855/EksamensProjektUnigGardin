@@ -167,5 +167,46 @@ namespace ApplicationLayer
 				}
 			}
 		}
+
+		private List<string> GetSampleTypesWithOrderID(Order o)
+		{
+			List<string> sampleTypeList = new List<string>();
+			using(con = new SqlConnection(connectionstring))
+			{
+
+				SqlCommand cmd6 = new SqlCommand("spGetOrderLinesWithOrderId", con);
+
+				try
+				{
+					con.Open();
+					cmd6.CommandType = CommandType.StoredProcedure;
+					cmd6.Parameters.Add(new SqlParameter("@Orderid", o.OrderId));
+					cmd6.ExecuteNonQuery();
+				}
+				catch (SqlException e)
+				{
+					error.SaveErrorLog(e.ToString());
+				}
+
+				try
+				{
+					SqlDataReader reader = cmd6.ExecuteReader();
+
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							string sampletype = reader["Order_ID"].ToString();
+							sampleTypeList.Add(sampletype);
+						}
+					}
+				}
+				catch (SqlException e)
+				{
+					error.SaveErrorLog(e.ToString());
+				}
+			}
+			return sampleTypeList;
+		}
 	}
 }
