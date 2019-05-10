@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace EksamensProjektUnigGardin
@@ -11,6 +12,7 @@ namespace EksamensProjektUnigGardin
     /// <summary>
     /// Interaction logic for ShowCurrentOrders.xaml
     /// </summary>
+    
     public partial class ShowCurrentOrders : Page
     {
         Controller controller = new Controller();
@@ -18,28 +20,38 @@ namespace EksamensProjektUnigGardin
         private List<IOrder> ordersAsList = new List<IOrder>();
         private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
         OrderRepository orderRepo = OrderRepository.GetOrderRepo();
+        DBController databaseController = new DBController();
+
+        ObservableCollection<IOrder> ObsCollForListView = new ObservableCollection<IOrder>();
+        //ObservableCollection<int> ObsCollForOrderIDs = new ObservableCollection<int>();
+
+        //ObservableCollection<int> ObsCollForListBox = new ObservableCollection<int>();
 
         public ShowCurrentOrders()
         {
             InitializeComponent();
             iController.OrderRegistered += OnOrderRegistered;
+            iController.OrderRegistered += databaseController.OnOrderRegistered;
             controller.ImportOrder("Orders.txt", iController);
-			OrderPackagedButton.IsEnabled = false;
 
-		}
+			OrderPackagedButton.IsEnabled = false;
+            ShowOrderIDsInListBox();
+
+        }
 
         private void ShowOrderIDsInListBox()
         {
             Dispatcher.Invoke(() => {
                 listBox.Items.Clear();
 
-                foreach (IOrder item in this.ordersAsList)
+                foreach ( IOrder item in this.ordersAsList)
                 {
                     listBox.Items.Add(item.OrderId);
                 }
+
             });
         }
-        public void ShowOrdersInListView()
+        public void ShowSamplesInListBox()
         {
             SelectedOrders.ItemsSource = ordersAsList;
         }
@@ -52,10 +64,15 @@ namespace EksamensProjektUnigGardin
             }
 
             IOrder result = ordersAsList.Find(x => x.OrderId == tal);
-            ListOfCurrentListViewItems.Add(result);
+
             SelectedOrders.ItemsSource = null;
             SelectedOrders.Items.Clear();
-            SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
+
+            SelectedOrders.ItemsSource = ObsCollForListView;
+            ObsCollForListView.Add(result);
+
+            //SelectedOrders.Items.Clear();
+            //SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
         }
 
         public void OnOrderRegistered(object source, OrderRepository e)

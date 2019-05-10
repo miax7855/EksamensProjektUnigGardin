@@ -22,12 +22,12 @@ namespace ApplicationLayer
 		OrderRepository orderRepo;
 		IDictionary<int, IOrder> orders;
         List<IOrder> listOfOrders = new List<IOrder>();
-        
+
 		public void RegisterOrders(object fileNameObj)
 		{
             string fileName = (string)fileNameObj;
             string relativePath = GetFilePath(fileName);
-
+            
             FileStream fs = new FileStream(relativePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
             using (StreamReader reader = new StreamReader(fs))
@@ -37,8 +37,9 @@ namespace ApplicationLayer
                     string line = reader.ReadLine();
                     orderRepo = OrderRepository.GetOrderRepo();
                     orders = orderRepo.GetOrderDic();
+                    orderRepo.listOfOrdersToAdd.Clear();
 
-                    if (!String.IsNullOrWhiteSpace(line))
+                    while (!reader.EndOfStream)
                     {
                         orderItems = line.Split(';');
                         if (!orders.ContainsKey(Convert.ToInt32(orderItems[0])))
@@ -50,8 +51,14 @@ namespace ApplicationLayer
 
                             orderRepo.AddOrder(order);
 
-                            OnOrderRegistered();
+                            orderRepo.listOfOrdersToAdd.Add(order);
+                            
                         }
+                        line = reader.ReadLine();
+                    }
+                    if (orderRepo.listOfOrdersToAdd.Count != 0)
+                    {
+                        OnOrderRegistered();
                     }
                 }
             }

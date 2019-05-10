@@ -19,14 +19,13 @@ namespace ApplicationLayer
 		object fileNameObj = "Orders.txt";
 
 
-		public void ExportOrder(Order order)
-        {
-            dbController.SaveOrder(order);
-        }
+		//public void ExportOrder(Order order)
+  //      {
+  //          dbController.SaveOrder(order);
+  //      }
        
         public void ImportOrder(string fileName, ImportController importcontroller)
         {
-
             fileNameObj = fileName;
             RefreshOrders(fileName, importcontroller);
         }

@@ -13,7 +13,12 @@ namespace ApplicationLayer
     {
 		private Dictionary<int, IOrder> orders = new Dictionary<int, IOrder>();
         private List<IOrder> orderAsList = new List<IOrder>();
-		static private OrderRepository orderRepository;
+
+        // Lavet pga Eventargs så DB ikke kun gemmer én ad gangen
+        public List<IOrder> listOfOrdersToAdd = new List<IOrder>();
+
+
+        static private OrderRepository orderRepository;
 		public static OrderRepository GetOrderRepo()
 		{
 			if (orderRepository == null)
