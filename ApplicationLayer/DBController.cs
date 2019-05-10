@@ -13,6 +13,7 @@ namespace ApplicationLayer
 		private Controller controller = new Controller();
 		private ErrorController error = new ErrorController();
 		private SqlConnection con;
+		private OrderRepository oRepo = OrderRepository.GetOrderRepo();
 
 		private static string connectionstring =
 			"Server = den1.mssql8.gear.host; Database = uniggardin; User Id = uniggardin; Password = Iy71?B8skjQ_";
@@ -143,6 +144,7 @@ namespace ApplicationLayer
 
 		public void GetOrdersFromDatabase()
 		{
+			
 			using (con = new SqlConnection(connectionstring))
 			{
 				con.Open();
@@ -162,13 +164,16 @@ namespace ApplicationLayer
 						string city = reader["Customer_Mail"].ToString();
 						string country = reader["Customer_Mail"].ToString();
 						int phone = Convert.ToInt32(reader["Customer_Phone"].ToString());
-
+						DateTime timeStamp = Convert.ToDateTime(reader["Order_Date"].ToString());
+						List<string> sampletypelist = GetSampleTypesWithOrderID(orderId);
+						Order o = new Order(orderId, customerFirstname, customerLastName, zip, city, country, phone, customerEmail, sampletypelist, timeStamp);
+						oRepo.AddOrder(o);
 					}
 				}
 			}
 		}
 
-		private List<string> GetSampleTypesWithOrderID(Order o)
+		private List<string> GetSampleTypesWithOrderID(int orderId)
 		{
 			List<string> sampleTypeList = new List<string>();
 			using(con = new SqlConnection(connectionstring))
@@ -196,7 +201,7 @@ namespace ApplicationLayer
 					{
 						while (reader.Read())
 						{
-							string sampletype = reader["Order_ID"].ToString();
+							string sampletype = reader["Sample_ID"].ToString();
 							sampleTypeList.Add(sampletype);
 						}
 					}
