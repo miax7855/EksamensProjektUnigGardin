@@ -9,9 +9,9 @@ using Domainlayer;
 using library;
 namespace ApplicationLayer
 {
-    public class DBController
-    {
-        private Controller controller = new Controller();
+	public class DBController
+	{
+		private Controller controller = new Controller();
 		private ErrorController error = new ErrorController();
 		private SqlConnection con;
         public ImportController importController = new ImportController();
@@ -86,29 +86,30 @@ namespace ApplicationLayer
 
 					error.SaveErrorLog(e.ToString());
 				}
-            }
-        }
-        public void FinishedOrder(Order order)
-        {
-            using (SqlConnection con3 = new SqlConnection(connectionstring))
-            {
-                try
-                {
-                    con3.Open();
-                    SqlCommand cmd3 = new SqlCommand("spRemoveFinishedOrder", con3);
-                    cmd3.CommandType = CommandType.StoredProcedure;
-                    cmd3.Parameters.Add(new SqlParameter("@Order_ID", order.OrderId));
-                    cmd3.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
+			}
+		}
+		public void FinishedOrder(Order order)
+		{
+			using (SqlConnection con3 = new SqlConnection(connectionstring))
+			{
+				try
+				{
+					con3.Open();
+					SqlCommand cmd3 = new SqlCommand("spRemoveFinishedOrder", con3);
+					cmd3.CommandType = CommandType.StoredProcedure;
+					cmd3.Parameters.Add(new SqlParameter("@Order_ID", order.OrderId));
+					cmd3.ExecuteNonQuery();
+				}
+				catch (Exception e)
+				{
 
-                    error.SaveErrorLog(e.ToString());
-                }
-            }
-        }
-        
-        public void UpdateStock(Order order)
+					error.SaveErrorLog(e.ToString());
+				}
+			}
+		}
+
+
+		public void UpdateStock(Order order)
 		{
 			using (con = new SqlConnection(connectionstring))
 			{
@@ -129,12 +130,85 @@ namespace ApplicationLayer
 
 
 				}
-				catch(SqlException e)
+				catch (SqlException e)
 				{
 					error.SaveErrorLog(e.ToString());
 				}
 			}
 		}
 
-    }
+
+		public void GetOrdersFromDatabase()
+		{
+			
+			using (con = new SqlConnection(connectionstring))
+			{
+				con.Open();
+				SqlCommand cmd5 = new SqlCommand("SelectAllOrders", con);
+				cmd5.CommandType = CommandType.StoredProcedure;
+				cmd5.ExecuteNonQuery();
+
+				SqlDataReader reader = cmd5.ExecuteReader();
+				if (reader.HasRows)
+				{
+					while (reader.Read())
+					{
+						string customerEmail = reader["Customer_Mail"].ToString();
+						string customerFirstname = reader["Customer_FirstName"].ToString();
+						string customerLastName = reader["Customer_SurName"].ToString();
+						int orderId = Convert.ToInt32(reader["Order_ID"].ToString());
+						int zip = Convert.ToInt32(reader["ZIP"].ToString());
+						string city = reader["Customer_Mail"].ToString();
+						string country = reader["Customer_Mail"].ToString();
+						int phone = Convert.ToInt32(reader["Customer_Phone"].ToString());
+						DateTime timeStamp = Convert.ToDateTime(reader["Order_Date"].ToString());
+						List<string> sampletypelist = GetSampleTypesWithOrderID(orderId);
+						Order o = new Order(orderId, customerFirstname, customerLastName, zip, city, country, phone, customerEmail, sampletypelist, timeStamp);
+						oRepo.AddOrder(o);
+					}
+				}
+			}
+		}
+
+		private List<string> GetSampleTypesWithOrderID(int orderId)
+		{
+			List<string> sampleTypeList = new List<string>();
+			using(con = new SqlConnection(connectionstring))
+			{
+
+				SqlCommand cmd6 = new SqlCommand("spGetOrderLinesWithOrderId", con);
+
+				try
+				{
+					con.Open();
+					cmd6.CommandType = CommandType.StoredProcedure;
+					cmd6.Parameters.Add(new SqlParameter("@Orderid", orderId));
+					cmd6.ExecuteNonQuery();
+				}
+				catch (SqlException e)
+				{
+					error.SaveErrorLog(e.ToString());
+				}
+
+				try
+				{
+					SqlDataReader reader = cmd6.ExecuteReader();
+
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							string sampletype = reader["Sample_ID"].ToString();
+							sampleTypeList.Add(sampletype);
+						}
+					}
+				}
+				catch (SqlException e)
+				{
+					error.SaveErrorLog(e.ToString());
+				}
+			}
+			return sampleTypeList;
+		}
+	}
 }
