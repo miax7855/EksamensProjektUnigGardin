@@ -150,6 +150,7 @@ namespace ApplicationLayer
 				con.Open();
 				SqlCommand cmd5 = new SqlCommand("SelectAllOrders", con);
 				cmd5.CommandType = CommandType.StoredProcedure;
+				cmd5.ExecuteNonQuery();
 
 				SqlDataReader reader = cmd5.ExecuteReader();
 				if (reader.HasRows)
@@ -185,7 +186,7 @@ namespace ApplicationLayer
 				{
 					con.Open();
 					cmd6.CommandType = CommandType.StoredProcedure;
-					cmd6.Parameters.Add(new SqlParameter("@Orderid", o.OrderId));
+					cmd6.Parameters.Add(new SqlParameter("@Orderid", orderId));
 					cmd6.ExecuteNonQuery();
 				}
 				catch (SqlException e)
