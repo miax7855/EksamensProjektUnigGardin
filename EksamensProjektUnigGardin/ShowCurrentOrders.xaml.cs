@@ -20,6 +20,7 @@ namespace EksamensProjektUnigGardin
         private List<IOrder> ordersAsList = new List<IOrder>();
         private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
         OrderRepository orderRepo = OrderRepository.GetOrderRepo();
+        DBController databaseController = new DBController();
 
         ObservableCollection<IOrder> ObsCollForListView = new ObservableCollection<IOrder>();
         //ObservableCollection<int> ObsCollForOrderIDs = new ObservableCollection<int>();
@@ -30,17 +31,20 @@ namespace EksamensProjektUnigGardin
         {
             InitializeComponent();
             iController.OrderRegistered += OnOrderRegistered;
+            iController.OrderRegistered += databaseController.OnOrderRegistered;
             controller.ImportOrder("Orders.txt", iController);
-			OrderPackagedButton.IsEnabled = false;
 
-		}
+			OrderPackagedButton.IsEnabled = false;
+            ShowOrderIDsInListBox();
+
+        }
 
         private void ShowOrderIDsInListBox()
         {
             Dispatcher.Invoke(() => {
                 listBox.Items.Clear();
 
-                foreach (IOrder item in this.ordersAsList)
+                foreach ( IOrder item in this.ordersAsList)
                 {
                     listBox.Items.Add(item.OrderId);
                 }
