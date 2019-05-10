@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using Domainlayer;
+using library;
 namespace ApplicationLayer
 {
     public class DBController
@@ -13,63 +14,59 @@ namespace ApplicationLayer
         private Controller controller = new Controller();
 		private ErrorController error = new ErrorController();
 		private SqlConnection con;
-
+        public ImportController importController = new ImportController();
+        
         private static string connectionstring =
             "Server = den1.mssql8.gear.host; Database = uniggardin; User Id = uniggardin; Password = Iy71?B8skjQ_";
-        public void SaveOrder(Order order)
+
+        public void OnOrderRegistered(object source, OrderRepository e)
+        {
+            SaveOrder(e.listOfOrdersToAdd);
+        }
+        public void SaveOrder(List<IOrder> order)
         {
             using (con = new SqlConnection(connectionstring))
             {
-                try
-                {
+                
+                //try
+                //{
                     con.Open();
-                    SqlCommand cmd1 = new SqlCommand("spSaveOrdersS", con);
-                    cmd1.CommandType = CommandType.StoredProcedure;
-                    cmd1.Parameters.Add(new SqlParameter("@Customer_FirstName", order.FirstName));
-                    cmd1.Parameters.Add(new SqlParameter("@Customer_SurName", order.LastName));
-                    cmd1.Parameters.Add(new SqlParameter("@Country", order.Country));
-                    cmd1.Parameters.Add(new SqlParameter("@Customer_Phone", order.PhoneNumber));
-                    cmd1.Parameters.Add(new SqlParameter("@Customer_Mail", order.Email));
-                    cmd1.Parameters.Add(new SqlParameter("@ZIP", order.Zip));
-                    cmd1.Parameters.Add(new SqlParameter("@City", order.City));
-                    cmd1.Parameters.Add(new SqlParameter("@Order_Date", DateTime.Now));
-                    cmd1.Parameters.Add(new SqlParameter("@Order_Type", order.SampleType));
-					cmd1.ExecuteNonQuery();
-                }
-                catch(Exception e)
-                {
-					error.SaveErrorLog(e.ToString());
-                }
+                    foreach (IOrder item in order)
+                    {
+                        SqlCommand cmd1 = new SqlCommand("spSaveOrder", con);
+                        cmd1.CommandType = CommandType.StoredProcedure;
+                        cmd1.Parameters.Add(new SqlParameter("@Customer_FirstName", item.FirstName));
+                        cmd1.Parameters.Add(new SqlParameter("@Customer_SurName", item.LastName));
+                        cmd1.Parameters.Add(new SqlParameter("@Country", item.Country));
+                        cmd1.Parameters.Add(new SqlParameter("@Customer_Phone", item.PhoneNumber));
+                        cmd1.Parameters.Add(new SqlParameter("@Customer_Mail", item.Email));
+                        cmd1.Parameters.Add(new SqlParameter("@ZIP", item.Zip));
+                        cmd1.Parameters.Add(new SqlParameter("@City", item.City));
+                        cmd1.Parameters.Add(new SqlParameter("@Order_Date", DateTime.Now));
+
+                        cmd1.ExecuteNonQuery();
+
+                        InsertIntoOrderLines(item, con);
+                    }
+                //}
+                //catch (Exception e)
+                //{
+                //    error.SaveErrorLog(e.ToString());
+                //}
             }
         }
-        public void InsertIntoOrderLines(Order order)
+        public void InsertIntoOrderLines(IOrder order, SqlConnection con)
         {
-            using (con = new SqlConnection(connectionstring))
-            {
-                try
-                {
-                    con.Open();
-                    SqlCommand cmd2 = new SqlCommand("spAddSamplesToOrder", con);
-                    cmd2.CommandType = CommandType.StoredProcedure;
-                    cmd2.Parameters.Add(new SqlParameter("@OrderID", order.OrderId));
-                    cmd2.Parameters.Add(new SqlParameter("@SampleType1", order.SampleType[0]));
-                    cmd2.Parameters.Add(new SqlParameter("@SampleType2", order.SampleType[1]));
-                    cmd2.Parameters.Add(new SqlParameter("@SampleType3", order.SampleType[2]));
-                    cmd2.Parameters.Add(new SqlParameter("@SampleType4", order.SampleType[3]));
-                    cmd2.Parameters.Add(new SqlParameter("@SampleType5", order.SampleType[4]));
-                    cmd2.Parameters.Add(new SqlParameter("@SampleType6", order.SampleType[5]));
-                    cmd2.Parameters.Add(new SqlParameter("@SampleType7", order.SampleType[6]));
-                    cmd2.Parameters.Add(new SqlParameter("@SampleType8", order.SampleType[7]));
-                    cmd2.Parameters.Add(new SqlParameter("@SampleType9", order.SampleType[8]));
-                    cmd2.Parameters.Add(new SqlParameter("@SampleType10", order.SampleType[9]));
+            SqlCommand cmd2 = new SqlCommand("spAddSamplesToOrder", con);
+            cmd2.CommandType = CommandType.StoredProcedure;
 
-                    cmd2.ExecuteNonQuery();
-                }
-                catch (SqlException e)
-                {
-					error.SaveErrorLog(e.ToString());
-				}
+            for (int i = 0; i < order.SampleType.Count; i++)
+            {
+                int place = i + 1;
+                cmd2.Parameters.Add(new SqlParameter("@" + $"SampleType{place}", order.SampleType[i]));
+
             }
+            cmd2.ExecuteNonQuery();
         }
         public void InsertIntoStock(int Quantity)
         {
