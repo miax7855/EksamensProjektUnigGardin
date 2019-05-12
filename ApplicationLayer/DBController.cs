@@ -23,6 +23,7 @@ namespace ApplicationLayer
         {
             SaveOrder(e.listOfOrdersToAdd);
         }
+        string orderIDSaved = "";
         public void SaveOrder(List<IOrder> order)
         {
             using (con = new SqlConnection(connectionstring))
@@ -43,11 +44,23 @@ namespace ApplicationLayer
                         cmd1.Parameters.Add(new SqlParameter("@ZIP", item.Zip));
                         cmd1.Parameters.Add(new SqlParameter("@City", item.City));
                         cmd1.Parameters.Add(new SqlParameter("@Order_Date", DateTime.Now));
-
+                    
                         cmd1.ExecuteNonQuery();
 
+                        SqlDataReader reader = cmd1.ExecuteReader();
+
+                        int OrderID = 0;
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                OrderID = Convert.ToInt32(reader["Order_ID"].ToString());
+
+                            }
+                        }
                         InsertIntoOrderLines(item, con);
-                    }
+
+                }
                 //}
                 //catch (Exception e)
                 //{
@@ -59,6 +72,7 @@ namespace ApplicationLayer
         {
             SqlCommand cmd2 = new SqlCommand("spAddSamplesToOrder", con);
             cmd2.CommandType = CommandType.StoredProcedure;
+            
 
             for (int i = 0; i < order.SampleType.Count; i++)
             {
