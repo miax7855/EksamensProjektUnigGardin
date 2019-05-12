@@ -21,23 +21,24 @@ namespace Domainlayer
       
         public DateTime TimeStamp { get; set; }
 
-        public Order()
-        {
+		public Order(int orderId, string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email, List<string> sampleType) :
+			 this(orderId, firstName, lastName, zip, city, country, phoneNumber, email, sampleType, DateTime.Now)
+		{
+		}
 
-        }
-        public Order(int orderId, string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email, List<string> sampleType)
-        {
+		public Order(int orderId, string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email, List<string> sampleType, DateTime timeStamp)
+		{
 			OrderId = orderId;
-            FirstName = firstName;
-            LastName = lastName;
-            Zip = zip;
+			FirstName = firstName;
+			LastName = lastName;
+			Zip = zip;
 			City = city;
 			Country = country;
 			PhoneNumber = phoneNumber;
 			Email = email;
 			SampleType = sampleType;
-			TimeStamp = DateTime.Now;
-        }
+			TimeStamp = timeStamp;
+		}
 
 		public string PrintOrderInfo(Order o)
 		{
