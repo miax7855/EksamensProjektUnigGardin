@@ -24,6 +24,8 @@ namespace ImportControllerUnitTest
 		[TestMethod]
 		public void TestProperReadingOfSampleTypes()
 		{
+			//Interaction based Test
+			//ARRANGE
 			ImportController ic = new ImportController();
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
@@ -34,16 +36,21 @@ namespace ImportControllerUnitTest
 
 			Order o = new Order(1, "Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", testSampleType);
 
+			//ACT
 			c.RefreshOrders(fileName, ic);
 			// venter 1 sekund pga. den anden thread ikke har tilføjet data til orderRepo endnu
 			Thread.Sleep(1000);
 			IOrder o2 = or.GetOrderDic()[1];
+
+			//ASSERT
 			Assert.AreEqual(o.SampleType.ToString(), o2.SampleType.ToString());
 		}
 
 		[TestMethod]
 		public void TestProperReadingOfOrder()
 		{
+			//Interaction based Test
+			//ARRANGE
 			ImportController ic = new ImportController();
 			Controller c = new Controller();
 			string fileName = "Orders.txt";
@@ -54,15 +61,19 @@ namespace ImportControllerUnitTest
 
 			Order o = new Order(3, "Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", testSampleType);
 
+			//ACT
 			c.RefreshOrders(fileName, ic);
 			Order o2 = (Order)or.GetOrderDic()[3];
 
+			//ASSERT
 			Assert.AreEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
 		}
 
 		[TestMethod]
 		public void TestProperReadingOfOrder2()
 		{
+			//Interaction based Test
+			//ARRANGE
 			ImportController ic = new ImportController();
 			Controller c = new Controller();
 			string fileName = "Orders.txt";
@@ -74,14 +85,18 @@ namespace ImportControllerUnitTest
 
 			Order o = new Order(3, "Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", testSampleType);
 
+			//ACT
 			c.RefreshOrders(fileName, ic);
 			Order o2 = (Order)or.GetOrderDic()[3];
 
+			//ASSERT
 			Assert.AreNotEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
 		}
 		[TestMethod]
 		public void TestRefreshOrders()
 		{
+			//Interaction based Test
+			//ARRANGE
 			ImportController ic = new ImportController();
 			Controller c = new Controller();
 			string fileName = "Orders.txt";
@@ -97,7 +112,11 @@ namespace ImportControllerUnitTest
 				Writer.WriteLine("5;Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
 			}
 			Thread.Sleep(5000);
+
+			//ACT
 			int Count = or.GetOrderDic().Count();
+
+			//ASSERT
 			Assert.AreEqual(5, Count);
 		}
 		public void ClearTxt()
