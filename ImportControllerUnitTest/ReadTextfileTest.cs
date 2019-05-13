@@ -13,24 +13,25 @@ namespace ImportControllerUnitTest
 	[TestClass]
 	public class ReadTextfileTest
 	{
+		ImportController ic;
+		Controller c;
+		OrderRepository or;
+
 		[TestInitialize]
 		public void Initialize()
 		{
-			
-
+			ic = new ImportController();
+			c = new Controller();
+			or = OrderRepository.GetOrderRepo();
 		}
-		int TempInteger;
 
 		[TestMethod]
 		public void TestProperReadingOfSampleTypes()
 		{
 			//Interaction based Test
 			//ARRANGE
-			ImportController ic = new ImportController();
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
-			Controller c = new Controller();
-			OrderRepository or = OrderRepository.GetOrderRepo();
 
 			List<string> testSampleType = new List<string> { "1", "2", "3" };
 
@@ -40,7 +41,7 @@ namespace ImportControllerUnitTest
 			c.RefreshOrders(fileName, ic);
 			// venter 1 sekund pga. den anden thread ikke har tilføjet data til orderRepo endnu
 			Thread.Sleep(1000);
-			IOrder o2 = or.GetOrderDic()[1];
+			Order o2 = (Order)or.GetOrderDic()[1];
 
 			//ASSERT
 			Assert.AreEqual(o.SampleType.ToString(), o2.SampleType.ToString());
@@ -51,11 +52,8 @@ namespace ImportControllerUnitTest
 		{
 			//Interaction based Test
 			//ARRANGE
-			ImportController ic = new ImportController();
-			Controller c = new Controller();
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
-			OrderRepository or = OrderRepository.GetOrderRepo();
 
 			List<string> testSampleType = new List<string> { "U6542", "U7854" };
 
@@ -74,11 +72,8 @@ namespace ImportControllerUnitTest
 		{
 			//Interaction based Test
 			//ARRANGE
-			ImportController ic = new ImportController();
-			Controller c = new Controller();
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
-			OrderRepository or = OrderRepository.GetOrderRepo();
 
 			//dengang med et forkert testSampleType liste
 			List<string> testSampleType = new List<string> { "U6542"};
@@ -97,12 +92,10 @@ namespace ImportControllerUnitTest
 		{
 			//Interaction based Test
 			//ARRANGE
-			ImportController ic = new ImportController();
-			Controller c = new Controller();
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
 			c.RefreshOrders(fileName, ic);
-			OrderRepository or = OrderRepository.GetOrderRepo();
+
 			using (StreamWriter Writer = new StreamWriter(relativePath, true))
 			{
 				Writer.WriteLine("1;Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;1,2,3", true);

@@ -10,14 +10,19 @@ namespace ImportControllerUnitTest
 	[TestClass]
 	public class ImportControllerTest
 	{
+		ImportController ICT;
+
+		[TestInitialize]
+		public void TestInitialize()
+		{
+			ICT = new ImportController();
+		}
 		[TestMethod]
 		public void ImportReaderTest1()
 		{
 			//State based Test
 			//ARRANGE
 			string[] TestArray = { "hello", "goddag", "Nice" };
-
-			ImportController ICT = new ImportController();
 
 			//ACT
 			List<string> TestList = ICT.ConvertArrayToList(TestArray);
@@ -32,8 +37,6 @@ namespace ImportControllerUnitTest
 			//ARRANGE
 			string[] TestArray = { "hello", "goddag", "Nice" };
 
-			ImportController ICT = new ImportController();
-
 			//ACT
 			List<string> TestList = ICT.ConvertArrayToList(TestArray);
 
@@ -46,8 +49,6 @@ namespace ImportControllerUnitTest
 			//State based Test
 			//ARRANGE
 			string[] TestArray = { "hello", "goddag", "Nice" };
-
-			ImportController ICT = new ImportController();
 
 			//ACT
 			List<string> TestList = ICT.ConvertArrayToList(TestArray);
