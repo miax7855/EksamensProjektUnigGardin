@@ -15,6 +15,7 @@ namespace ApplicationLayer
 		private ErrorController error = new ErrorController();
 		private SqlConnection con;
         public ImportController importController = new ImportController();
+		private OrderRepository oRepo = OrderRepository.GetOrderRepo();
         
         private static string connectionstring =
             "Server = den1.mssql8.gear.host; Database = uniggardin; User Id = uniggardin; Password = Iy71?B8skjQ_";

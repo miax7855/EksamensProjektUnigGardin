@@ -40,6 +40,11 @@ namespace Domainlayer
 			TimeStamp = timeStamp;
 		}
 
+		public Order()
+		{
+
+		}
+
 		public string PrintOrderInfo(Order o)
 		{
 			char[] symbol = new char[] { ',', ' ' };
