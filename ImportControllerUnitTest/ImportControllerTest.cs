@@ -4,6 +4,7 @@ using ApplicationLayer;
 using EksamensProjektUnigGardin;
 using System.Collections.Generic;
 using System.Threading;
+using System.IO;
 
 namespace ImportControllerUnitTest
 {
@@ -57,5 +58,18 @@ namespace ImportControllerUnitTest
 			Assert.AreEqual(TestList[2], TestArray[2]);
 		}
 
+		[TestMethod]
+		public void testDeleteFileContent()
+		{
+			//ARRANGE
+			object fileNameObj = "TestText.txt";
+			ICT.DeleteOrderItemEvent(fileNameObj);
+			string relatvePath = ICT.GetFilePath("TestText.txt");
+
+			StreamReader reader = new StreamReader(relatvePath);
+
+			Assert.AreEqual(-1, reader.Peek());
+
+		}
 	}
 }

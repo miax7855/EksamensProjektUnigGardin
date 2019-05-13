@@ -82,6 +82,8 @@ namespace ImportControllerUnitTest
 
 			//ACT
 			c.RefreshOrders(fileName, ic);
+			//da refreshorders er en threat
+			Thread.Sleep(1000);
 			Order o2 = (Order)or.GetOrderDic()[3];
 
 			//ASSERT
