@@ -71,5 +71,19 @@ namespace ImportControllerUnitTest
 			Assert.AreEqual(-1, reader.Peek());
 
 		}
+
+		[TestMethod]
+		public void testDeleteFileContent2()
+		{
+			//ARRANGE
+			object fileNameObj = "TestText.txt";
+			ICT.DeleteOrderItemEvent(fileNameObj);
+			string relatvePath = ICT.GetFilePath("TestText.txt");
+
+			StreamReader reader = new StreamReader(relatvePath);
+
+			Assert.AreNotEqual(1, reader.Peek());
+
+		}
 	}
 }
