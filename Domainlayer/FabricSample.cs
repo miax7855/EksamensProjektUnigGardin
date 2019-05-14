@@ -8,10 +8,10 @@ namespace Domainlayer
 {
     public class FabricSample
     {
-        public int FabricSampleNumber { get; set; }
+        public string FabricSampleNumber { get; set; }
         public int Quantity { get; set; }
 
-		public FabricSample(int fabricSampleNumber, int quantity)
+		public FabricSample(string fabricSampleNumber, int quantity)
 		{
 			FabricSampleNumber = fabricSampleNumber;
 			Quantity = quantity;
