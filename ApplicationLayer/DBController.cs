@@ -211,5 +211,41 @@ namespace ApplicationLayer
 			}
 			return sampleTypeList;
 		}
+
+		public List<FabricSample> GetLowStockSampleTypes()
+		{
+			List<FabricSample> lowStockSampleTypes = new List<FabricSample>();
+
+			using(con = new SqlConnection(connectionstring))
+			{
+				SqlCommand cmd7 = new SqlCommand("spGetLowStockSampleTypes", con);
+				cmd7.CommandType = CommandType.StoredProcedure;
+				cmd7.ExecuteNonQuery();
+
+				try
+				{
+					SqlDataReader reader = cmd7.ExecuteReader();
+
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							string sampleID = reader["Sample_ID"].ToString();
+							int quantity = Convert.ToInt32(reader["Quantity"].ToString());
+							FabricSample fs = new FabricSample(sampleID, quantity);
+							lowStockSampleTypes.Add(fs);
+						}
+					}
+
+				}
+				
+				catch (SqlException e)
+				{
+					error.SaveErrorLog(e.ToString());
+				}
+
+				return lowStockSampleTypes;
+			}
+		}
 	}
 }
