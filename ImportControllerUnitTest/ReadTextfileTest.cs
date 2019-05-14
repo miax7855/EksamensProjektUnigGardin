@@ -13,81 +13,91 @@ namespace ImportControllerUnitTest
 	[TestClass]
 	public class ReadTextfileTest
 	{
+		ImportController ic;
+		Controller c;
+		OrderRepository or;
+
 		[TestInitialize]
 		public void Initialize()
 		{
-			
-
+			ic = new ImportController();
+			c = new Controller();
+			or = OrderRepository.GetOrderRepo();
 		}
-		int TempInteger;
 
 		[TestMethod]
 		public void TestProperReadingOfSampleTypes()
 		{
-			ImportController ic = new ImportController();
+			//Interaction based Test
+			//ARRANGE
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
-			Controller c = new Controller();
-			OrderRepository or = OrderRepository.GetOrderRepo();
 
 			List<string> testSampleType = new List<string> { "1", "2", "3" };
 
 			Order o = new Order(1, "Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", testSampleType);
 
+			//ACT
 			c.RefreshOrders(fileName, ic);
 			// venter 1 sekund pga. den anden thread ikke har tilføjet data til orderRepo endnu
 			Thread.Sleep(1000);
-			IOrder o2 = or.GetOrderDic()[1];
+			Order o2 = (Order)or.GetOrderDic()[1];
+
+			//ASSERT
 			Assert.AreEqual(o.SampleType.ToString(), o2.SampleType.ToString());
 		}
 
 		[TestMethod]
 		public void TestProperReadingOfOrder()
 		{
-			ImportController ic = new ImportController();
-			Controller c = new Controller();
+			//Interaction based Test
+			//ARRANGE
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
-			OrderRepository or = OrderRepository.GetOrderRepo();
 
 			List<string> testSampleType = new List<string> { "U6542", "U7854" };
 
 			Order o = new Order(3, "Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", testSampleType);
 
+			//ACT
 			c.RefreshOrders(fileName, ic);
 			Order o2 = (Order)or.GetOrderDic()[3];
 
+			//ASSERT
 			Assert.AreEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
 		}
 
 		[TestMethod]
 		public void TestProperReadingOfOrder2()
 		{
-			ImportController ic = new ImportController();
-			Controller c = new Controller();
+			//Interaction based Test
+			//ARRANGE
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
-			OrderRepository or = OrderRepository.GetOrderRepo();
 
 			//dengang med et forkert testSampleType liste
 			List<string> testSampleType = new List<string> { "U6542"};
 
 			Order o = new Order(3, "Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", testSampleType);
 
+			//ACT
 			c.RefreshOrders(fileName, ic);
+			//da refreshorders er en threat
+			Thread.Sleep(1000);
 			Order o2 = (Order)or.GetOrderDic()[3];
 
+			//ASSERT
 			Assert.AreNotEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
 		}
 		[TestMethod]
 		public void TestRefreshOrders()
 		{
-			ImportController ic = new ImportController();
-			Controller c = new Controller();
+			//Interaction based Test
+			//ARRANGE
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
 			c.RefreshOrders(fileName, ic);
-			OrderRepository or = OrderRepository.GetOrderRepo();
+
 			using (StreamWriter Writer = new StreamWriter(relativePath, true))
 			{
 				Writer.WriteLine("1;Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;1,2,3", true);
@@ -97,7 +107,11 @@ namespace ImportControllerUnitTest
 				Writer.WriteLine("5;Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
 			}
 			Thread.Sleep(5000);
+
+			//ACT
 			int Count = or.GetOrderDic().Count();
+
+			//ASSERT
 			Assert.AreEqual(5, Count);
 		}
 		public void ClearTxt()

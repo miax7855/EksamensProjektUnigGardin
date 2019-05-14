@@ -63,12 +63,12 @@ namespace ApplicationLayer
                 }
             }
         }
-        public void DeleteOrderItemEvent(object fileNameObj, IOrder io)
+        public void DeleteOrderItemEvent(object fileNameObj)
         {
             string fileName = (string)fileNameObj;
-            FileStream filestream = new FileStream(fileName, FileMode.Truncate, FileAccess.ReadWrite);
-
-            
+			string relativPath = GetFilePath(fileName);
+            FileStream filestream = new FileStream(relativPath, FileMode.Truncate, FileAccess.ReadWrite);
+			filestream.Close();
         }
 
         public void RegisterOrdersInGUI(object fileNameObj, string orderLinesToAdd)
