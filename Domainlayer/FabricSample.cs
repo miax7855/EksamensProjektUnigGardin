@@ -10,6 +10,7 @@ namespace Domainlayer
     {
         public int FabricSampleNumber { get; set; }
         public int Quantity { get; set; }
+		public string ProductName { get; set; }
 
 		public FabricSample(int fabricSampleNumber, int quantity)
 		{
