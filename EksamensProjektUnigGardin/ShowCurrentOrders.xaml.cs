@@ -13,8 +13,7 @@ namespace EksamensProjektUnigGardin
     /// Interaction logic for ShowCurrentOrders.xaml
     /// </summary>
     
-    public partial class ShowCurrentOrders : Page, IOnStockUpdatedSubscriber
-    public partial class ShowCurrentOrders : Page , ISubscribersOrderRegistered
+    public partial class ShowCurrentOrders : Page, IOnStockUpdatedSubscriber, ISubscribersOrderRegistered
     {
         Controller controller = new Controller();
 
@@ -25,10 +24,8 @@ namespace EksamensProjektUnigGardin
         public ShowCurrentOrders()
         {
             InitializeComponent();
-            iController.OrderRegistered += OnOrderRegistered;
-			// iController.OrderRegistered += databaseController.OnOrderRegistered;
+
 			controller.StockUpdated += OnStockUpdated;
-            controller.ImportOrder("Orders.txt", iController);
 
             controller.ConGetOrdersFromDataBase();
             controller.SubscribersOrderRegistered(this);

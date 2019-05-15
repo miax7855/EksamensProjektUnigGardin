@@ -18,7 +18,7 @@ namespace ApplicationLayer
         DBController dbController = new DBController();
 		private ImportController iController = new ImportController();
         private ErrorController error = new ErrorController();
-		private FabricSampleRepository fRepo = new FabricSampleRepository();
+		private FabricSampleRepository fRepo = FabricSampleRepository.GetFabricSampleRepo();
 		public bool programRunning = true;
 		object fileNameObj = "Orders.txt";
 
@@ -70,15 +70,13 @@ namespace ApplicationLayer
 		{
 			dbController.FinishedOrder(orderToRemove);
 		}
+		public void ConGetOrdersFromDataBase()
+		{
+			dbController.GetOrdersFromDatabase();
+		}
+		public OrderRepository ReturnRepository()
+		{
+			return OrderRepository.GetOrderRepo();
+		}
 	}
-
-        public void ConGetOrdersFromDataBase()
-        {
-            dbController.GetOrdersFromDatabase();
-        }
-        public OrderRepository ReturnRepository()
-        {
-            return OrderRepository.GetOrderRepo();
-        }
-    }
 }
