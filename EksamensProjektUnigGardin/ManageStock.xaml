@@ -9,7 +9,7 @@
       Title="StorageManagement">
 
     <Grid>
-        <ListView HorizontalAlignment="Left" Height="334" Margin="10,25,0,0" VerticalAlignment="Top" Width="275">
+        <ListView x:Name="AllStock" HorizontalAlignment="Left" Height="334" Margin="10,25,0,0" VerticalAlignment="Top" Width="275">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Stofprøve ID" 
@@ -26,7 +26,7 @@
         </ListView>
         <Button Content="Tilføj Stofprøve" HorizontalAlignment="Left" Margin="10,373,0,0" VerticalAlignment="Top" Width="135" Height="52" Click="Button_Click_2"/>
         <Button Content="Tilføj Udskæringer" HorizontalAlignment="Left" Margin="339,373,0,0" VerticalAlignment="Top" Width="135" Height="52" Click="Button_Click_3"/>
-        <ListView HorizontalAlignment="Left" Height="334" Margin="339,25,0,0" VerticalAlignment="Top" Width="135">
+        <ListView x:Name="LowStock" HorizontalAlignment="Left" Height="334" Margin="339,25,0,0" VerticalAlignment="Top" Width="135">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Stofprøve ID" 

@@ -216,7 +216,7 @@ namespace ApplicationLayer
 		{
 			List<FabricSample> lowStockSampleTypes = new List<FabricSample>();
 
-			using(con = new SqlConnection(connectionstring))
+			using (con = new SqlConnection(connectionstring))
 			{
 				SqlCommand cmd7 = new SqlCommand("spGetLowStockSampleTypes", con);
 				cmd7.CommandType = CommandType.StoredProcedure;
@@ -232,13 +232,14 @@ namespace ApplicationLayer
 						{
 							string sampleID = reader["Sample_ID"].ToString();
 							int quantity = Convert.ToInt32(reader["Quantity"].ToString());
-							FabricSample fs = new FabricSample(sampleID, quantity);
+							// ProductName skal tilføjes til databasen
+							FabricSample fs = new FabricSample(sampleID, quantity, productName);
 							lowStockSampleTypes.Add(fs);
 						}
 					}
 
 				}
-				
+
 				catch (SqlException e)
 				{
 					error.SaveErrorLog(e.ToString());

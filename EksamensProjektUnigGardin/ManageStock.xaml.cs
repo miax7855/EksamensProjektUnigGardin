@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ApplicationLayer;
+using library;
+
 
 namespace EksamensProjektUnigGardin
 {
@@ -20,9 +23,36 @@ namespace EksamensProjektUnigGardin
 	/// </summary>
 	public partial class ManageStock : Page
 	{
+		FabricSampleRepository FRepo = new FabricSampleRepository();
+		List<IFabricSample> fabricSamples = new List<IFabricSample>();
+
+
 		public ManageStock()
 		{
 			InitializeComponent();
+			FRepo.AddTestSamples();
+			ShowSamplesAllStock();
+			ShowLowStackSamples();
+		}
+		private void ShowSamplesAllStock()
+		{
+
+			foreach (IFabricSample item in FRepo.ReturnStock())
+			{
+				AllStock.Items.Add(item);
+			}
+		}
+		private void ShowLowStackSamples()
+		{
+			foreach (IFabricSample item in FRepo.ReturnLowStockSamples())
+			{
+				LowStock.Items.Add(item);
+			}
+		}
+		public void OnOrderRegistered(object source, FabricSampleRepository e)
+		{
+			this.fabricSamples.Clear();
+			this.fabricSamples = e.ReturnLowStockSamples();
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
