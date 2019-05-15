@@ -8,11 +8,26 @@ using library;
 
 namespace ApplicationLayer
 {
-    public class FabricSampleRepository
+    public class FabricSampleRepository : EventArgs
     {
         private List<IFabricSample> fabricSamples = new List<IFabricSample>();
+		static private FabricSampleRepository fabricSampleRepository;
 
-        public void AddFabricSample(IFabricSample sample)
+		public static FabricSampleRepository GetFabricSampleRepo()
+		{
+			if (fabricSampleRepository == null)
+			{
+				fabricSampleRepository = new FabricSampleRepository();
+
+				return fabricSampleRepository;
+			}
+			else
+			{
+				return fabricSampleRepository;
+			}
+		}
+
+		public void AddFabricSample(IFabricSample sample)
         {
             fabricSamples.Add(sample);
         }

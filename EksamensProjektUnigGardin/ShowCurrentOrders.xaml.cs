@@ -13,7 +13,7 @@ namespace EksamensProjektUnigGardin
     /// Interaction logic for ShowCurrentOrders.xaml
     /// </summary>
     
-    public partial class ShowCurrentOrders : Page
+    public partial class ShowCurrentOrders : Page, IOnStockUpdatedSubscriber
     {
         Controller controller = new Controller();
         ImportController iController = new ImportController();
@@ -31,7 +31,8 @@ namespace EksamensProjektUnigGardin
         {
             InitializeComponent();
             iController.OrderRegistered += OnOrderRegistered;
-           // iController.OrderRegistered += databaseController.OnOrderRegistered;
+			// iController.OrderRegistered += databaseController.OnOrderRegistered;
+			controller.StockUpdated += OnStockUpdated;
             controller.ImportOrder("Orders.txt", iController);
 
 			OrderPackagedButton.IsEnabled = false;
@@ -120,7 +121,11 @@ namespace EksamensProjektUnigGardin
 					ListOfCurrentListViewItems.Remove(orderToRemove);
 
 					orderRepo.RemoveOrder(orderToRemove);
+					
 					ordersAsList = orderRepo.ReturnOrdersAsList();
+
+					controller.OrderPacked(this, orderToRemove);
+					controller.DeleteOrderFromDatabase(orderToRemove);
 
 					SelectedOrders.ItemsSource = null;
 					SelectedOrders.Items.Clear();
@@ -139,7 +144,7 @@ namespace EksamensProjektUnigGardin
 			}
 
 			OrderPackagedButton.IsEnabled = false;
-
+			
 		}
 
 		private bool ShowPopUpBox()
@@ -169,6 +174,18 @@ namespace EksamensProjektUnigGardin
 		private void Button_Click_1(object sender, RoutedEventArgs e)
 		{
 			Application.Current.MainWindow.Content = new ManageStock();
+		}
+
+		public void OnStockUpdated(object sender, EventArgs e)
+		{
+			FabricSampleRepository e2 = (FabricSampleRepository)e;
+			MessageBoxResult result = MessageBox.Show("Der er Stofprøver under en kritisk mængde", "Hovsa", MessageBoxButton.OK, MessageBoxImage.Warning);
+			switch (result)
+			{
+				case MessageBoxResult.OK:
+					MessageBox.Show(e2.ReturnLowStockSamples().ToString());
+					break;
+			}
 		}
 	}
 }
