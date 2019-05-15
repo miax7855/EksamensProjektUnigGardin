@@ -41,7 +41,7 @@ namespace EksamensProjektUnigGardin
 
         private void ShowOrderIDsInListBox()
         {
-            Dispatcher.Invoke(() => {
+           Dispatcher.Invoke(() => {
                 listBox.Items.Clear();
 
                 foreach ( IOrder item in this.ordersAsList)
@@ -49,7 +49,7 @@ namespace EksamensProjektUnigGardin
                     listBox.Items.Add(item.OrderId);
                 }
 
-            });
+           });
         }
         public void ShowSamplesInListBox()
         {
