@@ -5,11 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EksamensProjektUnigGardin"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="500" d:DesignWidth="900"
       Title="ShowCurrentOrders">
 
     <Grid Margin="0,0,-192,-0.4">
-        <ListBox Name ="listBox" HorizontalAlignment="Left" Height="385" VerticalAlignment="Top" Width="112" SelectionChanged="ListBox_SelectionChanged" RenderTransformOrigin="0.5,0.5" Margin="3,0,0,0">
+        <ListBox Name ="listBox" HorizontalAlignment="Left" Height="385" VerticalAlignment="Top" Width="112" SelectionChanged="ListBox_SelectionChanged" RenderTransformOrigin="0.5,0.5" Margin="2,22,0,0">
             <ListBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -19,7 +19,7 @@
                 </TransformGroup>
             </ListBox.RenderTransform>
         </ListBox>
-        <ListView x:Name="SelectedOrders" HorizontalAlignment="Left" Height="168" Margin="116,10,0,0" VerticalAlignment="Top" Width="760" SelectionChanged="SelectedOrders_SelectionChanged">
+        <ListView x:Name="SelectedOrders" HorizontalAlignment="Left" Height="168" Margin="118,27,0,0" VerticalAlignment="Top" Width="760" SelectionChanged="SelectedOrders_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="OrderID" 
@@ -53,8 +53,12 @@
             </ListView.View>
             <GroupBox Header="GroupBox" Height="100" Width="100"/>
         </ListView>
+        <TextBox x:Name="InsertOrderTextBox" HorizontalAlignment="Left" Height="88" Margin="10,362,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="386"/>
+        <Button x:Name="InsertOrderButton" Content="Button" HorizontalAlignment="Left" Margin="321,228,0,0" VerticalAlignment="Top" Width="75" Click="InsertOrderButton_Click"/>
         <ListBox x:Name="SamplesListBox" HorizontalAlignment="Left" Height="204" Margin="456,212,0,0" VerticalAlignment="Top" Width="131" SelectionChanged="SamplesListBox_SelectionChanged"/>
         <Button x:Name="OrderPackagedButton" Content="Ordrer Pakket" HorizontalAlignment="Left" Margin="699,223,0,0" VerticalAlignment="Top" Width="75" Click="OrderPackagedButton_Click"/>
+        <Button Content="Ordrer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="63" Click="Button_Click"/>
+        <Button Content="Lager styring" HorizontalAlignment="Left" Margin="63,0,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
 
     </Grid>
 </Page>

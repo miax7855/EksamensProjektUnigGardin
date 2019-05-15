@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IFabricSample.cs" />
     <Compile Include="IOrder.cs" />
     <Compile Include="ISubscribersOrderRegistered.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
