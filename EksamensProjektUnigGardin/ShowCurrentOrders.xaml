@@ -53,8 +53,6 @@
             </ListView.View>
             <GroupBox Header="GroupBox" Height="100" Width="100"/>
         </ListView>
-        <TextBox x:Name="InsertOrderTextBox" HorizontalAlignment="Left" Height="88" Margin="10,352,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="386"/>
-        <Button x:Name="InsertOrderButton" Content="Button" HorizontalAlignment="Left" Margin="321,228,0,0" VerticalAlignment="Top" Width="75" Click="InsertOrderButton_Click"/>
         <ListBox x:Name="SamplesListBox" HorizontalAlignment="Left" Height="204" Margin="456,212,0,0" VerticalAlignment="Top" Width="131" SelectionChanged="SamplesListBox_SelectionChanged"/>
         <Button x:Name="OrderPackagedButton" Content="Ordrer Pakket" HorizontalAlignment="Left" Margin="699,223,0,0" VerticalAlignment="Top" Width="75" Click="OrderPackagedButton_Click"/>
 

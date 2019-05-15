@@ -16,8 +16,7 @@ namespace library
         string Country { get; set; }
         int PhoneNumber { get; set; }
         string Email { get; set; }
-        List<string> SampleType { get; set; }
         DateTime TimeStamp { get; set; }
-
+        List<string> SampleType { get; set; }
     }
 }
