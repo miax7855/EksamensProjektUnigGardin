@@ -14,7 +14,6 @@ namespace ApplicationLayer
 		private Dictionary<int, IOrder> orders = new Dictionary<int, IOrder>();
         private List<IOrder> orderAsList = new List<IOrder>();
 
-        // Lavet pga Eventargs så DB ikke kun gemmer én ad gangen
         public List<IOrder> listOfOrdersToAdd = new List<IOrder>();
 
 
@@ -38,7 +37,7 @@ namespace ApplicationLayer
 		}
         public List<IOrder> ReturnOrdersAsList()
         {
-			orderAsList.Clear();
+            orderAsList.Clear();
             foreach (KeyValuePair<int, IOrder> item in orders)
             {
                 orderAsList.Add(item.Value);
@@ -49,11 +48,14 @@ namespace ApplicationLayer
         {
 			orders.Add(o.OrderId, o);
         }
+        public void AddOrder(int Key, IOrder o)
+        {
+            orders.Add(Key, o);
+        }
         public void RemoveOrder(IOrder o)
         {
 			orders.Remove(o.OrderId);
         }
         
-
     }
 }

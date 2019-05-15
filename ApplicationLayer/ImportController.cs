@@ -18,57 +18,82 @@ namespace ApplicationLayer
 
         string[] orderItems;
 		string[] sampleTypeArray;
+        string[] dateTimeArray;
 		List<string> sampleTypeList;
-		OrderRepository orderRepo;
+        
+        OrderRepository orderRepo;
 		IDictionary<int, IOrder> orders;
-        List<IOrder> listOfOrders = new List<IOrder>();
 
 		public void RegisterOrders(object fileNameObj)
 		{
             string fileName = (string)fileNameObj;
             string relativePath = GetFilePath(fileName);
-            
+
+            orderRepo = OrderRepository.GetOrderRepo();
+
             FileStream fs = new FileStream(relativePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
             using (StreamReader reader = new StreamReader(fs))
             {
                 while (true)
                 {
-                    string line = reader.ReadLine();
-                    orderRepo = OrderRepository.GetOrderRepo();
-                    orders = orderRepo.GetOrderDic();
-                    orderRepo.listOfOrdersToAdd.Clear();
+                    string line = string.Empty;
 
-                    while (!reader.EndOfStream)
+                    orderRepo.listOfOrdersToAdd.Clear();
+                    
+                    while ((line = reader.ReadLine()) != null)
                     {
                         orderItems = line.Split(';');
-                        if (!orders.ContainsKey(Convert.ToInt32(orderItems[0])))
-                        {
-                            sampleTypeArray = orderItems[8].Split(',');
-                            sampleTypeList = ConvertArrayToList(sampleTypeArray);
-                            Order order = new Order(Convert.ToInt32(orderItems[0]), orderItems[1], orderItems[2], Convert.ToInt32(orderItems[3]), 
-                                orderItems[4], orderItems[5], Convert.ToInt32(orderItems[6]), orderItems[7], sampleTypeList);
 
-                            orderRepo.AddOrder(order);
+                        dateTimeArray = orderItems[7].Split(',');
+                        sampleTypeArray = orderItems[8].Split(',');
+                        sampleTypeList = ConvertArrayToList(sampleTypeArray);
+                        
+                        DateTime timeStamp = new DateTime  (Convert.ToInt32(dateTimeArray[0]), Convert.ToInt32(dateTimeArray[1]), 
+                                                            Convert.ToInt32(dateTimeArray[2]), Convert.ToInt32(dateTimeArray[3]), 
+                                                            Convert.ToInt32(dateTimeArray[4]), Convert.ToInt32(dateTimeArray[5]));
 
-                            orderRepo.listOfOrdersToAdd.Add(order);
-                            
-                        }
-                        line = reader.ReadLine();
+                        Order order = new Order(orderItems[0], orderItems[1], Convert.ToInt32(orderItems[2]), orderItems[3], 
+                                                orderItems[4], Convert.ToInt32(orderItems[5]), orderItems[6], timeStamp, sampleTypeList);
+
+                        orderRepo.listOfOrdersToAdd.Add(order);
                     }
                     if (orderRepo.listOfOrdersToAdd.Count != 0)
                     {
+                        //List<IOrder> lst = orderRepo.listOfOrdersToAdd;
+                        foreach (IOrder item in orderRepo.listOfOrdersToAdd.ToList())
+                        {
+                            foreach (IOrder thing in orderRepo.ReturnOrdersAsList())
+                            {
+                                if (item.Email.Equals(thing.Email) && item.TimeStamp == thing.TimeStamp)
+                                {
+                                    orderRepo.listOfOrdersToAdd.Remove(item);
+                                }
+                            }
+                            //orderRepo.listOfOrdersToAdd.Remove(orderRepo.ReturnOrdersAsList().Find(x => x.Email.Equals(item.Email) && x.TimeStamp == item.TimeStamp));
+                        }
+
+                        foreach (IOrder item in orderRepo.listOfOrdersToAdd)
+                        {
+                            if (orderRepo.GetOrderDic().Count == 0)
+                            {
+                                orderRepo.AddOrder(0, item);
+                            }
+                            else
+                            {
+                                orderRepo.AddOrder(orderRepo.GetOrderDic().Keys.Last() + 1, item);
+                            }
+                        }
                         OnOrderRegistered();
                     }
                 }
             }
         }
-        public void DeleteOrderItemEvent(object fileNameObj)
+        
+        public void DeleteOrderItemEvent(object fileNameObj, IOrder io)
         {
             string fileName = (string)fileNameObj;
-			string relativPath = GetFilePath(fileName);
-            FileStream filestream = new FileStream(relativPath, FileMode.Truncate, FileAccess.ReadWrite);
-			filestream.Close();
+            FileStream filestream = new FileStream(fileName, FileMode.Truncate, FileAccess.ReadWrite);
         }
 
         public void RegisterOrdersInGUI(object fileNameObj, string orderLinesToAdd)

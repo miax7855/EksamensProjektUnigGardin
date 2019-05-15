@@ -9,7 +9,7 @@ namespace Domainlayer
 {
     public class Order : IOrder
     {
-		public int OrderId { get; set; }
+        public int OrderId { get; set; }
 		public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Zip { get; set; }
@@ -17,18 +17,17 @@ namespace Domainlayer
         public string Country { get; set; }
         public int PhoneNumber { get; set; }
         public string Email { get; set; }
-        public List<string> SampleType { get; set; }
-      
         public DateTime TimeStamp { get; set; }
+        public List<string> SampleType { get; set; }
 
-		public Order(int orderId, string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email, List<string> sampleType) :
-			 this(orderId, firstName, lastName, zip, city, country, phoneNumber, email, sampleType, DateTime.Now)
+		public Order(int orderId, string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email, DateTime timeStamp, List<string> sampleType) :
+			 this(firstName, lastName, zip, city, country, phoneNumber, email, timeStamp, sampleType)
 		{
+            OrderId = orderId;
 		}
 
-		public Order(int orderId, string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email, List<string> sampleType, DateTime timeStamp)
+		public Order(string firstName, string lastName, int zip, string city, string country, int phoneNumber, string email, DateTime timeStamp, List<string> sampleType)
 		{
-			OrderId = orderId;
 			FirstName = firstName;
 			LastName = lastName;
 			Zip = zip;
@@ -37,7 +36,7 @@ namespace Domainlayer
 			PhoneNumber = phoneNumber;
 			Email = email;
 			SampleType = sampleType;
-			TimeStamp = timeStamp;
+            TimeStamp = timeStamp;
 		}
 
 		public Order()

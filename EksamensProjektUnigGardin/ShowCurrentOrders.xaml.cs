@@ -13,34 +13,28 @@ namespace EksamensProjektUnigGardin
     /// Interaction logic for ShowCurrentOrders.xaml
     /// </summary>
     
-    public partial class ShowCurrentOrders : Page
+    public partial class ShowCurrentOrders : Page , ISubscribersOrderRegistered
     {
         Controller controller = new Controller();
-        ImportController iController = new ImportController();
+
         private List<IOrder> ordersAsList = new List<IOrder>();
         private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
-        OrderRepository orderRepo = OrderRepository.GetOrderRepo();
-        DBController databaseController = new DBController();
-
         ObservableCollection<IOrder> ObsCollForListView = new ObservableCollection<IOrder>();
-        //ObservableCollection<int> ObsCollForOrderIDs = new ObservableCollection<int>();
-
-        //ObservableCollection<int> ObsCollForListBox = new ObservableCollection<int>();
 
         public ShowCurrentOrders()
         {
             InitializeComponent();
-            iController.OrderRegistered += OnOrderRegistered;
-           // iController.OrderRegistered += databaseController.OnOrderRegistered;
-            controller.ImportOrder("Orders.txt", iController);
 
+            controller.ConGetOrdersFromDataBase();
+            controller.SubscribersOrderRegistered(this);
+            controller.ImportOrder("Orders.txt");
 			OrderPackagedButton.IsEnabled = false;
             ShowOrderIDsInListBox();
-
         }
 
         private void ShowOrderIDsInListBox()
         {
+            //der er noget gaalt den kører foreach loopen forfra hvergang den har været igennem én gang
             Dispatcher.Invoke(() => {
                 listBox.Items.Clear();
 
@@ -57,38 +51,29 @@ namespace EksamensProjektUnigGardin
         }
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int tal = 0;
+            int OrderIdSelected = 0;
             foreach (System.Int32 item in e.AddedItems)
             {
-                tal = item;
+                OrderIdSelected = item;
             }
 
-            IOrder result = ordersAsList.Find(x => x.OrderId == tal);
+            IOrder result = ordersAsList.Find(x => x.OrderId == OrderIdSelected);
 
             SelectedOrders.ItemsSource = null;
             SelectedOrders.Items.Clear();
 
             SelectedOrders.ItemsSource = ObsCollForListView;
             ObsCollForListView.Add(result);
-
-            //SelectedOrders.Items.Clear();
-            //SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
         }
 
-        public void OnOrderRegistered(object source, OrderRepository e)
+        public void OnOrderRegistered(object source, EventArgs e)
         {
             this.ordersAsList.Clear();
-            this.ordersAsList = e.ReturnOrdersAsList();
+            OrderRepository o = (OrderRepository)e;
+            this.ordersAsList = o.ReturnOrdersAsList();
             ShowOrderIDsInListBox();
         }
-
-        private void InsertOrderButton_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            if (InsertOrderTextBox.Text != null)
-            {
-                controller.ImportOrder(iController.GetFilePath("Orders.txt"), iController, InsertOrderTextBox.Text);
-            }
-        }
+        
 
         private void SelectedOrders_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -119,27 +104,20 @@ namespace EksamensProjektUnigGardin
 					IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
 					ListOfCurrentListViewItems.Remove(orderToRemove);
 
-					orderRepo.RemoveOrder(orderToRemove);
-					ordersAsList = orderRepo.ReturnOrdersAsList();
+					controller.ReturnRepository().RemoveOrder(orderToRemove);
+
+					ordersAsList = controller.ReturnRepository().ReturnOrdersAsList();
 
 					SelectedOrders.ItemsSource = null;
 					SelectedOrders.Items.Clear();
-					//SelectedOrders.Items.Remove(orderToRemove);
 					SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
 
 					listBox.Items.Clear();
 					ShowOrderIDsInListBox();
-
-
-					//SelectedOrders.Items.Remove(SelectedOrders.FindResource(orderToRemove));
-					//SelectedOrders.Items.Clear();
-					//SelectedOrders.ItemsSource = ordersAsList;
-					//SelectedOrders.SelectedValue
 				}
 			}
 
 			OrderPackagedButton.IsEnabled = false;
-
 		}
 
 		private bool ShowPopUpBox()
