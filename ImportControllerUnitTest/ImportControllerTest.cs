@@ -59,7 +59,7 @@ namespace ImportControllerUnitTest
 		}
 
 		[TestMethod]
-		public void testDeleteFileContent()
+		public void TestDeleteFileContent()
 		{
 			//ARRANGE
 			object fileNameObj = "TestText.txt";
@@ -73,7 +73,7 @@ namespace ImportControllerUnitTest
 		}
 
 		[TestMethod]
-		public void testDeleteFileContent2()
+		public void TestDeleteFileContent2()
 		{
 			//ARRANGE
 			object fileNameObj = "TestText.txt";
