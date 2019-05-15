@@ -11,7 +11,6 @@ namespace ApplicationLayer
 {
 	public class DBController
 	{
-		private Controller controller = new Controller();
 		private ErrorController error = new ErrorController();
 		private SqlConnection con;
         public ImportController importController = new ImportController();
@@ -25,13 +24,14 @@ namespace ApplicationLayer
         {
             SaveOrder(e.listOfOrdersToAdd);
         }
+
         public void SaveOrder(List<IOrder> order)
         {
             using (con = new SqlConnection(connectionstring))
             {
-                
+
                 //try
-                //{
+                {
                     con.Open();
                     foreach (IOrder item in order)
                     {
@@ -44,32 +44,44 @@ namespace ApplicationLayer
                         cmd1.Parameters.Add(new SqlParameter("@Customer_Mail", item.Email));
                         cmd1.Parameters.Add(new SqlParameter("@ZIP", item.Zip));
                         cmd1.Parameters.Add(new SqlParameter("@City", item.City));
-                        cmd1.Parameters.Add(new SqlParameter("@Order_Date", DateTime.Now));
+                        cmd1.Parameters.Add(new SqlParameter("@Order_Date", item.TimeStamp));
+
+                        for (int i = 0; i < item.SampleType.Count; i++)
+                        {
+                            int place = i + 1;
+                            cmd1.Parameters.Add(new SqlParameter("@" + $"SampleType{place}", item.SampleType[i]));
+                        }
 
                         cmd1.ExecuteNonQuery();
-
-                        InsertIntoOrderLines(item, con);
                     }
-                //}
+                }
                 //catch (Exception e)
                 //{
                 //    error.SaveErrorLog(e.ToString());
                 //}
             }
         }
-        public void InsertIntoOrderLines(IOrder order, SqlConnection con)
-        {
-            SqlCommand cmd2 = new SqlCommand("spAddSamplesToOrder", con);
-            cmd2.CommandType = CommandType.StoredProcedure;
+        //public void InsertIntoOrderLines(IOrder order)
+        //{
+        //    SqlCommand cmd2 = new SqlCommand("spAddSamplesToOrder", con);
+        //    cmd2.CommandType = CommandType.StoredProcedure;
 
-            for (int i = 0; i < order.SampleType.Count; i++)
-            {
-                int place = i + 1;
-                cmd2.Parameters.Add(new SqlParameter("@" + $"SampleType{place}", order.SampleType[i]));
 
-            }
-            cmd2.ExecuteNonQuery();
-        }
+
+
+        //    using (con = new SqlConnection(connectionstring)
+        //    {
+
+        //    }
+
+        //    for (int i = 0; i < order.SampleType.Count; i++)
+        //    {
+        //        int place = i + 1;
+        //        cmd2.Parameters.Add(new SqlParameter("@" + $"SampleType{place}", order.SampleType[i]));
+        //    }
+        //    cmd2.ExecuteNonQuery();
+
+        //}
         public void InsertIntoStock(int Quantity)
         {
             using (con = new SqlConnection(connectionstring))
@@ -104,7 +116,6 @@ namespace ApplicationLayer
 				}
 				catch (Exception e)
 				{
-
 					error.SaveErrorLog(e.ToString());
 				}
 			}
@@ -118,8 +129,7 @@ namespace ApplicationLayer
 				try
 				{
 					con.Open();
-
-
+                    
 					foreach (string s in order.SampleType)
 					{
 						SqlCommand cmd4 = new SqlCommand("spUpdateStock", con);
@@ -138,38 +148,37 @@ namespace ApplicationLayer
 				}
 			}
 		}
-
-
+        
 		public void GetOrdersFromDatabase()
 		{
-			
 			using (con = new SqlConnection(connectionstring))
 			{
 				con.Open();
 				SqlCommand cmd5 = new SqlCommand("SelectAllOrders", con);
 				cmd5.CommandType = CommandType.StoredProcedure;
-				cmd5.ExecuteNonQuery();
-
-				SqlDataReader reader = cmd5.ExecuteReader();
-				if (reader.HasRows)
-				{
-					while (reader.Read())
-					{
-						string customerEmail = reader["Customer_Mail"].ToString();
-						string customerFirstname = reader["Customer_FirstName"].ToString();
-						string customerLastName = reader["Customer_SurName"].ToString();
-						int orderId = Convert.ToInt32(reader["Order_ID"].ToString());
-						int zip = Convert.ToInt32(reader["ZIP"].ToString());
-						string city = reader["Customer_Mail"].ToString();
-						string country = reader["Customer_Mail"].ToString();
-						int phone = Convert.ToInt32(reader["Customer_Phone"].ToString());
-						DateTime timeStamp = Convert.ToDateTime(reader["Order_Date"].ToString());
-						List<string> sampletypelist = GetSampleTypesWithOrderID(orderId);
-						Order o = new Order(orderId, customerFirstname, customerLastName, zip, city, country, phone, customerEmail, sampletypelist, timeStamp);
-						oRepo.AddOrder(o);
-					}
-				}
-			}
+				
+                using (SqlDataReader reader = cmd5.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                             string customerEmail = reader["Customer_Mail"].ToString();
+                             string customerFirstname = reader["Customer_FirstName"].ToString();
+                             string customerLastName = reader["Customer_SurName"].ToString();
+                             int orderId = Convert.ToInt32(reader["Order_ID"].ToString());
+                             int zip = Convert.ToInt32(reader["ZIP"].ToString());
+                             string city = reader["Customer_Mail"].ToString();
+                             string country = reader["Customer_Mail"].ToString();
+                             int phone = Convert.ToInt32(reader["Customer_Phone"].ToString());
+                             DateTime timeStamp = Convert.ToDateTime(reader["Order_Date"].ToString());
+                             List<string> sampletypelist = GetSampleTypesWithOrderID(orderId);
+                              oRepo.AddOrder(new Order(orderId, customerFirstname, customerLastName, zip, city, country, phone, customerEmail, timeStamp, sampletypelist));
+                            
+                        }
+                    }
+                }
+            }
 		}
 
 		private List<string> GetSampleTypesWithOrderID(int orderId)

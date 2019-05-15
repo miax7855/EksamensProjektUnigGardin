@@ -32,12 +32,12 @@ namespace ApplicationLayer
 			//{
 			//	Console.WriteLine("an order");
 			//	Console.WriteLine(o.PrintOrderInfo(o));
-			//}
-			List<string> sampletype = new List<string> { "U4000", "U4505", "U9805" };
-			Order o = new Order(1, "julian", "petersen", 5246, "slesvig", "deutschland", 548765, "julian@fkdfijf.com", sampletype);
-			DBController dbcon = new DBController();
+			////}
+			//List<string> sampletype = new List<string> { "U4000", "U4505", "U9805" };
+			//Order o = new Order(1, "julian", "petersen", 5246, "slesvig", "deutschland", 548765, "julian@fkdfijf.com", sampletype);
+			//DBController dbcon = new DBController();
 
-			dbcon.UpdateStock(o);
+			//dbcon.UpdateStock(o);
 		}
         public void OnOrderRegistered(object source, EventArgs e)
         {

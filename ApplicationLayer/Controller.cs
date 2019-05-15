@@ -15,7 +15,7 @@ namespace ApplicationLayer
     {
 		public event EventHandler<FabricSampleRepository> StockUpdated;
         private OrderRepository oRepo;
-        private DBController dbController;
+        DBController dbController = new DBController();
 		private ImportController iController = new ImportController();
         private ErrorController error = new ErrorController();
 		private FabricSampleRepository fRepo = new FabricSampleRepository();
@@ -27,22 +27,27 @@ namespace ApplicationLayer
   //      {
   //          dbController.SaveOrder(order);
   //      }
-       
-        public void ImportOrder(string fileName, ImportController importcontroller)
+
+        public void SubscribersOrderRegistered(ISubscribersOrderRegistered subscriber)
+        {
+            iController.OrderRegistered += subscriber.OnOrderRegistered;
+            iController.OrderRegistered += dbController.OnOrderRegistered;
+        }
+        public void ImportOrder(string fileName)
         {
             fileNameObj = fileName;
-            RefreshOrders(fileName, importcontroller);
+            RefreshOrders(fileName);
         }
         public void ImportOrder(string fileName, ImportController importcontroller, string orderToAdd)
         {
             fileNameObj = fileName;
             importcontroller.RegisterOrdersInGUI(fileNameObj, orderToAdd);
         }
-        public void RefreshOrders(string fileName, ImportController importcontroller)
+        public void RefreshOrders(string fileName)
         {
             fileNameObj = fileName;
 
-            Thread thread = new Thread(importcontroller.RegisterOrders);
+            Thread thread = new Thread(iController.RegisterOrders);
             thread.IsBackground = true;
             thread.Start(fileNameObj);
         }
@@ -66,4 +71,14 @@ namespace ApplicationLayer
 			dbController.FinishedOrder(orderToRemove);
 		}
 	}
+
+        public void ConGetOrdersFromDataBase()
+        {
+            dbController.GetOrdersFromDatabase();
+        }
+        public OrderRepository ReturnRepository()
+        {
+            return OrderRepository.GetOrderRepo();
+        }
+    }
 }

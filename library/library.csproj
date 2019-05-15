@@ -44,6 +44,7 @@
     <Compile Include="IFabricSample.cs" />
     <Compile Include="IOnStockUpdatedSubscriber.cs" />
     <Compile Include="IOrder.cs" />
+    <Compile Include="ISubscribersOrderRegistered.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
