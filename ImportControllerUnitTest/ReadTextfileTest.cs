@@ -35,10 +35,10 @@ namespace ImportControllerUnitTest
 
 			List<string> testSampleType = new List<string> { "1", "2", "3" };
 
-			Order o = new Order(1, "Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", testSampleType);
+			Order o = new Order("Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", testSampleType);
 
 			//ACT
-			c.RefreshOrders(fileName, ic);
+			c.RefreshOrders(fileName);
 			// venter 1 sekund pga. den anden thread ikke har tilføjet data til orderRepo endnu
 			Thread.Sleep(1000);
 			Order o2 = (Order)or.GetOrderDic()[1];

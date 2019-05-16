@@ -13,7 +13,7 @@ namespace EksamensProjektUnigGardin
     /// Interaction logic for ShowCurrentOrders.xaml
     /// </summary>
     
-    public partial class ShowCurrentOrders : Page , ISubscribersOrderRegistered
+    public partial class ShowCurrentOrders : Page, IOnStockUpdatedSubscriber, ISubscribersOrderRegistered
     {
         Controller controller = new Controller();
 
@@ -24,6 +24,8 @@ namespace EksamensProjektUnigGardin
         public ShowCurrentOrders()
         {
             InitializeComponent();
+
+			controller.StockUpdated += OnStockUpdated;
 
             controller.ConGetOrdersFromDataBase();
             controller.SubscribersOrderRegistered(this);
@@ -43,7 +45,7 @@ namespace EksamensProjektUnigGardin
                     listBox.Items.Add(item.OrderId);
                 }
 
-            });
+           });
         }
         public void ShowSamplesInListBox()
         {
@@ -108,6 +110,9 @@ namespace EksamensProjektUnigGardin
 
 					ordersAsList = controller.ReturnRepository().ReturnOrdersAsList();
 
+					controller.OrderPacked(this, orderToRemove);
+					controller.DeleteOrderFromDatabase(orderToRemove);
+
 					SelectedOrders.ItemsSource = null;
 					SelectedOrders.Items.Clear();
 					SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
@@ -118,6 +123,7 @@ namespace EksamensProjektUnigGardin
 			}
 
 			OrderPackagedButton.IsEnabled = false;
+
 		}
 
 		private bool ShowPopUpBox()
@@ -147,6 +153,18 @@ namespace EksamensProjektUnigGardin
 		private void Button_Click_1(object sender, RoutedEventArgs e)
 		{
 			Application.Current.MainWindow.Content = new ManageStock();
+		}
+
+		public void OnStockUpdated(object sender, EventArgs e)
+		{
+			FabricSampleRepository e2 = (FabricSampleRepository)e;
+			MessageBoxResult result = MessageBox.Show("Der er Stofprøver under en kritisk mængde", "Hovsa", MessageBoxButton.OK, MessageBoxImage.Warning);
+			switch (result)
+			{
+				case MessageBoxResult.OK:
+					MessageBox.Show(e2.ReturnLowStockSamples().ToString());
+					break;
+			}
 		}
 	}
 }
