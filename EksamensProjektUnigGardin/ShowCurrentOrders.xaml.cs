@@ -18,7 +18,7 @@ namespace EksamensProjektUnigGardin
         Controller controller = new Controller();
 
         private List<IOrder> ordersAsList = new List<IOrder>();
-        private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
+        //private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
         ObservableCollection<IOrder> ObsCollForListView = new ObservableCollection<IOrder>();
 
         public ShowCurrentOrders()
@@ -59,14 +59,16 @@ namespace EksamensProjektUnigGardin
             {
                 OrderIdSelected = item;
             }
-
+            
             IOrder result = ordersAsList.Find(x => x.OrderId == OrderIdSelected);
+            if (!ObsCollForListView.Contains(result))
+            {
+                SelectedOrders.ItemsSource = null;
+                SelectedOrders.Items.Clear();
+                SelectedOrders.ItemsSource = ObsCollForListView;
 
-            SelectedOrders.ItemsSource = null;
-            SelectedOrders.Items.Clear();
-
-            SelectedOrders.ItemsSource = ObsCollForListView;
-            ObsCollForListView.Add(result);
+                ObsCollForListView.Add(result);
+            }
         }
 
         public void OnOrderRegistered(object source, EventArgs e)
@@ -103,20 +105,15 @@ namespace EksamensProjektUnigGardin
 			{
 				if (SelectedOrders.HasItems)
 				{
-
 					IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
-					ListOfCurrentListViewItems.Remove(orderToRemove);
+                    ObsCollForListView.Remove(orderToRemove);
 
 					controller.ReturnRepository().RemoveOrder(orderToRemove);
 
-					ordersAsList = controller.ReturnRepository().ReturnOrdersAsList();
+                    ordersAsList = controller.ReturnRepository().ReturnOrdersAsList();
 
-					controller.OrderPacked(this, orderToRemove);
+                    controller.OrderPacked(this, orderToRemove);
 					controller.DeleteOrderFromDatabase(orderToRemove);
-
-					SelectedOrders.ItemsSource = null;
-					SelectedOrders.Items.Clear();
-					SelectedOrders.ItemsSource = ListOfCurrentListViewItems;
 
 					listBox.Items.Clear();
 					ShowOrderIDsInListBox();
