@@ -15,7 +15,7 @@ namespace ImportControllerUnitTest
 		{
 			//Interaction Based Testing
 			//ARRANGE
-			bool True = true;
+			
 			string actualString;
 			ErrorController errorsTest = new ErrorController();
 			string expectedString = "THERE ARE OVER 9000 ERRORS!\n///\n///\n///";
