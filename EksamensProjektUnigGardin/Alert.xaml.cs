@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,6 +41,7 @@ namespace EksamensProjektUnigGardin
 		}
 		private void LowStockMessage()
 		{
+			Frepo = FabricSampleRepository.GetFabricSampleRepo();
 			string ErrorMessage = "";
 			List<IFabricSample> LowStock = new List<IFabricSample>();
 			LowStock = Frepo.ReturnLowStockSamples();
@@ -47,6 +49,7 @@ namespace EksamensProjektUnigGardin
 			{
 				ErrorMessage += item.FabricSampleNumber + " beholdning: " + item.Quantity + "\n";
 			}
+			LowStockMessages.Text = ErrorMessage;
 		}
 	}
 }
