@@ -96,15 +96,15 @@ namespace ApplicationLayer
             FileStream filestream = new FileStream(fileName, FileMode.Truncate, FileAccess.ReadWrite);
         }
 
-        public void RegisterOrdersInGUI(object fileNameObj, string orderLinesToAdd)
-        {
-            string filename = (string)fileNameObj;
-            FileStream filestream = new FileStream(filename, FileMode.Append, FileAccess.Write);
-            byte[] buffer = Encoding.Default.GetBytes(orderLinesToAdd);
-            filestream.Write(buffer, 0, buffer.Length);
-            filestream.Flush();
-            filestream.Close();
-        }
+        //public void RegisterOrdersInGUI(object fileNameObj, string orderLinesToAdd)
+        //{
+        //    string filename = (string)fileNameObj;
+        //    FileStream filestream = new FileStream(filename, FileMode.Append, FileAccess.Write);
+        //    byte[] buffer = Encoding.Default.GetBytes(orderLinesToAdd);
+        //    filestream.Write(buffer, 0, buffer.Length);
+        //    filestream.Flush();
+        //    filestream.Close();
+        //}
 
         public void OnOrderRegistered()
         {

@@ -21,28 +21,19 @@ namespace ApplicationLayer
 		private FabricSampleRepository fRepo = FabricSampleRepository.GetFabricSampleRepo();
 		public bool programRunning = true;
 		object fileNameObj = "Orders.txt";
-
-
-		//public void ExportOrder(Order order)
-  //      {
-  //          dbController.SaveOrder(order);
-  //      }
-
+        
         public void SubscribersOrderRegistered(ISubscribersOrderRegistered subscriber)
         {
             iController.OrderRegistered += subscriber.OnOrderRegistered;
             iController.OrderRegistered += dbController.OnOrderRegistered;
         }
+
         public void ImportOrder(string fileName)
         {
             fileNameObj = fileName;
             RefreshOrders(fileName);
         }
-        public void ImportOrder(string fileName, ImportController importcontroller, string orderToAdd)
-        {
-            fileNameObj = fileName;
-            importcontroller.RegisterOrdersInGUI(fileNameObj, orderToAdd);
-        }
+        
         public void RefreshOrders(string fileName)
         {
             fileNameObj = fileName;
