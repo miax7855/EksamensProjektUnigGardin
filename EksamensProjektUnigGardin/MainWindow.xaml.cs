@@ -24,7 +24,8 @@ namespace EksamensProjektUnigGardin
         public MainWindow()
         {
             InitializeComponent();
-			this.Content = new ShowCurrentOrders();
+            ShowCurrentOrders sco = new ShowCurrentOrders();
+			this.Content = sco;
         }
 	}
 }

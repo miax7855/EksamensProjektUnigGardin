@@ -28,7 +28,7 @@ namespace ApplicationLayer
             using (con = new SqlConnection(connectionstring))
             {
 
-                //try
+                try
                 {
                     con.Open();
                     foreach (IOrder item in order)
@@ -53,33 +53,12 @@ namespace ApplicationLayer
                         cmd1.ExecuteNonQuery();
                     }
                 }
-                //catch (Exception e)
-                //{
-                //    error.SaveErrorLog(e.ToString());
-                //}
+                catch (Exception e)
+                {
+                    error.SaveErrorLog(e.ToString());
+                }
             }
         }
-        //public void InsertIntoOrderLines(IOrder order)
-        //{
-        //    SqlCommand cmd2 = new SqlCommand("spAddSamplesToOrder", con);
-        //    cmd2.CommandType = CommandType.StoredProcedure;
-
-
-
-
-        //    using (con = new SqlConnection(connectionstring)
-        //    {
-
-        //    }
-
-        //    for (int i = 0; i < order.SampleType.Count; i++)
-        //    {
-        //        int place = i + 1;
-        //        cmd2.Parameters.Add(new SqlParameter("@" + $"SampleType{place}", order.SampleType[i]));
-        //    }
-        //    cmd2.ExecuteNonQuery();
-
-        //}
         public void InsertIntoStock(int Quantity)
         {
             using (con = new SqlConnection(connectionstring))

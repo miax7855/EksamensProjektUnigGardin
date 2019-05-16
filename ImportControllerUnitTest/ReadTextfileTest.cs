@@ -34,11 +34,11 @@ namespace ImportControllerUnitTest
 			string relativePath = ic.GetFilePath(fileName);
 
 			List<string> testSampleType = new List<string> { "1", "2", "3" };
-
-			Order o = new Order(1, "Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", testSampleType);
+            DateTime date = new DateTime(2018, 11, 01, 02, 18, 11);
+			Order o = new Order("Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", date, testSampleType);
 
 			//ACT
-			c.RefreshOrders(fileName, ic);
+			c.RefreshOrders(fileName);
 			// venter 1 sekund pga. den anden thread ikke har tilføjet data til orderRepo endnu
 			Thread.Sleep(1000);
 			Order o2 = (Order)or.GetOrderDic()[1];
@@ -56,11 +56,11 @@ namespace ImportControllerUnitTest
 			string relativePath = ic.GetFilePath(fileName);
 
 			List<string> testSampleType = new List<string> { "U6542", "U7854" };
-
-			Order o = new Order(3, "Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", testSampleType);
+            DateTime date = new DateTime(2018, 11, 01, 02, 18, 11);
+            Order o = new Order("Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", date, testSampleType);
 
 			//ACT
-			c.RefreshOrders(fileName, ic);
+			c.RefreshOrders(fileName);
 			Order o2 = (Order)or.GetOrderDic()[3];
 
 			//ASSERT
@@ -77,11 +77,11 @@ namespace ImportControllerUnitTest
 
 			//dengang med et forkert testSampleType liste
 			List<string> testSampleType = new List<string> { "U6542"};
-
-			Order o = new Order(3, "Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", testSampleType);
+            DateTime date = new DateTime(2018, 11, 01, 02, 18, 11);
+            Order o = new Order("Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", date, testSampleType);
 
 			//ACT
-			c.RefreshOrders(fileName, ic);
+			c.RefreshOrders(fileName);
 			//da refreshorders er en threat
 			Thread.Sleep(1000);
 			Order o2 = (Order)or.GetOrderDic()[3];
@@ -96,7 +96,7 @@ namespace ImportControllerUnitTest
 			//ARRANGE
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
-			c.RefreshOrders(fileName, ic);
+			c.RefreshOrders(fileName);
 
 			using (StreamWriter Writer = new StreamWriter(relativePath, true))
 			{

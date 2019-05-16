@@ -36,8 +36,9 @@ namespace EksamensProjektUnigGardin
         {
             //der er noget gaalt den kører foreach loopen forfra hvergang den har været igennem én gang
             Dispatcher.Invoke(() => {
+                
                 listBox.Items.Clear();
-
+                
                 foreach ( IOrder item in this.ordersAsList)
                 {
                     listBox.Items.Add(item.OrderId);
