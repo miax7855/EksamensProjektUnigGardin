@@ -243,8 +243,16 @@ namespace ApplicationLayer
 							string sampleID = reader["Sample_ID"].ToString();
 							int quantity = Convert.ToInt32(reader["Quantity"].ToString());
 							string productName = reader["Product_Name"].ToString();
-							FabricSample fs = new FabricSample(sampleID, quantity, productName);
-							fRepo.AddFabricSample(fs);
+							if(productName == null)
+							{
+								FabricSample fs = new FabricSample(sampleID, quantity);
+								fRepo.AddFabricSample(fs);
+							}
+							else
+							{
+								FabricSample fs = new FabricSample(sampleID, quantity, productName);
+								fRepo.AddFabricSample(fs);
+							}
 						}
 					}
 
