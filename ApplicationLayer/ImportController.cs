@@ -22,7 +22,7 @@ namespace ApplicationLayer
 		List<string> sampleTypeList;
         
         OrderRepository orderRepo;
-		IDictionary<int, IOrder> orders;
+		
 
 		public void RegisterOrders(object fileNameObj)
 		{
