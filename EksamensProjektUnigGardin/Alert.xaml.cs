@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ApplicationLayer;
+using library;
 
 namespace EksamensProjektUnigGardin
 {
@@ -19,9 +21,11 @@ namespace EksamensProjektUnigGardin
 	/// </summary>
 	public partial class Alert : Window
 	{
+		FabricSampleRepository Frepo;
 		public Alert()
 		{
 			InitializeComponent();
+			LowStockMessage();
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,6 +37,16 @@ namespace EksamensProjektUnigGardin
 		private void Button_Click_1(object sender, RoutedEventArgs e)
 		{
 			this.Close();
+		}
+		private void LowStockMessage()
+		{
+			string ErrorMessage = "";
+			List<IFabricSample> LowStock = new List<IFabricSample>();
+			LowStock = Frepo.ReturnLowStockSamples();
+			foreach (IFabricSample item in LowStock)
+			{
+				ErrorMessage += item.FabricSampleNumber + " beholdning: " + item.Quantity + "\n";
+			}
 		}
 	}
 }
