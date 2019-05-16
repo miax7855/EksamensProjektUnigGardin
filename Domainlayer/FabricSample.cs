@@ -19,5 +19,10 @@ namespace Domainlayer
 			Quantity = quantity;
 			ProductName = productName;
 		}
+
+		public FabricSample(string fabricSampleNumber, int quantity) : this(fabricSampleNumber, quantity, "Not Given")
+		{
+
+		}
 	}
 }

@@ -201,39 +201,47 @@ namespace ApplicationLayer
 			return sampleTypeList;
 		}
 
-		//public void GetLowStockSampleTypes()
-		//{
-		//	List<IFabricSample> lowStockSampleTypes = new List<IFabricSample>();
+		public void GetLowStockSampleTypes()
+		{
+			List<IFabricSample> lowStockSampleTypes = new List<IFabricSample>();
 
-		//	using (con = new SqlConnection(connectionstring))
-		//	{
-		//		SqlCommand cmd7 = new SqlCommand("spGetLowStockSampleTypes", con);
-		//		cmd7.CommandType = CommandType.StoredProcedure;
-		//		cmd7.ExecuteNonQuery();
+			using (con = new SqlConnection(connectionstring))
+			{
+				SqlCommand cmd7 = new SqlCommand("spGetLowStockSampleTypes", con);
+				cmd7.CommandType = CommandType.StoredProcedure;
+				cmd7.ExecuteNonQuery();
 
-		//		try
-		//		{
-		//			SqlDataReader reader = cmd7.ExecuteReader();
+				try
+				{
+					SqlDataReader reader = cmd7.ExecuteReader();
 
-		//			if (reader.HasRows)
-		//			{
-		//				while (reader.Read())
-		//				{
-		//					string sampleID = reader["Sample_ID"].ToString();
-		//					int quantity = Convert.ToInt32(reader["Quantity"].ToString());
-		//					// ProductName skal tilføjes til databasen
-		//					FabricSample fs = new FabricSample(sampleID, quantity, productName);
-		//					fRepo.AddFabricSample(fs);
-		//				}
-		//			}
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							string sampleID = reader["Sample_ID"].ToString();
+							int quantity = Convert.ToInt32(reader["Quantity"].ToString());
+							string productName = reader["Product_Name"].ToString();
+							if(productName == null)
+							{
+								FabricSample fs = new FabricSample(sampleID, quantity);
+								fRepo.AddFabricSample(fs);
+							}
+							else
+							{
+								FabricSample fs = new FabricSample(sampleID, quantity, productName);
+								fRepo.AddFabricSample(fs);
+							}
+						}
+					}
 
-		//		}
+				}
 
-		//		catch (SqlException e)
-		//		{
-		//			error.SaveErrorLog(e.ToString());
-		//		}
-		//	}
-		//}
+				catch (SqlException e)
+				{
+					error.SaveErrorLog(e.ToString());
+				}
+			}
+		}
 	}
 }
