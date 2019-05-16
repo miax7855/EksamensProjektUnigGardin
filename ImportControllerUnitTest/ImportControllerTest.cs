@@ -82,7 +82,7 @@ namespace ImportControllerUnitTest
 
 			StreamReader reader = new StreamReader(relatvePath);
 
-			Assert.AreNotEqual(1, reader.Peek());
+			Assert.AreNotEqual(0, reader.Peek());
 
 		}
 	}

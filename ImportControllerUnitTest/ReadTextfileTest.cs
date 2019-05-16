@@ -89,32 +89,32 @@ namespace ImportControllerUnitTest
 			//ASSERT
 			Assert.AreNotEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
 		}
-		[TestMethod]
-		public void TestRefreshOrders()
-		{
-			//Interaction based Test
-			//ARRANGE
-			string fileName = "Orders.txt";
-			string relativePath = ic.GetFilePath(fileName);
-			c.RefreshOrders(fileName);
+        [TestMethod]
+        public void TestRefreshOrders()
+        {
+            //Interaction based Test
+            //ARRANGE
+            string fileName = "Orders.txt";
+            string relativePath = ic.GetFilePath(fileName);
+            c.RefreshOrders(fileName);
 
-			using (StreamWriter Writer = new StreamWriter(relativePath, true))
-			{
-				Writer.WriteLine("1;Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;1,2,3", true);
-				Writer.WriteLine("2;Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;U4000,A6666,K6666,U4001", true);
-				Writer.WriteLine("3;Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;U6542,U7854", true);
-				Writer.WriteLine("4;Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;U5426", true);
-				Writer.WriteLine("5;Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
-			}
-			Thread.Sleep(5000);
+            using (StreamWriter Writer = new StreamWriter(relativePath, true))
+            {
+                Writer.WriteLine("1;Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;1,2,3", true);
+                Writer.WriteLine("2;Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;U4000,A6666,K6666,U4001", true);
+                Writer.WriteLine("3;Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;U6542,U7854", true);
+                Writer.WriteLine("4;Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;U5426", true);
+                Writer.WriteLine("5;Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
+            }
+            Thread.Sleep(5000);
 
-			//ACT
-			int Count = or.GetOrderDic().Count();
+            //ACT
+            int Count = or.GetOrderDic().Count();
 
-			//ASSERT
-			Assert.AreEqual(5, Count);
-		}
-		public void ClearTxt()
+            //ASSERT
+            Assert.AreEqual(5, Count);
+        }
+        public void ClearTxt()
 		{
 			ImportController ic = new ImportController();
 			string fileName = "Orders.txt";
