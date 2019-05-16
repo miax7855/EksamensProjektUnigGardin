@@ -58,6 +58,11 @@ namespace ApplicationLayer
 			return Stock;
 		}
 
+		public void CLearSampleTypeList()
+		{
+			fabricSamples.Clear();
+		}
+
 		public void AddTestSamples()
 		{
 			FabricSample Test1 = new FabricSample("U5500", 8, "Grøn Persienne");

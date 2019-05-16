@@ -21,6 +21,7 @@ namespace ApplicationLayer
 		private FabricSampleRepository fRepo = FabricSampleRepository.GetFabricSampleRepo();
 		public bool programRunning = true;
 		object fileNameObj = "Orders.txt";
+		public bool ran = false;
         
         public void SubscribersOrderRegistered(ISubscribersOrderRegistered subscriber)
         {
@@ -53,8 +54,14 @@ namespace ApplicationLayer
 		{
 			StockUpdated += subscriber.OnStockUpdated;
 			dbController.UpdateStock(orderToRemove);
-			//dbController.GetLowStockSampleTypes();
-			StockUpdated(this, fRepo);
+			ran = dbController.GetLowStockSampleTypes(ran);
+
+			if (ran)
+			{
+				StockUpdated(this, fRepo);
+			}
+			ran = false;
+			fRepo.CLearSampleTypeList();
 		}
 
 		public void DeleteOrderFromDatabase(IOrder orderToRemove)

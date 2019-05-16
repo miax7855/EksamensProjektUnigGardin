@@ -201,12 +201,11 @@ namespace ApplicationLayer
 			return sampleTypeList;
 		}
 
-		public void GetLowStockSampleTypes()
+		public bool GetLowStockSampleTypes(bool ran)
 		{
-			List<IFabricSample> lowStockSampleTypes = new List<IFabricSample>();
-
 			using (con = new SqlConnection(connectionstring))
 			{
+				con.Open();
 				SqlCommand cmd7 = new SqlCommand("spGetLowStockSampleTypes", con);
 				cmd7.CommandType = CommandType.StoredProcedure;
 				cmd7.ExecuteNonQuery();
@@ -217,6 +216,7 @@ namespace ApplicationLayer
 
 					if (reader.HasRows)
 					{
+						ran = true;
 						while (reader.Read())
 						{
 							string sampleID = reader["Sample_ID"].ToString();
@@ -242,6 +242,7 @@ namespace ApplicationLayer
 					error.SaveErrorLog(e.ToString());
 				}
 			}
+			return ran;
 		}
 	}
 }
