@@ -74,5 +74,13 @@ namespace EksamensProjektUnigGardin
 		{
 
 		}
+		private void AlertOnLowStock()
+		{
+			if (LowStock != null)
+			{
+				Alert AlertWindow = new Alert();
+				AlertWindow.Show();
+			}
+		}
 	}
 }
