@@ -242,7 +242,7 @@ namespace ApplicationLayer
 						{
 							string sampleID = reader["Sample_ID"].ToString();
 							int quantity = Convert.ToInt32(reader["Quantity"].ToString());
-							// ProductName skal tilføjes til databasen
+							string productName = reader["Product_Name"].ToString();
 							FabricSample fs = new FabricSample(sampleID, quantity, productName);
 							fRepo.AddFabricSample(fs);
 						}
