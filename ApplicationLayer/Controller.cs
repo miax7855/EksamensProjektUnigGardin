@@ -53,7 +53,7 @@ namespace ApplicationLayer
 		{
 			StockUpdated += subscriber.OnStockUpdated;
 			dbController.UpdateStock(orderToRemove);
-			dbController.GetLowStockSampleTypes();
+			//dbController.GetLowStockSampleTypes();
 			StockUpdated(this, fRepo);
 		}
 
