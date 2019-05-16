@@ -9,12 +9,16 @@ using library;
 
 namespace ApplicationLayer
 {
+	public delegate void UpdateStockEventHandler<FabricSampleRepository>(object sender, EventArgs e);
+
     public class Controller
     {
+		public event EventHandler<FabricSampleRepository> StockUpdated;
         private OrderRepository oRepo;
         DBController dbController = new DBController();
 		private ImportController iController = new ImportController();
         private ErrorController error = new ErrorController();
+		private FabricSampleRepository fRepo = FabricSampleRepository.GetFabricSampleRepo();
 		public bool programRunning = true;
 		object fileNameObj = "Orders.txt";
         
@@ -45,13 +49,25 @@ namespace ApplicationLayer
 			return oRepo.GetOrderDic();
 		}
 
-        public void ConGetOrdersFromDataBase()
-        {
-            dbController.GetOrdersFromDatabase();
-        }
-        public OrderRepository ReturnRepository()
-        {
-            return OrderRepository.GetOrderRepo();
-        }
-    }
+		public void OrderPacked(IOnStockUpdatedSubscriber subscriber, IOrder orderToRemove)
+		{
+			StockUpdated += subscriber.OnStockUpdated;
+			dbController.UpdateStock(orderToRemove);
+			dbController.GetLowStockSampleTypes();
+			StockUpdated(this, fRepo);
+		}
+
+		public void DeleteOrderFromDatabase(IOrder orderToRemove)
+		{
+			dbController.FinishedOrder(orderToRemove);
+		}
+		public void ConGetOrdersFromDataBase()
+		{
+			dbController.GetOrdersFromDatabase();
+		}
+		public OrderRepository ReturnRepository()
+		{
+			return OrderRepository.GetOrderRepo();
+		}
+	}
 }

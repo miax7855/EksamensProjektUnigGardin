@@ -14,7 +14,9 @@ namespace ApplicationLayer
 		private ErrorController error = new ErrorController();
 		private SqlConnection con;
         public ImportController importController = new ImportController();
-        OrderRepository oRepo = OrderRepository.GetOrderRepo();
+		private OrderRepository oRepo = OrderRepository.GetOrderRepo();
+		private FabricSampleRepository fRepo = FabricSampleRepository.GetFabricSampleRepo();
+        
         private static string connectionstring =
             "Server = den1.mssql8.gear.host; Database = uniggardin; User Id = uniggardin; Password = Iy71?B8skjQ_";
 
@@ -79,7 +81,7 @@ namespace ApplicationLayer
 				}
 			}
 		}
-		public void FinishedOrder(Order order)
+		public void FinishedOrder(IOrder order)
 		{
 			using (SqlConnection con3 = new SqlConnection(connectionstring))
 			{
@@ -97,8 +99,9 @@ namespace ApplicationLayer
 				}
 			}
 		}
-        
-		public void UpdateStock(Order order)
+
+
+		public void UpdateStock(IOrder order)
 		{
 			using (con = new SqlConnection(connectionstring))
 			{
@@ -196,6 +199,41 @@ namespace ApplicationLayer
 				}
 			}
 			return sampleTypeList;
+		}
+
+		public void GetLowStockSampleTypes()
+		{
+			List<IFabricSample> lowStockSampleTypes = new List<IFabricSample>();
+
+			using (con = new SqlConnection(connectionstring))
+			{
+				SqlCommand cmd7 = new SqlCommand("spGetLowStockSampleTypes", con);
+				cmd7.CommandType = CommandType.StoredProcedure;
+				cmd7.ExecuteNonQuery();
+
+				try
+				{
+					SqlDataReader reader = cmd7.ExecuteReader();
+
+					if (reader.HasRows)
+					{
+						while (reader.Read())
+						{
+							string sampleID = reader["Sample_ID"].ToString();
+							int quantity = Convert.ToInt32(reader["Quantity"].ToString());
+							// ProductName skal tilføjes til databasen
+							FabricSample fs = new FabricSample(sampleID, quantity, productName);
+							fRepo.AddFabricSample(fs);
+						}
+					}
+
+				}
+
+				catch (SqlException e)
+				{
+					error.SaveErrorLog(e.ToString());
+				}
+			}
 		}
 	}
 }
