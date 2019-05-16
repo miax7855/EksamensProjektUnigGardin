@@ -55,12 +55,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Alert.xaml.cs">
+      <DependentUpon>Alert.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManageStock.xaml.cs">
       <DependentUpon>ManageStock.xaml</DependentUpon>
     </Compile>
     <Compile Include="ShowCurrentOrders.xaml.cs">
       <DependentUpon>ShowCurrentOrders.xaml</DependentUpon>
     </Compile>
+    <Page Include="Alert.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
