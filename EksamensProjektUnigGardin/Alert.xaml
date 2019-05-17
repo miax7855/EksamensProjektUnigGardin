@@ -9,7 +9,7 @@
     <Grid>
         <Button Content="Gå til ManageStock" HorizontalAlignment="Left" Margin="24,133,0,0" VerticalAlignment="Top" Width="116" Click="Button_Click"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="192,133,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-        <TextBlock HorizontalAlignment="Left" Margin="24,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="87" Width="243"/>
+        <TextBlock x:Name="LowStockMessages" HorizontalAlignment="Left" Margin="24,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="87" Width="243"/>
         <TextBlock HorizontalAlignment="Left" Margin="42,10,0,0" TextWrapping="Wrap" Text="Der er stofprøver med lav beholdning!" VerticalAlignment="Top" Width="204"/>
 
     </Grid>

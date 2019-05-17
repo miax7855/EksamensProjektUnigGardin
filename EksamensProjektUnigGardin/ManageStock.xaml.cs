@@ -33,6 +33,7 @@ namespace EksamensProjektUnigGardin
 			FRepo.AddTestSamples();
 			ShowSamplesAllStock();
 			ShowLowStackSamples();
+			AlertOnLowStock();
 		}
 		private void ShowSamplesAllStock()
 		{
@@ -76,7 +77,7 @@ namespace EksamensProjektUnigGardin
 		}
 		private void AlertOnLowStock()
 		{
-			if (LowStock != null)
+			if (FRepo.ReturnLowStockSamples() != null)
 			{
 				Alert AlertWindow = new Alert();
 				AlertWindow.Show();
