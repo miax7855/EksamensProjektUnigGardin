@@ -57,11 +57,12 @@ namespace ImportControllerUnitTest
 
 			List<string> testSampleType = new List<string> { "U6542", "U7854" };
             DateTime date = new DateTime(2018, 11, 01, 02, 18, 11);
-            Order o = new Order("Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", date, testSampleType);
+            Order o = new Order("Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born@Ass.com", date, testSampleType);
 
 			//ACT
 			c.RefreshOrders(fileName);
-			Order o2 = (Order)or.GetOrderDic()[3];
+            Thread.Sleep(1000);
+			Order o2 = (Order)or.GetOrderDic()[2];
 
 			//ASSERT
 			Assert.AreEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
@@ -97,14 +98,14 @@ namespace ImportControllerUnitTest
             string fileName = "Orders.txt";
             string relativePath = ic.GetFilePath(fileName);
             c.RefreshOrders(fileName);
-
+            Thread.Sleep(1000);
             using (StreamWriter Writer = new StreamWriter(relativePath, true))
             {
-                Writer.WriteLine("1;Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;1,2,3", true);
-                Writer.WriteLine("2;Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;U4000,A6666,K6666,U4001", true);
-                Writer.WriteLine("3;Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;U6542,U7854", true);
-                Writer.WriteLine("4;Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;U5426", true);
-                Writer.WriteLine("5;Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
+                Writer.WriteLine("Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;2018,11,01,02,18,11;1,2,3", true);
+                Writer.WriteLine("Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;2018,11,01,02,18,11;U4000,A6666,K6666,U4001", true);
+                Writer.WriteLine("Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;2018,11,01,02,18,11;U6542,U7854", true);
+                Writer.WriteLine("Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;2018,11,01,02,18,11;U5426", true);
+                Writer.WriteLine("Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;2018,11,01,02,18,11;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
             }
             Thread.Sleep(5000);
 
