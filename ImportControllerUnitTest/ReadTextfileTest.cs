@@ -57,11 +57,12 @@ namespace ImportControllerUnitTest
 
 			List<string> testSampleType = new List<string> { "U6542", "U7854" };
             DateTime date = new DateTime(2018, 11, 01, 02, 18, 11);
-            Order o = new Order("Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born @Ass.com", date, testSampleType);
+            Order o = new Order("Assborn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Born@Ass.com", date, testSampleType);
 
 			//ACT
 			c.RefreshOrders(fileName);
-			Order o2 = (Order)or.GetOrderDic()[3];
+            Thread.Sleep(1000);
+			Order o2 = (Order)or.GetOrderDic()[2];
 
 			//ASSERT
 			Assert.AreEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
@@ -89,39 +90,56 @@ namespace ImportControllerUnitTest
 			//ASSERT
 			Assert.AreNotEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
 		}
-		[TestMethod]
-		public void TestRefreshOrders()
-		{
-			//Interaction based Test
-			//ARRANGE
-			string fileName = "Orders.txt";
-			string relativePath = ic.GetFilePath(fileName);
-			c.RefreshOrders(fileName);
+        [TestMethod]
+        public void TestRefreshOrders()
+        {
+            //Interaction based Test
+            //ARRANGE
+            string fileName = "Orders.txt";
+            string relativePath = ic.GetFilePath(fileName);
+            string thing = string.Empty;
 
-			using (StreamWriter Writer = new StreamWriter(relativePath, true))
-			{
-				Writer.WriteLine("1;Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;1,2,3", true);
-				Writer.WriteLine("2;Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;U4000,A6666,K6666,U4001", true);
-				Writer.WriteLine("3;Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;U6542,U7854", true);
-				Writer.WriteLine("4;Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;U5426", true);
-				Writer.WriteLine("5;Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
-			}
-			Thread.Sleep(5000);
+            using (StreamReader sr = new StreamReader(relativePath))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    thing += line + "\n";
+                }
+            }
+            using (FileStream fs = new FileStream(relativePath, FileMode.Truncate, FileAccess.ReadWrite))
+            {
+                byte[] byteArray = System.Text.Encoding.ASCII.GetBytes("Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;2018,11,01,02,18,11;1,2,3\n"+
+                    "Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;2018,11,01,02,18,11;U4000,A6666,K6666,U4001\n"+
+                    "Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;2018,11,01,02,18,11;U6542,U7854\n"+
+                    "Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;2018,11,01,02,18,11;U5426\n" +
+                    "Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;2018,11,01,02,18,11;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999\n"
+                    );
+                fs.Write(byteArray, 0, byteArray.Length);
+            }
 
-			//ACT
-			int Count = or.GetOrderDic().Count();
+            c.RefreshOrders(fileName);
+            Thread.Sleep(5000);
+            int Count = or.GetOrderDic().Count();
+            Assert.AreEqual(5, Count);
 
-			//ASSERT
-			Assert.AreEqual(5, Count);
-		}
-		public void ClearTxt()
+            using (FileStream fs = new FileStream(relativePath, FileMode.Truncate, FileAccess.ReadWrite))
+            {
+                byte[] byteArray = System.Text.Encoding.ASCII.GetBytes(thing);
+                fs.Write(byteArray, 0, thing.Length);
+            }
+
+            //ACT
+
+            //ASSERT
+        }
+        public void ClearTxt()
 		{
 			ImportController ic = new ImportController();
 			string fileName = "Orders.txt";
 			string relativePath = ic.GetFilePath(fileName);
 			using (StreamWriter Writer = new StreamWriter(relativePath))
 			{
-
 				File.WriteAllText(relativePath, String.Empty);
 				File.Create(relativePath).Close();
 			}

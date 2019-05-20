@@ -63,7 +63,7 @@ namespace Domainlayer
 				sampleTypesInOrder = sampleTypesInOrder.TrimEnd(symbol);
 			}
 
-			return "OrderId: " + o.OrderId + " " + "FirstName: " + o.FirstName + " " + "LastName: " + o.LastName + "Bestilling: " + sampleTypesInOrder;
+			return "FirstName: " + o.FirstName + " " + "LastName: " + o.LastName + "Bestilling: " + sampleTypesInOrder;
 		}
 		
 		
