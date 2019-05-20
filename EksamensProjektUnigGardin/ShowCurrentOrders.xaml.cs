@@ -155,13 +155,21 @@ namespace EksamensProjektUnigGardin
 		public void OnStockUpdated(object sender, EventArgs e)
 		{
 			FabricSampleRepository e2 = (FabricSampleRepository)e;
-			MessageBoxResult result = MessageBox.Show("Der er Stofprøver under en kritisk mængde", "Hovsa", MessageBoxButton.OK, MessageBoxImage.Warning);
-			switch (result)
-			{
-				case MessageBoxResult.OK:
-					MessageBox.Show(e2.ReturnLowStockSamples().ToString());
-					break;
-			}
+
+				string sampleTypesWithLowStock = string.Empty;
+
+				foreach (IFabricSample fabricSample in e2.ReturnLowStockSamples())
+				{
+					sampleTypesWithLowStock += fabricSample.ProductName;
+				}
+
+				MessageBoxResult result = MessageBox.Show("Der er Stofprøver under en kritisk mængde", "Hovsa", MessageBoxButton.OK, MessageBoxImage.Warning);
+				switch (result)
+				{
+					case MessageBoxResult.OK:
+						MessageBox.Show(sampleTypesWithLowStock);
+						break;
+				}
 		}
 	}
 }
