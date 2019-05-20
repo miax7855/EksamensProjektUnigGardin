@@ -97,23 +97,41 @@ namespace ImportControllerUnitTest
             //ARRANGE
             string fileName = "Orders.txt";
             string relativePath = ic.GetFilePath(fileName);
-            c.RefreshOrders(fileName);
-            Thread.Sleep(1000);
-            using (StreamWriter Writer = new StreamWriter(relativePath, true))
+            string thing = string.Empty;
+
+            using (StreamReader sr = new StreamReader(relativePath))
             {
-                Writer.WriteLine("Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;2018,11,01,02,18,11;1,2,3", true);
-                Writer.WriteLine("Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;2018,11,01,02,18,11;U4000,A6666,K6666,U4001", true);
-                Writer.WriteLine("Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;2018,11,01,02,18,11;U6542,U7854", true);
-                Writer.WriteLine("Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;2018,11,01,02,18,11;U5426", true);
-                Writer.WriteLine("Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;2018,11,01,02,18,11;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999", true);
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    thing += line + "\n";
+                }
             }
+            using (FileStream fs = new FileStream(relativePath, FileMode.Truncate, FileAccess.ReadWrite))
+            {
+                byte[] byteArray = System.Text.Encoding.ASCII.GetBytes("Julian;Petersen;52464;Slesvig;deutschland;123456789;julian@gmail.com;2018,11,01,02,18,11;1,2,3\n"+
+                    "Mia;Pars;56998;Odense;Danmark;98765432;mia.pars@camgirl.com;2018,11,01,02,18,11;U4000,A6666,K6666,U4001\n"+
+                    "Assborn;Larsen;2464;Bahnhof;Danmark;5648792;Born@Ass.com;2018,11,01,02,18,11;U6542,U7854\n"+
+                    "Anders;Weiskvist;5000;Bellinge;Danmark;6543214;An@ders.com;2018,11,01,02,18,11;U5426\n" +
+                    "Jens;Jensen;5000;Bolbro;Danmark;588359;Bo@bronze.com;2018,11,01,02,18,11;U3651,U8597,U8526,U4825,U9628,U6255,U6666,D6666,U1313,Z8542,A9999\n"
+                    );
+                fs.Write(byteArray, 0, byteArray.Length);
+            }
+
+            c.RefreshOrders(fileName);
             Thread.Sleep(5000);
+            int Count = or.GetOrderDic().Count();
+            Assert.AreEqual(5, Count);
+
+            using (FileStream fs = new FileStream(relativePath, FileMode.Truncate, FileAccess.ReadWrite))
+            {
+                byte[] byteArray = System.Text.Encoding.ASCII.GetBytes(thing);
+                fs.Write(byteArray, 0, thing.Length);
+            }
 
             //ACT
-            int Count = or.GetOrderDic().Count();
 
             //ASSERT
-            Assert.AreEqual(5, Count);
         }
         public void ClearTxt()
 		{
@@ -122,7 +140,6 @@ namespace ImportControllerUnitTest
 			string relativePath = ic.GetFilePath(fileName);
 			using (StreamWriter Writer = new StreamWriter(relativePath))
 			{
-
 				File.WriteAllText(relativePath, String.Empty);
 				File.Create(relativePath).Close();
 			}

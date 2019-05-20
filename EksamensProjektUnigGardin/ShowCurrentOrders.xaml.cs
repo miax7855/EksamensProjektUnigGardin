@@ -26,12 +26,14 @@ namespace EksamensProjektUnigGardin
             InitializeComponent();
 
 			controller.StockUpdated += OnStockUpdated;
-
-            controller.ConGetOrdersFromDataBase();
+            if (controller.ReturnRepository().GetOrderDic().Count == 0)
+            {
+                controller.ConGetOrdersFromDataBase();
+            }
             controller.SubscribersOrderRegistered(this);
             controller.ImportOrder("Orders.txt");
 			OrderPackagedButton.IsEnabled = false;
-            //ShowOrderIDsInListBox();
+            
         }
 
         private void ShowOrderIDsInListBox()
