@@ -21,6 +21,9 @@ namespace ApplicationLayer
 		private FabricSampleRepository fRepo = FabricSampleRepository.GetFabricSampleRepo();
 		public bool programRunning = true;
 		object fileNameObj = "Orders.txt";
+
+
+
 		public bool ran = false;
         
         public void SubscribersOrderRegistered(ISubscribersOrderRegistered subscriber)
@@ -53,8 +56,8 @@ namespace ApplicationLayer
 		public void OrderPacked(IOnStockUpdatedSubscriber subscriber, IOrder orderToRemove)
 		{
 			StockUpdated += subscriber.OnStockUpdated;
-			dbController.UpdateStock(orderToRemove);
-			ran = dbController.GetLowStockSampleTypes(ran);
+			dbController.UpdateStock(orderToRemove, error);
+			ran = dbController.GetLowStockSampleTypes(ran, fRepo, error);
 
 			if (ran)
 			{
@@ -66,15 +69,20 @@ namespace ApplicationLayer
 
 		public void DeleteOrderFromDatabase(IOrder orderToRemove)
 		{
-			dbController.FinishedOrder(orderToRemove);
+			dbController.FinishedOrder(orderToRemove, error);
 		}
 		public void ConGetOrdersFromDataBase()
 		{
-			dbController.GetOrdersFromDatabase();
+			dbController.GetOrdersFromDatabase(oRepo, error);
 		}
-		public OrderRepository ReturnRepository()
+		public OrderRepository ReturnOrderRepository()
 		{
 			return OrderRepository.GetOrderRepo();
+		}
+
+		public FabricSampleRepository ReturnFabricSampleRepository()
+		{
+			return FabricSampleRepository.GetFabricSampleRepo();
 		}
 	}
 }

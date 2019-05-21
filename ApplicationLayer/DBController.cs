@@ -13,9 +13,6 @@ namespace ApplicationLayer
 	{
 		private ErrorController error = new ErrorController();
 		private SqlConnection con;
-        public ImportController importController = new ImportController();
-		private OrderRepository oRepo = OrderRepository.GetOrderRepo();
-		private FabricSampleRepository fRepo = FabricSampleRepository.GetFabricSampleRepo();
         
         private static string connectionstring =
             "Server = den1.mssql8.gear.host; Database = uniggardin; User Id = uniggardin; Password = Iy71?B8skjQ_";
@@ -61,7 +58,7 @@ namespace ApplicationLayer
                 }
             }
         }
-        public void InsertIntoStock(int Quantity)
+        public void InsertIntoStock(int Quantity, ErrorController error)
         {
             using (con = new SqlConnection(connectionstring))
             {
@@ -81,7 +78,7 @@ namespace ApplicationLayer
 				}
 			}
 		}
-		public void FinishedOrder(IOrder order)
+		public void FinishedOrder(IOrder order, ErrorController error)
 		{
 			using (SqlConnection con3 = new SqlConnection(connectionstring))
 			{
@@ -101,7 +98,7 @@ namespace ApplicationLayer
 		}
 
 
-		public void UpdateStock(IOrder order)
+		public void UpdateStock(IOrder order, ErrorController error)
 		{
 			using (con = new SqlConnection(connectionstring))
 			{
@@ -128,7 +125,7 @@ namespace ApplicationLayer
 			}
 		}
         
-		public void GetOrdersFromDatabase()
+		public void GetOrdersFromDatabase(OrderRepository oRepo, ErrorController error)
 		{
 			using (con = new SqlConnection(connectionstring))
 			{
@@ -151,7 +148,7 @@ namespace ApplicationLayer
                              string country = reader["Customer_Mail"].ToString();
                              int phone = Convert.ToInt32(reader["Customer_Phone"].ToString());
                              DateTime timeStamp = Convert.ToDateTime(reader["Order_Date"].ToString());
-                             List<string> sampletypelist = GetSampleTypesWithOrderID(orderId);
+                             List<string> sampletypelist = GetSampleTypesWithOrderID(orderId, error);
                               oRepo.AddOrder(new Order(orderId, customerFirstname, customerLastName, zip, city, country, phone, customerEmail, timeStamp, sampletypelist));
                             
                         }
@@ -160,7 +157,7 @@ namespace ApplicationLayer
             }
 		}
 
-		private List<string> GetSampleTypesWithOrderID(int orderId)
+		private List<string> GetSampleTypesWithOrderID(int orderId, ErrorController error)
 		{
 			List<string> sampleTypeList = new List<string>();
 			using(con = new SqlConnection(connectionstring))
@@ -201,7 +198,7 @@ namespace ApplicationLayer
 			return sampleTypeList;
 		}
 
-		public bool GetLowStockSampleTypes(bool ran)
+		public bool GetLowStockSampleTypes(bool ran, FabricSampleRepository fRepo, ErrorController error)
 		{
 			using (con = new SqlConnection(connectionstring))
 			{
