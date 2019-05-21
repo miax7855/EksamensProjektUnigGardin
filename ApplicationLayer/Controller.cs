@@ -56,8 +56,8 @@ namespace ApplicationLayer
 		public void OrderPacked(IOnStockUpdatedSubscriber subscriber, IOrder orderToRemove)
 		{
 			StockUpdated += subscriber.OnStockUpdated;
-			dbController.UpdateStock(orderToRemove);
-			ran = dbController.GetLowStockSampleTypes(ran, fRepo);
+			dbController.UpdateStock(orderToRemove, error);
+			ran = dbController.GetLowStockSampleTypes(ran, fRepo, error);
 
 			if (ran)
 			{
@@ -69,11 +69,11 @@ namespace ApplicationLayer
 
 		public void DeleteOrderFromDatabase(IOrder orderToRemove)
 		{
-			dbController.FinishedOrder(orderToRemove);
+			dbController.FinishedOrder(orderToRemove, error);
 		}
 		public void ConGetOrdersFromDataBase()
 		{
-			dbController.GetOrdersFromDatabase(oRepo);
+			dbController.GetOrdersFromDatabase(oRepo, error);
 		}
 		public OrderRepository ReturnOrderRepository()
 		{
