@@ -14,8 +14,6 @@ namespace ApplicationLayer
 		private ErrorController error = new ErrorController();
 		private SqlConnection con;
         public ImportController importController = new ImportController();
-		private OrderRepository oRepo = OrderRepository.GetOrderRepo();
-		private FabricSampleRepository fRepo = FabricSampleRepository.GetFabricSampleRepo();
         
         private static string connectionstring =
             "Server = den1.mssql8.gear.host; Database = uniggardin; User Id = uniggardin; Password = Iy71?B8skjQ_";
@@ -128,7 +126,7 @@ namespace ApplicationLayer
 			}
 		}
         
-		public void GetOrdersFromDatabase()
+		public void GetOrdersFromDatabase(OrderRepository oRepo)
 		{
 			using (con = new SqlConnection(connectionstring))
 			{
@@ -201,7 +199,7 @@ namespace ApplicationLayer
 			return sampleTypeList;
 		}
 
-		public bool GetLowStockSampleTypes(bool ran)
+		public bool GetLowStockSampleTypes(bool ran, FabricSampleRepository fRepo)
 		{
 			using (con = new SqlConnection(connectionstring))
 			{

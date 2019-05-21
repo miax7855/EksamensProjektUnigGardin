@@ -54,7 +54,7 @@ namespace ApplicationLayer
 		{
 			StockUpdated += subscriber.OnStockUpdated;
 			dbController.UpdateStock(orderToRemove);
-			ran = dbController.GetLowStockSampleTypes(ran);
+			ran = dbController.GetLowStockSampleTypes(ran, fRepo);
 
 			if (ran)
 			{
@@ -70,7 +70,7 @@ namespace ApplicationLayer
 		}
 		public void ConGetOrdersFromDataBase()
 		{
-			dbController.GetOrdersFromDatabase();
+			dbController.GetOrdersFromDatabase(oRepo);
 		}
 		public OrderRepository ReturnRepository()
 		{
