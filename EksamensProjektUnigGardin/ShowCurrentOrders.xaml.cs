@@ -26,27 +26,26 @@ namespace EksamensProjektUnigGardin
             InitializeComponent();
 
 			controller.StockUpdated += OnStockUpdated;
-
-            controller.ConGetOrdersFromDataBase();
+            if (controller.ReturnRepository().GetOrderDic().Count == 0)
+            {
+                controller.ConGetOrdersFromDataBase();
+            }
             controller.SubscribersOrderRegistered(this);
             controller.ImportOrder("Orders.txt");
 			OrderPackagedButton.IsEnabled = false;
-            ShowOrderIDsInListBox();
+            
         }
 
         private void ShowOrderIDsInListBox()
         {
-            //der er noget gaalt den kører foreach loopen forfra hvergang den har været igennem én gang
-            Dispatcher.Invoke(() => {
-                
+            listBox.Dispatcher.Invoke(() =>
+            {
                 listBox.Items.Clear();
-                
-                foreach ( IOrder item in this.ordersAsList)
+                foreach (IOrder item in this.ordersAsList)
                 {
                     listBox.Items.Add(item.OrderId);
                 }
-
-           });
+            });
         }
         public void ShowSamplesInListBox()
         {
