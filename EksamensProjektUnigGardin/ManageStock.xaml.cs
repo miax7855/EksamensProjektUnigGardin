@@ -23,14 +23,16 @@ namespace EksamensProjektUnigGardin
 	/// </summary>
 	public partial class ManageStock : Page
 	{
-		FabricSampleRepository FRepo = new FabricSampleRepository();
+		Controller con = new Controller();
+		FabricSampleRepository fRepo;
 		List<IFabricSample> fabricSamples = new List<IFabricSample>();
 
 
 		public ManageStock()
 		{
+			fRepo = con.ConGetFabricSampleRepository();
 			InitializeComponent();
-			FRepo.AddTestSamples();
+			fRepo.AddTestSamples();
 			ShowSamplesAllStock();
 			ShowLowStackSamples();
 			AlertOnLowStock();
@@ -38,14 +40,14 @@ namespace EksamensProjektUnigGardin
 		private void ShowSamplesAllStock()
 		{
 
-			foreach (IFabricSample item in FRepo.ReturnStock())
+			foreach (IFabricSample item in fRepo.ReturnStock())
 			{
 				AllStock.Items.Add(item);
 			}
 		}
 		private void ShowLowStackSamples()
 		{
-			foreach (IFabricSample item in FRepo.ReturnLowStockSamples())
+			foreach (IFabricSample item in fRepo.ReturnLowStockSamples())
 			{
 				LowStock.Items.Add(item);
 			}
@@ -77,7 +79,7 @@ namespace EksamensProjektUnigGardin
 		}
 		private void AlertOnLowStock()
 		{
-			if (FRepo.ReturnLowStockSamples() != null)
+			if (fRepo.ReturnLowStockSamples() != null)
 			{
 				Alert AlertWindow = new Alert();
 				AlertWindow.Show();

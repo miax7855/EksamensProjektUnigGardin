@@ -21,6 +21,9 @@ namespace ApplicationLayer
 		private FabricSampleRepository fRepo = FabricSampleRepository.GetFabricSampleRepo();
 		public bool programRunning = true;
 		object fileNameObj = "Orders.txt";
+
+
+
 		public bool ran = false;
         
         public void SubscribersOrderRegistered(ISubscribersOrderRegistered subscriber)
@@ -75,6 +78,11 @@ namespace ApplicationLayer
 		public OrderRepository ReturnRepository()
 		{
 			return OrderRepository.GetOrderRepo();
+		}
+
+		public FabricSampleRepository ConGetFabricSampleRepository()
+		{
+			return FabricSampleRepository.GetFabricSampleRepo();
 		}
 	}
 }
