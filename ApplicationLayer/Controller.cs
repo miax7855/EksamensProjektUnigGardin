@@ -75,12 +75,12 @@ namespace ApplicationLayer
 		{
 			dbController.GetOrdersFromDatabase(oRepo);
 		}
-		public OrderRepository ReturnRepository()
+		public OrderRepository ReturnOrderRepository()
 		{
 			return OrderRepository.GetOrderRepo();
 		}
 
-		public FabricSampleRepository ConGetFabricSampleRepository()
+		public FabricSampleRepository ReturnFabricSampleRepository()
 		{
 			return FabricSampleRepository.GetFabricSampleRepo();
 		}

@@ -30,7 +30,7 @@ namespace EksamensProjektUnigGardin
 
 		public ManageStock()
 		{
-			fRepo = con.ConGetFabricSampleRepository();
+			fRepo = con.ReturnFabricSampleRepository();
 			InitializeComponent();
 			fRepo.AddTestSamples();
 			ShowSamplesAllStock();
