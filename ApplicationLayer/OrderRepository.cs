@@ -14,8 +14,7 @@ namespace ApplicationLayer
 		private Dictionary<int, IOrder> orders = new Dictionary<int, IOrder>();
         private List<IOrder> orderAsList = new List<IOrder>();
 
-        public List<IOrder> listOfOrdersToAdd = new List<IOrder>();
-
+        private List<IOrder> listOfOrdersToAdd = new List<IOrder>();
 
         static private OrderRepository orderRepository;
 		public static OrderRepository GetOrderRepo()
@@ -31,6 +30,10 @@ namespace ApplicationLayer
 				return orderRepository;
 			}
 		}
+        public List<IOrder> GetListOfOrdersToAdd()
+        {
+            return listOfOrdersToAdd;
+        }
 		public Dictionary<int, IOrder> GetOrderDic()
 		{
 			return orders;

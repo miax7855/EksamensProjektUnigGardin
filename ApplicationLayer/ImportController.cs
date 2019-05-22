@@ -39,7 +39,7 @@ namespace ApplicationLayer
                 {
                     string line = string.Empty;
 
-                    orderRepo.listOfOrdersToAdd.Clear();
+                    orderRepo.GetListOfOrdersToAdd().Clear();
                     
                     while ((line = reader.ReadLine()) != null)
                     {
@@ -56,24 +56,24 @@ namespace ApplicationLayer
                         Order order = new Order(orderItems[0], orderItems[1], Convert.ToInt32(orderItems[2]), orderItems[3], 
                                                 orderItems[4], Convert.ToInt32(orderItems[5]), orderItems[6], timeStamp, sampleTypeList);
 
-                        orderRepo.listOfOrdersToAdd.Add(order);
+                        orderRepo.GetListOfOrdersToAdd().Add(order);
                     }
-                    if (orderRepo.listOfOrdersToAdd.Count != 0)
+                    if (orderRepo.GetListOfOrdersToAdd().Count != 0)
                     {
                         //List<IOrder> lst = orderRepo.listOfOrdersToAdd;
-                        foreach (IOrder item in orderRepo.listOfOrdersToAdd.ToList())
+                        foreach (IOrder item in orderRepo.GetListOfOrdersToAdd().ToList())
                         {
                             foreach (IOrder thing in orderRepo.ReturnOrdersAsList())
                             {
                                 if (item.Email.Equals(thing.Email) && item.TimeStamp == thing.TimeStamp)
                                 {
-                                    orderRepo.listOfOrdersToAdd.Remove(item);
+                                    orderRepo.GetListOfOrdersToAdd().Remove(item);
                                 }
                             }
                             //orderRepo.listOfOrdersToAdd.Remove(orderRepo.ReturnOrdersAsList().Find(x => x.Email.Equals(item.Email) && x.TimeStamp == item.TimeStamp));
                         }
 
-                        foreach (IOrder item in orderRepo.listOfOrdersToAdd)
+                        foreach (IOrder item in orderRepo.GetListOfOrdersToAdd())
                         {
                             if (orderRepo.GetOrderDic().Count == 0)
                             {
