@@ -147,12 +147,11 @@ namespace ApplicationLayer
                              string customerLastName = reader["Customer_SurName"].ToString();
                              int orderId = Convert.ToInt32(reader["Order_ID"].ToString());
                              int zip = Convert.ToInt32(reader["ZIP"].ToString());
-                             string city = reader["Customer_Mail"].ToString();
-                             string country = reader["Customer_Mail"].ToString();
+                             string country = reader["Country"].ToString();
                              int phone = Convert.ToInt32(reader["Customer_Phone"].ToString());
                              DateTime timeStamp = Convert.ToDateTime(reader["Order_Date"].ToString());
                              List<string> sampletypelist = GetSampleTypesWithOrderID(orderId);
-                              oRepo.AddOrder(new Order(orderId, customerFirstname, customerLastName, zip, city, country, phone, customerEmail, timeStamp, sampletypelist));
+                              oRepo.AddOrder(new Order(orderId, customerFirstname, customerLastName, zip, country, phone, customerEmail, timeStamp, sampletypelist));
                             
                         }
                     }
