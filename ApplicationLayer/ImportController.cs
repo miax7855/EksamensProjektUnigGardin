@@ -54,7 +54,7 @@ namespace ApplicationLayer
                                                             Convert.ToInt32(dateTimeArray[4]), Convert.ToInt32(dateTimeArray[5]));
 
                         Order order = new Order(orderItems[0], orderItems[1], Convert.ToInt32(orderItems[2]), orderItems[3], 
-                                                orderItems[4], Convert.ToInt32(orderItems[5]), orderItems[6], timeStamp, sampleTypeList);
+                                                 Convert.ToInt32(orderItems[5]), orderItems[6], timeStamp, sampleTypeList);
 
                         orderRepo.GetListOfOrdersToAdd().Add(order);
                     }

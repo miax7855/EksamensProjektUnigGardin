@@ -19,7 +19,7 @@ namespace ApplicationLayer
 
         public void OnOrderRegistered(object source, OrderRepository e)
         {
-            SaveOrder(e.listOfOrdersToAdd);
+            SaveOrder(e.GetListOfOrdersToAdd());
         }
 
         public void SaveOrder(List<IOrder> order)
@@ -40,7 +40,6 @@ namespace ApplicationLayer
                         cmd1.Parameters.Add(new SqlParameter("@Customer_Phone", item.PhoneNumber));
                         cmd1.Parameters.Add(new SqlParameter("@Customer_Mail", item.Email));
                         cmd1.Parameters.Add(new SqlParameter("@ZIP", item.Zip));
-                        cmd1.Parameters.Add(new SqlParameter("@City", item.City));
                         cmd1.Parameters.Add(new SqlParameter("@Order_Date", item.TimeStamp));
 
                         for (int i = 0; i < item.SampleType.Count; i++)
@@ -147,7 +146,7 @@ namespace ApplicationLayer
                              string country = reader["Country"].ToString();
                              int phone = Convert.ToInt32(reader["Customer_Phone"].ToString());
                              DateTime timeStamp = Convert.ToDateTime(reader["Order_Date"].ToString());
-                             List<string> sampletypelist = GetSampleTypesWithOrderID(orderId);
+                             List<string> sampletypelist = GetSampleTypesWithOrderID(orderId, error);
                               oRepo.AddOrder(new Order(orderId, customerFirstname, customerLastName, zip, country, phone, customerEmail, timeStamp, sampletypelist));
                             
                         }
