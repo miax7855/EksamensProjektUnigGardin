@@ -77,12 +77,14 @@ namespace ApplicationLayer
 		}
 		public OrderRepository ReturnOrderRepository()
 		{
-			return OrderRepository.GetOrderRepo();
+			oRepo = OrderRepository.GetOrderRepo();
+			return oRepo;
 		}
 
 		public FabricSampleRepository ReturnFabricSampleRepository()
 		{
-			return FabricSampleRepository.GetFabricSampleRepo();
+			fRepo = FabricSampleRepository.GetFabricSampleRepo();
+			return fRepo;
 		}
 	}
 }

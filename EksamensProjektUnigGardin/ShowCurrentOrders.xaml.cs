@@ -26,7 +26,7 @@ namespace EksamensProjektUnigGardin
             InitializeComponent();
 
 			controller.StockUpdated += OnStockUpdated;
-            if (controller.ReturnRepository().GetOrderDic().Count == 0)
+            if (controller.ReturnOrderRepository().GetOrderDic().Count == 0)
             {
                 controller.ConGetOrdersFromDataBase();
             }
@@ -107,9 +107,9 @@ namespace EksamensProjektUnigGardin
 					IOrder orderToRemove = ordersAsList.Find((x) => SelectedOrders.SelectedValue.Equals(x));
                     ObsCollForListView.Remove(orderToRemove);
 
-					controller.ReturnRepository().RemoveOrder(orderToRemove);
+					controller.ReturnOrderRepository().RemoveOrder(orderToRemove);
 
-                    ordersAsList = controller.ReturnRepository().ReturnOrdersAsList();
+                    ordersAsList = controller.ReturnOrderRepository().ReturnOrdersAsList();
 
                     controller.OrderPacked(this, orderToRemove);
 					controller.DeleteOrderFromDatabase(orderToRemove);
