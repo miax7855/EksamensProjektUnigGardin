@@ -35,7 +35,7 @@ namespace ImportControllerUnitTest
 
 			List<string> testSampleType = new List<string> { "1", "2", "3" };
             DateTime date = new DateTime(2018, 11, 01, 02, 18, 11);
-			Order o = new Order("Julian", "Petersen", 52464, "schleswig", "deutschland", 123456789, "julian @gmail.com", date, testSampleType);
+			Order o = new Order("Julian", "Petersen", 52464, "deutschland", 123456789, "julian @gmail.com", date, testSampleType);
 
 			//ACT
 			c.RefreshOrders(fileName);
@@ -57,7 +57,7 @@ namespace ImportControllerUnitTest
 
 			List<string> testSampleType = new List<string> { "U6542", "U7854" };
             DateTime date = new DateTime(2018, 11, 01, 02, 18, 11);
-            Order o = new Order("Asbjørn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Asbjorn@hotmail.com", date, testSampleType);
+            Order o = new Order("Asbjørn", "Larsen", 2464 ,"Danmark", 5648792, "Asbjorn@hotmail.com", date, testSampleType);
 
 			//ACT
 			c.RefreshOrders(fileName);
@@ -79,7 +79,7 @@ namespace ImportControllerUnitTest
 			//dengang med et forkert testSampleType liste
 			List<string> testSampleType = new List<string> { "U6542"};
             DateTime date = new DateTime(2018, 11, 01, 02, 18, 11);
-            Order o = new Order("Asbjørn", "Larsen", 2464, "Bahnhof", "Danmark", 5648792, "Asbjorn@hotmail.com", date, testSampleType);
+            Order o = new Order("Asbjørn", "Larsen", 2464, "Danmark", 5648792, "Asbjorn@hotmail.com", date, testSampleType);
 
 			//ACT
 			c.RefreshOrders(fileName);
