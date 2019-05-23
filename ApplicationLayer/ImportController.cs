@@ -45,43 +45,49 @@ namespace ApplicationLayer
                     {
                         orderItems = line.Split(';');
 
-                        dateTimeArray = orderItems[7].Split(',');
-                        sampleTypeArray = orderItems[8].Split(',');
+                        dateTimeArray = orderItems[6].Split(',');
+                        sampleTypeArray = orderItems[7].Split(',');
                         sampleTypeList = ConvertArrayToList(sampleTypeArray);
                         
                         DateTime timeStamp = new DateTime  (Convert.ToInt32(dateTimeArray[0]), Convert.ToInt32(dateTimeArray[1]), 
                                                             Convert.ToInt32(dateTimeArray[2]), Convert.ToInt32(dateTimeArray[3]), 
                                                             Convert.ToInt32(dateTimeArray[4]), Convert.ToInt32(dateTimeArray[5]));
 
-                        Order order = new Order(orderItems[0], orderItems[1], Convert.ToInt32(orderItems[2]), orderItems[3], 
-                                                 Convert.ToInt32(orderItems[5]), orderItems[6], timeStamp, sampleTypeList);
+                        Order order = new Order(orderItems[0].ToString(), orderItems[1].ToString(), Convert.ToInt32(orderItems[2]), orderItems[3].ToString(), 
+                                                 Convert.ToInt32(orderItems[5]), orderItems[6].ToString(), timeStamp, sampleTypeList);
 
                         orderRepo.GetListOfOrdersToAdd().Add(order);
                     }
                     if (orderRepo.GetListOfOrdersToAdd().Count != 0)
                     {
-                        //List<IOrder> lst = orderRepo.listOfOrdersToAdd;
-                        foreach (IOrder item in orderRepo.GetListOfOrdersToAdd().ToList())
-                        {
-                            foreach (IOrder thing in orderRepo.ReturnOrdersAsList())
-                            {
-                                if (item.Email.Equals(thing.Email) && item.TimeStamp == thing.TimeStamp)
-                                {
-                                    orderRepo.GetListOfOrdersToAdd().Remove(item);
-                                }
-                            }
-                            //orderRepo.listOfOrdersToAdd.Remove(orderRepo.ReturnOrdersAsList().Find(x => x.Email.Equals(item.Email) && x.TimeStamp == item.TimeStamp));
-                        }
+                        List<IOrder> GetListOfOrdersToAdd = orderRepo.GetListOfOrdersToAdd();
+                        List<IOrder> ReturnOrdersAsList = orderRepo.ReturnOrdersAsList();
 
-                        foreach (IOrder item in orderRepo.GetListOfOrdersToAdd())
+
+                        foreach (IOrder item in GetListOfOrdersToAdd.ToList())
                         {
-                            if (orderRepo.GetOrderDic().Count == 0)
+                            IOrder ting = orderRepo.ReturnOrdersAsList().Find(x => x.Email.Equals(item.Email) && x.TimeStamp == item.TimeStamp);
+                            orderRepo.GetListOfOrdersToAdd().Remove(ting);
+
+                            //foreach (IOrder thing in ReturnOrdersAsList.ToList())
+                            //{
+                            //    if (item.Email.Equals(thing.Email) && item.TimeStamp == thing.TimeStamp)
+                            //    {
+                            //        orderRepo.GetListOfOrdersToAdd().Remove(item);
+                            //    }
+                            //}
+                            if (orderRepo.GetListOfOrdersToAdd().Contains(item))
                             {
-                                orderRepo.AddOrder(0, item);
-                            }
-                            else
-                            {
-                                orderRepo.AddOrder(orderRepo.GetOrderDic().Keys.Last() + 1, item);
+                                if (orderRepo.GetOrderDic().Count == 0)
+                                {
+                                    orderRepo.AddOrder(0, item);
+                                }
+                                else
+                                {
+                                    int id = orderRepo.GetOrderDic().Keys.Last() + 1;
+                                    item.OrderId = id;
+                                    orderRepo.AddOrder(id, item);
+                                }
                             }
                         }
                         OnOrderRegistered();
@@ -89,7 +95,6 @@ namespace ApplicationLayer
                 }
             }
         }
-        
         public void DeleteOrderItemEvent(object fileNameObj)
         {
             string fileName = (string)fileNameObj;
