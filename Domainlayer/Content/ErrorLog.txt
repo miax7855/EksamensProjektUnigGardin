@@ -1,5 +1,5 @@
-22-05-2019 13:12:00
-System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'spSaveOrder' expects parameter '@City', which was not supplied.
+23-05-2019 22:58:32
+System.Data.SqlClient.SqlException (0x80131904): Procedure or function spSaveOrder has too many arguments specified.
    at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
    at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
    at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
@@ -10,8 +10,8 @@ System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'spSaveOr
    at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
    at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
    at ApplicationLayer.DBController.SaveOrder(List`1 order) in C:\Users\Mia\source\repos\EksamensProjektUnigGardin\ApplicationLayer\DBController.cs:line 51
-ClientConnectionId:c9e40a6e-8bfe-46cf-b5c8-31ab761d932e
-Error Number:201,State:4,Class:16
+ClientConnectionId:b63d3ee0-48c0-4393-a86c-63c99c30d94b
+Error Number:8144,State:2,Class:16
 ///
 ///
 ///

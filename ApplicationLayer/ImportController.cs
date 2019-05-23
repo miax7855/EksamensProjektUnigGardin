@@ -60,28 +60,30 @@ namespace ApplicationLayer
                     }
                     if (orderRepo.GetListOfOrdersToAdd().Count != 0)
                     {
-                        //List<IOrder> lst = orderRepo.listOfOrdersToAdd;
-                        foreach (IOrder item in orderRepo.GetListOfOrdersToAdd().ToList())
+                        List<IOrder> Orders = orderRepo.ReturnOrdersAsList();
+                        List<IOrder> OrdersToAdd = orderRepo.GetListOfOrdersToAdd();
+
+                        foreach (IOrder item in OrdersToAdd.ToList())
                         {
-                            foreach (IOrder thing in orderRepo.ReturnOrdersAsList())
+                            foreach (IOrder thing in Orders.ToList())
                             {
                                 if (item.Email.Equals(thing.Email) && item.TimeStamp == thing.TimeStamp)
                                 {
                                     orderRepo.GetListOfOrdersToAdd().Remove(item);
                                 }
                             }
-                            //orderRepo.listOfOrdersToAdd.Remove(orderRepo.ReturnOrdersAsList().Find(x => x.Email.Equals(item.Email) && x.TimeStamp == item.TimeStamp));
-                        }
-
-                        foreach (IOrder item in orderRepo.GetListOfOrdersToAdd())
-                        {
-                            if (orderRepo.GetOrderDic().Count == 0)
+                            if (orderRepo.GetListOfOrdersToAdd().Contains(item))
                             {
-                                orderRepo.AddOrder(0, item);
-                            }
-                            else
-                            {
-                                orderRepo.AddOrder(orderRepo.GetOrderDic().Keys.Last() + 1, item);
+                                if (orderRepo.GetOrderDic().Count == 0)
+                                {
+                                    orderRepo.AddOrder(1000, item);
+                                }
+                                else
+                                {
+                                    int id = orderRepo.GetOrderDic().Keys.Last() + 1;
+                                    item.OrderId = id;
+                                    orderRepo.AddOrder(id, item);
+                                }
                             }
                         }
                         OnOrderRegistered();
