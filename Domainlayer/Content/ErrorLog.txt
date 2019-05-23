@@ -1,4 +1,4 @@
-23-05-2019 22:58:32
+23-05-2019 23:04:39
 System.Data.SqlClient.SqlException (0x80131904): Procedure or function spSaveOrder has too many arguments specified.
    at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
    at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
@@ -10,7 +10,7 @@ System.Data.SqlClient.SqlException (0x80131904): Procedure or function spSaveOrd
    at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
    at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
    at ApplicationLayer.DBController.SaveOrder(List`1 order) in C:\Users\Mia\source\repos\EksamensProjektUnigGardin\ApplicationLayer\DBController.cs:line 51
-ClientConnectionId:b63d3ee0-48c0-4393-a86c-63c99c30d94b
+ClientConnectionId:e66cea38-8d84-4b88-86bf-122d9412a870
 Error Number:8144,State:2,Class:16
 ///
 ///

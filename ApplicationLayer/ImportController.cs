@@ -45,8 +45,8 @@ namespace ApplicationLayer
                     {
                         orderItems = line.Split(';');
 
-                        dateTimeArray = orderItems[7].Split(',');
-                        sampleTypeArray = orderItems[8].Split(',');
+                        dateTimeArray = orderItems[6].Split(',');
+                        sampleTypeArray = orderItems[7].Split(',');
                         sampleTypeList = ConvertArrayToList(sampleTypeArray);
                         
                         DateTime timeStamp = new DateTime  (Convert.ToInt32(dateTimeArray[0]), Convert.ToInt32(dateTimeArray[1]), 
@@ -54,7 +54,7 @@ namespace ApplicationLayer
                                                             Convert.ToInt32(dateTimeArray[4]), Convert.ToInt32(dateTimeArray[5]));
 
                         Order order = new Order(orderItems[0], orderItems[1], Convert.ToInt32(orderItems[2]), orderItems[3], 
-                                                 Convert.ToInt32(orderItems[5]), orderItems[6], timeStamp, sampleTypeList);
+                                                 Convert.ToInt32(orderItems[4]), orderItems[5], timeStamp, sampleTypeList);
 
                         orderRepo.GetListOfOrdersToAdd().Add(order);
                     }
