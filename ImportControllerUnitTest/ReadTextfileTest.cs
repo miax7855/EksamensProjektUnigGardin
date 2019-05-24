@@ -41,7 +41,7 @@ namespace ImportControllerUnitTest
 			c.RefreshOrders(fileName);
 			// venter 1 sekund pga. den anden thread ikke har tilføjet data til orderRepo endnu
 			Thread.Sleep(1000);
-			Order o2 = (Order)or.GetOrderDic()[1];
+			Order o2 = (Order)or.ReturnOrdersAsList()[1];
 
 			//ASSERT
 			Assert.AreEqual(o.SampleType.ToString(), o2.SampleType.ToString());
@@ -61,8 +61,8 @@ namespace ImportControllerUnitTest
 
 			//ACT
 			c.RefreshOrders(fileName);
-            Thread.Sleep(1000);
-			Order o2 = (Order)or.GetOrderDic()[2];
+            Thread.Sleep(5000);
+			Order o2 = (Order)or.ReturnOrdersAsList()[2];
 
 			//ASSERT
 			Assert.AreEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
@@ -85,7 +85,7 @@ namespace ImportControllerUnitTest
 			c.RefreshOrders(fileName);
 			//da refreshorders er en threat
 			Thread.Sleep(1000);
-			Order o2 = (Order)or.GetOrderDic()[3];
+			Order o2 = (Order)or.ReturnOrdersAsList()[3];
 
 			//ASSERT
 			Assert.AreNotEqual(o.PrintOrderInfo(o), o2.PrintOrderInfo(o2));
