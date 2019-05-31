@@ -15,16 +15,13 @@ namespace ApplicationLayer
     {
 		public event EventHandler<FabricSampleRepository> StockUpdated;
         private OrderRepository oRepo;
-        DBController dbController = new DBController();
+        private DBController dbController = new DBController();
 		private ImportController iController = new ImportController();
         private ErrorController error = new ErrorController();
 		private FabricSampleRepository fRepo = FabricSampleRepository.GetFabricSampleRepo();
-		public bool programRunning = true;
-		object fileNameObj = "Orders.txt";
-
-
-
-		public bool ran = false;
+		private bool programRunning = true;
+		private object fileNameObj = "Orders.txt";
+		private bool ran = false;
         
         public void SubscribersOrderRegistered(ISubscribersOrderRegistered subscriber)
         {

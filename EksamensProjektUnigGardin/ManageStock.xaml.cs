@@ -32,7 +32,7 @@ namespace EksamensProjektUnigGardin
 		{
 			fRepo = con.ReturnFabricSampleRepository();
 			InitializeComponent();
-			fRepo.AddTestSamples();
+			fRepo.AdTestSamples();
 			ShowSamplesAllStock();
 			ShowLowStackSamples();
 			AlertOnLowStock();
@@ -52,31 +52,17 @@ namespace EksamensProjektUnigGardin
 				LowStock.Items.Add(item);
 			}
 		}
-		public void OnOrderRegistered(object source, FabricSampleRepository e)
+		public void OnOrderRegistered(object sender, FabricSampleRepository e)
 		{
 			this.fabricSamples.Clear();
 			this.fabricSamples = e.ReturnLowStockSamples();
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void GoToCurrentOrders(object sender, RoutedEventArgs e)
 		{
 			Application.Current.MainWindow.Content = new ShowCurrentOrders();
 		}
-
-		private void Button_Click_1(object sender, RoutedEventArgs e)
-		{
-		//	Application.Current.MainWindow.Content = new ManageStock();
-		}
-
-		private void Button_Click_2(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-		private void Button_Click_3(object sender, RoutedEventArgs e)
-		{
-
-		}
+        
 		private void AlertOnLowStock()
 		{
 			if (fRepo.ReturnLowStockSamples() != null)
@@ -85,5 +71,25 @@ namespace EksamensProjektUnigGardin
 				AlertWindow.Show();
 			}
 		}
-	}
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }
