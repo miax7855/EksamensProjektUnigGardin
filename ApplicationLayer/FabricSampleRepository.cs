@@ -63,7 +63,7 @@ namespace ApplicationLayer
 			fabricSamples.Clear();
 		}
 
-		public void AddTestSamples()
+		public void AdTestSamples()
 		{
 			FabricSample Test1 = new FabricSample("U5500", 8, "Grøn Persienne");
 			FabricSample Test2 = new FabricSample("U7000", 12, "Sort Persienne");

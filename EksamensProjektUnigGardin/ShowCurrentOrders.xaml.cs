@@ -16,9 +16,7 @@ namespace EksamensProjektUnigGardin
     public partial class ShowCurrentOrders : Page, IOnStockUpdatedSubscriber, ISubscribersOrderRegistered
     {
         Controller controller = new Controller();
-
         private List<IOrder> ordersAsList = new List<IOrder>();
-        //private List<IOrder> ListOfCurrentListViewItems = new List<IOrder>();
         ObservableCollection<IOrder> ObsCollForListView = new ObservableCollection<IOrder>();
 
         public ShowCurrentOrders()
@@ -91,12 +89,7 @@ namespace EksamensProjektUnigGardin
 				OrderPackagedButton.IsEnabled = true;
 			}
         }
-
-        private void SamplesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+        
         private void OrderPackagedButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 			bool confirmation = ShowPopUpBox();
@@ -141,13 +134,8 @@ namespace EksamensProjektUnigGardin
 
 			return confirmation;
 		}
-
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-		//	Application.Current.MainWindow.Content = new ShowCurrentOrders();
-		}
-
-		private void Button_Click_1(object sender, RoutedEventArgs e)
+        
+		private void GoToManageStock(object sender, RoutedEventArgs e)
 		{
 			Application.Current.MainWindow.Content = new ManageStock();
 		}
@@ -171,5 +159,20 @@ namespace EksamensProjektUnigGardin
 						break;
 				}
 		}
-	}
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SamplesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+    }
 }

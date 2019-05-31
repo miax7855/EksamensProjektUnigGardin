@@ -51,9 +51,9 @@ namespace ApplicationLayer
         {
 			orders.Add(o.OrderId, o);
         }
-        public void AddOrder(int Key, IOrder o)
+        public void AddOrder(int key, IOrder o)
         {
-            orders.Add(Key, o);
+            orders.Add(key, o);
         }
         public void RemoveOrder(IOrder o)
         {
