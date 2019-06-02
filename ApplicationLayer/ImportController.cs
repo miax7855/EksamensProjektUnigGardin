@@ -10,7 +10,6 @@ using library;
 namespace ApplicationLayer
 {
 	public delegate void RegisterOrderEventHandler<OrderRepository>(object source, EventArgs e);
-    
 
     public class ImportController
     {
@@ -23,7 +22,6 @@ namespace ApplicationLayer
         
         private OrderRepository orderRepo;
 		
-
 		public void RegisterOrders(object fileNameObj)
 		{
             string fileName = (string)fileNameObj;
@@ -80,35 +78,6 @@ namespace ApplicationLayer
                 }
             }
         }
-
-
-
-        //List<IOrder> Orders = orderRepo.ReturnOrdersAsList();
-
-
-        //foreach (IOrder item in OrdersToAdd.ToList())
-        //{
-        //    foreach (IOrder i in Orders.ToList())
-        //    {
-        //        if (item.Email.Equals(i.Email) && item.TimeStamp == i.TimeStamp)
-        //        {
-        //            orderRepo.GetListOfOrdersToAdd().Remove(item);
-        //        }
-        //    }
-        //    if (orderRepo.GetListOfOrdersToAdd().Contains(item))
-        //    {
-        //        if (orderRepo.GetOrderDic().Count == 0)
-        //        {
-        //            orderRepo.AddOrder(1000, item);
-        //        }
-        //        else
-        //        {
-        //            int id = orderRepo.GetOrderDic().Keys.Last() + 1;
-        //            item.OrderId = id;
-        //            orderRepo.AddOrder(id, item);
-        //        }
-        //    }
-        //}
 
         public void DeleteOrderItemEvent(object fileNameObj)
         {
