@@ -34,12 +34,12 @@ namespace EksamensProjektUnigGardin
             
         }
 
-        private void ShowOrderIDsInListBox(OrderRepository orderRepo)
+        private void ShowOrderIDsInListBox()
         {
             listBox.Dispatcher.Invoke(() =>
             {
                 listBox.Items.Clear();
-                foreach (IOrder item in orderRepo.ReturnOrdersAsList())
+                foreach (IOrder item in this.ordersAsList)
                 {
                     listBox.Items.Add(item.OrderId);
                 }
@@ -72,7 +72,8 @@ namespace EksamensProjektUnigGardin
         {
             this.ordersAsList.Clear();
             OrderRepository o = (OrderRepository)e;
-            ShowOrderIDsInListBox(o);
+            this.ordersAsList.AddRange(o.ReturnOrdersAsList());
+            ShowOrderIDsInListBox();
         }
         
 
