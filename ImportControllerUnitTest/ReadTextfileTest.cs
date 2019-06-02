@@ -57,7 +57,7 @@ namespace ImportControllerUnitTest
 
 			List<string> testSampleType = new List<string> { "U6542", "U7854" };
             DateTime date = new DateTime(2018, 11, 01, 02, 18, 11);
-            Order o = new Order("Asbjørn", "Larsen", 2464 ,"Danmark", 5648792, "Asbjorn@hotmail.com", date, testSampleType);
+            Order o = new Order("Asbjorn", "Larsen", 2464 ,"Danmark", 5648792, "Asbjorn@hotmail.com", date, testSampleType);
 
 			//ACT
 			c.RefreshOrders(fileName);
