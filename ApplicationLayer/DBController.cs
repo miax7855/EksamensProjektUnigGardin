@@ -26,7 +26,6 @@ namespace ApplicationLayer
         {
             using (con = new SqlConnection(connectionstring))
             {
-
                 try
                 {
                     con.Open();

@@ -28,7 +28,7 @@ namespace ApplicationLayer
 		{
             string fileName = (string)fileNameObj;
             string relativePath = GetFilePath(fileName);
-            List<IOrder> OrdersToAdd = new List<IOrder>();
+            List<IOrder> newOrders = new List<IOrder>();
             orderRepo = OrderRepository.GetOrderRepo();
 
             FileStream fs = new FileStream(relativePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -38,8 +38,6 @@ namespace ApplicationLayer
                 while (true)
                 {
                     string line = string.Empty;
-
-                    OrdersToAdd.Clear();
                     
                     while ((line = reader.ReadLine()) != null)
                     {
@@ -55,62 +53,63 @@ namespace ApplicationLayer
 
                         Order order = new Order(orderItems[0], orderItems[1], Convert.ToInt32(orderItems[2]), orderItems[3], 
                                                  Convert.ToInt32(orderItems[4]), orderItems[5], timeStamp, sampleTypeList);
-
-                        OrdersToAdd.Add(order);
+                        newOrders.Add(order);
                     }
-                    if (OrdersToAdd.Count != 0)
+                    if (newOrders.Count != 0)
                     {
-                        //List<IOrder> Orders = orderRepo.ReturnOrdersAsList();
+                        orderRepo.GetListOfOrdersToAdd().Clear();
+
+                        orderRepo.GetListOfOrdersToAdd().AddRange(newOrders.Except(orderRepo.ReturnOrdersAsList()));
                         
-
-                        //foreach (IOrder item in OrdersToAdd.ToList())
-                        //{
-                        //    foreach (IOrder i in Orders.ToList())
-                        //    {
-                        //        if (item.Email.Equals(i.Email) && item.TimeStamp == i.TimeStamp)
-                        //        {
-                        //            orderRepo.GetListOfOrdersToAdd().Remove(item);
-                        //        }
-                        //    }
-                        //    if (orderRepo.GetListOfOrdersToAdd().Contains(item))
-                        //    {
-                        //        if (orderRepo.GetOrderDic().Count == 0)
-                        //        {
-                        //            orderRepo.AddOrder(1000, item);
-                        //        }
-                        //        else
-                        //        {
-                        //            int id = orderRepo.GetOrderDic().Keys.Last() + 1;
-                        //            item.OrderId = id;
-                        //            orderRepo.AddOrder(id, item);
-                        //        }
-                        //    }
-                        //}
-
-                        IEnumerable<IOrder> liste = OrdersToAdd.Except(orderRepo.ReturnOrdersAsList());
-                        
-                        //List<IOrder> tingest = (List<IOrder>) liste;
-
-                        foreach (IOrder item in liste)
+                        foreach (IOrder item in orderRepo.GetListOfOrdersToAdd())
                         {
-                            if (orderRepo.GetOrderDic().Count == 0)
-                            {
-                                orderRepo.AddOrder(1000, item);
-                            }
-                            else
+                            if (orderRepo.GetOrderDic().Count != 0)
                             {
                                 int id = orderRepo.GetOrderDic().Keys.Last() + 1;
                                 item.OrderId = id;
                                 orderRepo.AddOrder(id, item);
                             }
+                            else
+                            {
+                                orderRepo.AddOrder(1000, item);
+                            }
                         }
-
                         OnOrderRegistered();
+                        newOrders.Clear();
                     }
                 }
             }
         }
-        
+
+
+
+        //List<IOrder> Orders = orderRepo.ReturnOrdersAsList();
+
+
+        //foreach (IOrder item in OrdersToAdd.ToList())
+        //{
+        //    foreach (IOrder i in Orders.ToList())
+        //    {
+        //        if (item.Email.Equals(i.Email) && item.TimeStamp == i.TimeStamp)
+        //        {
+        //            orderRepo.GetListOfOrdersToAdd().Remove(item);
+        //        }
+        //    }
+        //    if (orderRepo.GetListOfOrdersToAdd().Contains(item))
+        //    {
+        //        if (orderRepo.GetOrderDic().Count == 0)
+        //        {
+        //            orderRepo.AddOrder(1000, item);
+        //        }
+        //        else
+        //        {
+        //            int id = orderRepo.GetOrderDic().Keys.Last() + 1;
+        //            item.OrderId = id;
+        //            orderRepo.AddOrder(id, item);
+        //        }
+        //    }
+        //}
+
         public void DeleteOrderItemEvent(object fileNameObj)
         {
             string fileName = (string)fileNameObj;

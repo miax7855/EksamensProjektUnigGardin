@@ -72,7 +72,7 @@ namespace EksamensProjektUnigGardin
         {
             this.ordersAsList.Clear();
             OrderRepository o = (OrderRepository)e;
-            this.ordersAsList = o.ReturnOrdersAsList();
+            this.ordersAsList.AddRange(o.ReturnOrdersAsList());
             ShowOrderIDsInListBox();
         }
         
@@ -90,8 +90,9 @@ namespace EksamensProjektUnigGardin
 			}
         }
         
-        private void OrderPackagedButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void OrderPackagedButton_Click(object sender, RoutedEventArgs e)
         {
+
 			bool confirmation = ShowPopUpBox();
 			if (confirmation)
 			{
@@ -108,7 +109,7 @@ namespace EksamensProjektUnigGardin
 					controller.DeleteOrderFromDatabase(orderToRemove);
 
 					listBox.Items.Clear();
-					ShowOrderIDsInListBox();
+					//ShowOrderIDsInListBox(controller.ReturnOrderRepository());
 				}
 			}
 

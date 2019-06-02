@@ -47,6 +47,17 @@ namespace ApplicationLayer
             }
             return orderAsList;
         }
+        //oprettes til DCD
+        //public List<Order> ReturnOrdersWithoutIDs()
+        //{
+        //    List<Order> noIds = new List<Order>();
+        //    foreach (KeyValuePair<int, IOrder> item in orders)
+        //    {
+        //        noIds.Add(new Order(item.Value.OrderId = 0, item.Value.FirstName, item.Value.LastName, item.Value.Zip, item.Value.Country, 
+        //                            item.Value.PhoneNumber, item.Value.Email, item.Value.TimeStamp, item.Value.SampleType));
+        //    }
+        //    return noIds;
+        //}
         public void AddOrder(IOrder o)
         {
 			orders.Add(o.OrderId, o);
