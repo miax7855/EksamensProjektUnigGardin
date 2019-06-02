@@ -109,8 +109,8 @@ namespace EksamensProjektUnigGardin
 					controller.DeleteOrderFromDatabase(orderToRemove);
 
 					listBox.Items.Clear();
-					//ShowOrderIDsInListBox(controller.ReturnOrderRepository());
-				}
+                    ShowOrderIDsInListBox();
+                }
 			}
 
 			OrderPackagedButton.IsEnabled = false;
