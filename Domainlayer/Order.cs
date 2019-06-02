@@ -7,7 +7,7 @@ using library;
 
 namespace Domainlayer
 {
-    public class Order : IOrder
+    public class Order : IOrder , IEquatable<IOrder>
     {
         public int OrderId { get; set; }
 		public string FirstName { get; set; }
@@ -63,8 +63,17 @@ namespace Domainlayer
 
 			return "FirstName: " + o.FirstName + " " + "LastName: " + o.LastName + "Bestilling: " + sampleTypesInOrder;
 		}
-		
-		
-		
-	}
+
+        public bool Equals(IOrder other)
+        {
+            if (other is null)
+                return false;
+            return this.Email.Equals(other.Email) && this.TimeStamp == other.TimeStamp;
+        }
+        public override bool Equals(object obj) => Equals(obj as IOrder);
+        public override int GetHashCode()
+        {
+            return (Email+TimeStamp).GetHashCode();
+        }
+    }
 }
