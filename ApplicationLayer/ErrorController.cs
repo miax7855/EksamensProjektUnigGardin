@@ -9,6 +9,7 @@ namespace ApplicationLayer
 {
 	public class ErrorController
 	{
+		// Gemmer parameter string til tekstfilen "ErrorLog.txt", hver error besked skilles med 3 linjer samt et timestamp
 		public void SaveErrorLog(string message)
 		{
 			ImportController ic = new ImportController();

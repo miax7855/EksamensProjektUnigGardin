@@ -27,7 +27,7 @@ namespace EksamensProjektUnigGardin
 		FabricSampleRepository fRepo;
 		List<IFabricSample> fabricSamples = new List<IFabricSample>();
 
-
+		// understående metoder kaldes når pagen startes
 		public ManageStock()
 		{
 			fRepo = con.ReturnFabricSampleRepository();
@@ -52,17 +52,18 @@ namespace EksamensProjektUnigGardin
 				LowStock.Items.Add(item);
 			}
 		}
+		// IKKE KORREKT
 		public void OnOrderRegistered(object sender, FabricSampleRepository e)
 		{
 			this.fabricSamples.Clear();
 			this.fabricSamples = e.ReturnLowStockSamples();
 		}
-
+		// Henter MainWindow og dens indhold sættes til at være "ShowCurrentOrders"
 		private void GoToCurrentOrders(object sender, RoutedEventArgs e)
 		{
 			Application.Current.MainWindow.Content = new ShowCurrentOrders();
 		}
-        
+        // ved lav beholdning startes alert
 		private void AlertOnLowStock()
 		{
 			if (fRepo.ReturnLowStockSamples() != null)

@@ -13,13 +13,14 @@ namespace Domainlayer
         public int Quantity { get; set; }
 		public string ProductName { get; set; }
 
+		// Constructor
 		public FabricSample(string fabricSampleNumber, int quantity, string productName)
 		{
 			FabricSampleNumber = fabricSampleNumber;
 			Quantity = quantity;
 			ProductName = productName;
 		}
-
+		// Constructor overload
 		public FabricSample(string fabricSampleNumber, int quantity) 
             : this(fabricSampleNumber, quantity, "Not Given")
 		{

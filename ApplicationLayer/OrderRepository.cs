@@ -17,6 +17,7 @@ namespace ApplicationLayer
         private List<IOrder> listOfOrdersToAdd = new List<IOrder>();
 
         static private OrderRepository orderRepository;
+		// Singleton
 		public static OrderRepository GetOrderRepo()
 		{
 			if (orderRepository == null)
@@ -47,21 +48,25 @@ namespace ApplicationLayer
             }
             return orderAsList;
         }
-        //oprettes til DCD
-        //public List<Order> ReturnOrdersWithoutIDs()
-        //{
-        //    List<Order> noIds = new List<Order>();
-        //    foreach (KeyValuePair<int, IOrder> item in orders)
-        //    {
-        //        noIds.Add(new Order(item.Value.OrderId = 0, item.Value.FirstName, item.Value.LastName, item.Value.Zip, item.Value.Country, 
-        //                            item.Value.PhoneNumber, item.Value.Email, item.Value.TimeStamp, item.Value.SampleType));
-        //    }
-        //    return noIds;
-        //}
-        public void AddOrder(IOrder o)
+		//oprettes til DCD
+		//public List<Order> ReturnOrdersWithoutIDs()
+		//{
+		//    List<Order> noIds = new List<Order>();
+		//    foreach (KeyValuePair<int, IOrder> item in orders)
+		//    {
+		//        noIds.Add(new Order(item.Value.OrderId = 0, item.Value.FirstName, item.Value.LastName, item.Value.Zip, item.Value.Country, 
+		//                            item.Value.PhoneNumber, item.Value.Email, item.Value.TimeStamp, item.Value.SampleType));
+		//    }
+		//    return noIds;
+		//}
+
+
+		// Tilføjer IOrder til Dictionary
+		public void AddOrder(IOrder o)
         {
 			orders.Add(o.OrderId, o);
         }
+		// Overload af "AddOrder" her indsættes key value i metoden, og kræves som parameter.
         public void AddOrder(int key, IOrder o)
         {
             orders.Add(key, o);

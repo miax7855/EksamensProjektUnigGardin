@@ -14,14 +14,18 @@ namespace ApplicationLayer
 		private ErrorController error = new ErrorController();
 		private SqlConnection con;
         
+		// connectionString som benyttes til at tilgå databasen. ((( NOT SAFE )))
         private static string connectionstring =
             "Server = den1.mssql8.gear.host; Database = uniggardin; User Id = uniggardin; Password = Iy71?B8skjQ_";
 
+		// En metode der er subscribed til "OrderRegistered" tager objekt source, som parameter samt OrderRepository
+		// OrderRepository kan benyttes som EventArgs input, da den arver fra eventArgs
         public void OnOrderRegistered(object source, OrderRepository e)
         {
+			// kalder metoden SaveOrder med en liste fra OrderRepository som parameter via metoden "GetListOfOrdersToAdd"
             SaveOrder(e.GetListOfOrdersToAdd());
         }
-
+		// Denne metode gemmer enhver ordre i listen den modtager på databasen
         public void SaveOrder(List<IOrder> order)
         {
             using (con = new SqlConnection(connectionstring))
@@ -41,6 +45,8 @@ namespace ApplicationLayer
                         cmd1.Parameters.Add(new SqlParameter("@ZIP", item.Zip));
                         cmd1.Parameters.Add(new SqlParameter("@Order_Date", item.TimeStamp));
 
+
+						// tilføjer hver SampleType fra en ordre
                         for (int i = 0; i < item.SampleType.Count; i++)
                         {
                             int place = i + 1;
@@ -52,10 +58,12 @@ namespace ApplicationLayer
                 }
                 catch (Exception e)
                 {
+					// gemmer errors i en tekstfil (((Skulle være SQLException)))
                     error.SaveErrorLog(e.ToString());
                 }
             }
         }
+		// Tilføjer quantity til en nuværende SampleType
         public void InsertIntoStock(int Quantity, ErrorController error)
         {
             using (con = new SqlConnection(connectionstring))
@@ -76,6 +84,7 @@ namespace ApplicationLayer
 				}
 			}
 		}
+		// Fjerner ordrer fra "ORDERS" table i databasen
 		public void FinishedOrder(IOrder order, ErrorController error)
 		{
 			using (SqlConnection con3 = new SqlConnection(connectionstring))
@@ -95,7 +104,9 @@ namespace ApplicationLayer
 			}
 		}
 
-
+		// Hvis en ordre bliver pakket, opdaterer denne metode databasen.
+		// hardkodet til at ændre værdien med en, da det ikke giver mening at en ordre har mere end en
+		// stofprøve per ordre.
 		public void UpdateStock(IOrder order, ErrorController error)
 		{
 			using (con = new SqlConnection(connectionstring))
@@ -116,13 +127,14 @@ namespace ApplicationLayer
 
 
 				}
+				// gemmer fejlbesked der kommer fra SQL, hvis der opstod fejl.
 				catch (SqlException e)
 				{
 					error.SaveErrorLog(e.ToString());
 				}
 			}
 		}
-        
+        // Indlæser ordre fra databasen ind i programmet.
 		public void GetOrdersFromDatabase(OrderRepository oRepo, ErrorController error)
 		{
 			using (con = new SqlConnection(connectionstring))
@@ -135,6 +147,8 @@ namespace ApplicationLayer
                 {
                     if (reader.HasRows)
                     {
+						// Reader.Read returnerer en boolean værdi om den kan læse den næste row i databasen. Så længe
+						// der er data den kan læse, vil metoden fortsætte.
                         while (reader.Read())
                         {
                              string customerEmail = reader["Customer_Mail"].ToString();
@@ -153,7 +167,7 @@ namespace ApplicationLayer
                 }
             }
 		}
-
+		// Henter alle SampleTypes for en specifik ordre ( int orderId )
 		private List<string> GetSampleTypesWithOrderID(int orderId, ErrorController error)
 		{
 			List<string> sampleTypeList = new List<string>();
@@ -194,7 +208,8 @@ namespace ApplicationLayer
 			}
 			return sampleTypeList;
 		}
-
+		// kaldete stored procedure "spGetLowStockSampleTypes i databasen. Metoden læser alle fabricSampleTypes hvor 
+		// quantity er under 10. alle læste linjer tilføjes til FabricSampleRepository.
 		public bool GetLowStockSampleTypes(bool ran, FabricSampleRepository fRepo, ErrorController error)
 		{
 			using (con = new SqlConnection(connectionstring))

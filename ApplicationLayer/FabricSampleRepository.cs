@@ -8,11 +8,13 @@ using library;
 
 namespace ApplicationLayer
 {
+	// Arver fra EventArgs, fordi den så kan bruges som eventparameter.
     public class FabricSampleRepository : EventArgs
     {
         private List<IFabricSample> fabricSamples = new List<IFabricSample>();
 		static private FabricSampleRepository fabricSampleRepository;
 
+		// Singleton
 		public static FabricSampleRepository GetFabricSampleRepo()
 		{
 			if (fabricSampleRepository == null)
@@ -26,16 +28,17 @@ namespace ApplicationLayer
 				return fabricSampleRepository;
 			}
 		}
-
+		// tilføjer FabricSample til collection
 		public void AddFabricSample(IFabricSample sample)
         {
             fabricSamples.Add(sample);
         }
-
-        public void RemoveFabricSample(IFabricSample sample)
+		// fjerner FabricSample fra collection
+		public void RemoveFabricSample(IFabricSample sample)
         {
             fabricSamples.Remove(sample);
         }
+		// Returnerer en liste over FabricSamples med lav Quantity.
 		public List<IFabricSample> ReturnLowStockSamples()
 		{
 			List<IFabricSample> LowStockList = new List<IFabricSample>();
@@ -48,6 +51,7 @@ namespace ApplicationLayer
 			}
 			return LowStockList;
 		}
+		// Returnerer kollektion af typen list
 		public List<IFabricSample> ReturnStock()
 		{
 			List<IFabricSample> Stock = new List<IFabricSample>();
@@ -57,7 +61,7 @@ namespace ApplicationLayer
 			}
 			return Stock;
 		}
-
+		// fjerner alle entries i FabricSamples
 		public void CLearSampleTypeList()
 		{
 			fabricSamples.Clear();

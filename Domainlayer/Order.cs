@@ -19,12 +19,13 @@ namespace Domainlayer
         public DateTime TimeStamp { get; set; }
         public List<string> SampleType { get; set; }
 
+		// constructor overload
 		public Order(int orderId, string firstName, string lastName, int zip, string country, int phoneNumber, string email, DateTime timeStamp, List<string> sampleType) :
 			 this(firstName, lastName, zip, country, phoneNumber, email, timeStamp, sampleType)
 		{
             OrderId = orderId;
 		}
-
+		// constructor overload
 		public Order(string firstName, string lastName, int zip, string country, int phoneNumber, string email, DateTime timeStamp, List<string> sampleType)
 		{
 			FirstName = firstName;
@@ -36,12 +37,12 @@ namespace Domainlayer
 			SampleType = sampleType;
             TimeStamp = timeStamp;
 		}
-
+		// default constructor
 		public Order()
 		{
 
 		}
-
+		// benyttes til test
 		public string PrintOrderInfo(Order o)
 		{
 			char[] symbol = new char[] { ',', ' ' };
@@ -63,14 +64,18 @@ namespace Domainlayer
 
 			return "FirstName: " + o.FirstName + " " + "LastName: " + o.LastName + "Bestilling: " + sampleTypesInOrder;
 		}
-
+		// Overwriter Equals for Order, bruges til sammenligning af Orders, ved Mail og timestamp.
         public bool Equals(IOrder other)
         {
             if (other is null)
                 return false;
             return this.Email.Equals(other.Email) && this.TimeStamp == other.TimeStamp;
         }
+		// metoden Equals Overrides så den kan benytte objekt af typen IOrder
         public override bool Equals(object obj) => Equals(obj as IOrder);
+		// generer en hashcode for denne specifikke instans udfra Email og TimeStamp, dermed skabes en unik værdi
+		// der bruges til at relatere objekterne.
+		// GetHashCode(); returnerer en 32bit interger.
         public override int GetHashCode()
         {
             return (Email+TimeStamp).GetHashCode();

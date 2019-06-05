@@ -20,9 +20,14 @@ namespace EksamensProjektUnigGardin
 	/// <summary>
 	/// Interaction logic for Alert.xaml
 	/// </summary>
+	/// 
+
+	// arver fra Window
 	public partial class Alert : Window
 	{
+		
 		FabricSampleRepository Frepo;
+		// ved start af dette window kaldes understående metoder.
 		public Alert()
 		{
 			InitializeComponent();
@@ -39,6 +44,7 @@ namespace EksamensProjektUnigGardin
 		{
 			this.Close();
 		}
+		// returnerer en string med besked om SampleTypes med lav beholdning
 		private void LowStockMessage()
 		{
 			Frepo = FabricSampleRepository.GetFabricSampleRepo();
