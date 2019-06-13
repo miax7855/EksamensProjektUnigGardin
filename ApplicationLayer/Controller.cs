@@ -52,15 +52,16 @@ namespace ApplicationLayer
 
 		public void OrderPacked(IOnStockUpdatedSubscriber subscriber, IOrder orderToRemove)
 		{
-			StockUpdated += subscriber.OnStockUpdated;
+			//StockUpdated += subscriber.OnStockUpdated;
 			dbController.UpdateStock(orderToRemove, error);
 			ran = dbController.GetLowStockSampleTypes(ran, fRepo, error);
 
 			if (ran)
 			{
 				StockUpdated(this, fRepo);
-			}
-			ran = false;
+                ran = false;
+            }
+			
 			fRepo.CLearSampleTypeList();
 		}
 

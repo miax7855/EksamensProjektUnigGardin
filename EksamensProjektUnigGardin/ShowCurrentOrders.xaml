@@ -56,7 +56,7 @@
         <ListBox x:Name="SamplesListBox" HorizontalAlignment="Left" Height="204" Margin="466,258,0,0" VerticalAlignment="Top" Width="131" SelectionChanged="SamplesListBox_SelectionChanged"/>
         <Button x:Name="OrderPackagedButton" Content="Ordrer Pakket" HorizontalAlignment="Left" Margin="644,258,0,0" VerticalAlignment="Top" Width="75" Click="OrderPackagedButton_Click"/>
         <Button Content="Ordrer" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="63" Click="Button_Click" Margin="18,0,0,440.4"/>
-        <Button Content="Lager styring" HorizontalAlignment="Left" Margin="86,0,0,440.4" VerticalAlignment="Bottom" Width="75" Click="Button_Click_1"/>
+        <Button Content="Lager styring" HorizontalAlignment="Left" Margin="86,0,0,440.4" VerticalAlignment="Bottom" Width="75" Click="GoToManageStock"/>
 
     </Grid>
 </Page>
