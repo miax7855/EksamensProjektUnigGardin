@@ -28,9 +28,9 @@ namespace ImportControllerUnitTest
 			//ACT
 			List<string> TestList = ICT.ConvertArrayToList(TestArray);
 
-			//ASSERT
-			Assert.AreEqual(TestList[0], TestArray[0]);
-		}
+            //ASSERT
+            Assert.AreEqual(typeof(List<string>), TestList.GetType());
+        }
 		[TestMethod]
 		public void ImportReaderTest2()
 		{

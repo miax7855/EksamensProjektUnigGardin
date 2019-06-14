@@ -23,7 +23,7 @@ namespace EksamensProjektUnigGardin
         {
             InitializeComponent();
 
-			controller.StockUpdated += OnStockUpdated;
+            controller.StockUpdated += OnStockUpdated;
             if (controller.ReturnOrderRepository().GetOrderDic().Count == 0)
             {
                 controller.ConGetOrdersFromDataBase();
